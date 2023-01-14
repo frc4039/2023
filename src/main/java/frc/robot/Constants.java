@@ -43,8 +43,8 @@ public final class Constants {
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
 
-   // public static final int pigeonID = 6;
-   //  public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+   public static final int pigeonID = 6;
+   public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(21.73);

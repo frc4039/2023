@@ -73,7 +73,7 @@ public class SwerveModule {
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
-    configAngleEncoder();
+    configAngleEncoder()
 
     /* Angle Motor Config */
     angleMotor = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
