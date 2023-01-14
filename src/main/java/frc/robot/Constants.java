@@ -44,7 +44,7 @@ public final class Constants {
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
 
-   public static final int pigeonID = 6; // AFAIK this is a completely random and arbitrary number, but I guess we'll see..
+   public static final int pigeonID = 30;
    public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
