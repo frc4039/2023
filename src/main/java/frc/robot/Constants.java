@@ -45,7 +45,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
    public static final int BoardID = 1; // AFAIK this is a completely random and arbitrary number, but I guess we'll see..
-   public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+   public static final boolean invertGyro = true; // Always ensure Gyro is CCW- CW+
 
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(21.73);
