@@ -55,7 +55,7 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
 
   public Swerve() {
-    gyro = new NavX(Constants.Swerve.pigeonID); // the replacement MIGHT be registerCallback https://www.kauailabs.com/public_files/navx-mxp/apidocs/java/com/kauailabs/navx/frc/AHRS.html#registerCallback(com.kauailabs.navx.frc.ITimestampedDataSubscriber,java.lang.Object)
+    gyro = new NavX(Constants.Swerve.BoardID); // the replacement MIGHT be registerCallback https://www.kauailabs.com/public_files/navx-mxp/apidocs/java/com/kauailabs/navx/frc/AHRS.html#registerCallback(com.kauailabs.navx.frc.ITimestampedDataSubscriber,java.lang.Object)
     gyro.configFactoryDefault();
     zeroGyro();
 
