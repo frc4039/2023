@@ -32,6 +32,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.kauailabs.navx.frc
+import com.kauailabs.navx
 import frc.robot.common.drivers.NavX;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -54,7 +55,7 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
 
   public Swerve() {
-    gyro = new NavX(Constants.Swerve.pigeonID);
+    gyro = new NavX(Constants.Swerve.pigeonID); // the replacement MIGHT be registerCallback https://www.kauailabs.com/public_files/navx-mxp/apidocs/java/com/kauailabs/navx/frc/AHRS.html#registerCallback(com.kauailabs.navx.frc.ITimestampedDataSubscriber,java.lang.Object)
     gyro.configFactoryDefault();
     zeroGyro();
 
