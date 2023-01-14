@@ -31,9 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.kauailabs.navx.frc
-import com.kauailabs.navx
-import frc.robot.common.drivers.NavX;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -47,7 +44,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
-  private final NavX gyro;
+  private final Pigeon2 gyro;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -55,9 +52,9 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
 
   public Swerve() {
-    gyro = new NavX(Constants.Swerve.BoardID); // the replacement MIGHT be registerCallback https://www.kauailabs.com/public_files/navx-mxp/apidocs/java/com/kauailabs/navx/frc/AHRS.html#registerCallback(com.kauailabs.navx.frc.ITimestampedDataSubscriber,java.lang.Object)
+    gyro = new PigeonID(Constants.Swerve.pigeonID);
     gyro.configFactoryDefault();
-    Reset(); // might be zeroYaw?
+    zeroGyro();
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
 
