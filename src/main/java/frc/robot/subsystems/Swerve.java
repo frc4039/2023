@@ -57,7 +57,7 @@ public class Swerve extends SubsystemBase {
   public Swerve() {
     gyro = new NavX(Constants.Swerve.BoardID); // the replacement MIGHT be registerCallback https://www.kauailabs.com/public_files/navx-mxp/apidocs/java/com/kauailabs/navx/frc/AHRS.html#registerCallback(com.kauailabs.navx.frc.ITimestampedDataSubscriber,java.lang.Object)
     gyro.configFactoryDefault();
-    zeroGyro();
+    Reset(); // might be zeroYaw?
 
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
 
