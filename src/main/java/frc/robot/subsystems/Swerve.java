@@ -45,7 +45,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
-  private final WPI_PigeonIMU gyro;
+  private final PigeonIMU gyro;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -53,7 +53,7 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
 
   public Swerve() {
-    gyro = new WPI_PigeonIMU(Constants.Swerve.WPI_PigeonIMU);
+    gyro = new PigeonIMU(Constants.Swerve.pigeonID);
     gyro.configFactoryDefault();
     zeroGyro();
 
