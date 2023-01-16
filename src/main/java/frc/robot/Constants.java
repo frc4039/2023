@@ -1,3 +1,4 @@
+
 /* BSD 3-Clause License
 
 Copyright (c) 2022, FRC Team 3512
@@ -34,6 +35,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.config.SwerveModuleConstants;
@@ -119,6 +121,9 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(327.48046875);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static SwerveModulePosition getPosition() {
+        return null;
+      }
     }
 
     /* Front Right Module - Module 1 */
@@ -129,6 +134,9 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(286.34765625);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    public static SwerveModulePosition getPosition() {
+        return null;
+    }
     }
 
     /* Back Left Module - Module 2 */
@@ -139,6 +147,9 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(55.01953125);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    public static SwerveModulePosition getPosition() {
+        return null;
+    }
     }
 
     /* Back Right Module - Module 3 */
@@ -149,6 +160,9 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(67.939453125);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+    public static SwerveModulePosition getPosition() {
+        return null;
+    }
     }
   }
 

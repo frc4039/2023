@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.*;
 
 /**
@@ -38,6 +39,8 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
+  public class setDefaultCommand{}
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -46,7 +49,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
-            () -> robotCentric.get()));
+            () -> (robotCentric).getAsBoolean()));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -68,8 +71,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve);
-  }
+ // public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous // RE-ENABLE WHEN AUTO BECOMES AVAILABLE
+   // return new exampleAuto(s_Swerve);
+ // }
 }
