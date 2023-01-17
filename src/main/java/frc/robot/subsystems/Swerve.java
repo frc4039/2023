@@ -32,12 +32,13 @@ package frc.robot.subsystems;
 
 // import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -52,7 +53,7 @@ import frc.robot.Constants.Swerve.Mod3;
 public class Swerve extends SubsystemBase {
   private final WPI_PigeonIMU gyro;
 
-  private SwerveDriveOdometry swerveOdometry;
+  private SwerveDrivePoseEstimator swervePoseEstimator;
   private SwerveModule[] mSwerveMods;
 
   private Field2d field;
@@ -62,16 +63,16 @@ public class Swerve extends SubsystemBase {
     gyro.configFactoryDefault();
     zeroGyro();
 
-    mSwerveMods =
-        new SwerveModule[] {
-          new SwerveModule(0, Constants.Swerve.Mod0.constants),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants)
-        };
+    mSwerveMods = new SwerveModule[] {
+        new SwerveModule(0, Constants.Swerve.Mod0.constants),
+        new SwerveModule(1, Constants.Swerve.Mod1.constants),
+        new SwerveModule(2, Constants.Swerve.Mod2.constants),
+        new SwerveModule(3, Constants.Swerve.Mod3.constants)
+    };
 
-  swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), new SwerveModulePosition[] {Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition()},
-  getPose() ); // TODO: null should be replaced at some time and this should be cleaned up
+    swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
+        new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() },
+        getPose());
 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
@@ -79,12 +80,11 @@ public class Swerve extends SubsystemBase {
 
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-    SwerveModuleState[] swerveModuleStates =
-        Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-            fieldRelative
-                ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                    translation.getX(), translation.getY(), rotation, getYaw())
-                : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
+    SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        fieldRelative
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                translation.getX(), translation.getY(), rotation, getYaw())
+            : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
@@ -102,11 +102,13 @@ public class Swerve extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return swerveOdometry.getPoseMeters();
+    return swervePoseEstimator.getEstimatedPosition();
   }
 
-  public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getYaw(), null, getPose()); // TODO: also fix this sometime soon, also null
+  public void resetPoseEstimator(Pose2d pose) {
+    swervePoseEstimator.resetPosition(getYaw(),
+        new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() },
+        getPose());
   }
 
   public SwerveModuleState[] getStates() {
@@ -129,7 +131,7 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swerveOdometry.update(getYaw(), null);
+    swervePoseEstimator.update(getYaw(), null);
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
