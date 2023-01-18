@@ -72,7 +72,7 @@ public class Swerve extends SubsystemBase {
 
     swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
         new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() },
-        getPose());
+        new Pose2d());
 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
@@ -131,7 +131,7 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swervePoseEstimator.update(getYaw(), null);
+    swervePoseEstimator.update(getYaw(), new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() });
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
