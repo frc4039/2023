@@ -131,7 +131,7 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swervePoseEstimator.update(getYaw(), new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() });
+    swervePoseEstimator.update(getYaw(), new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() }); // get the rotation and offset for encoder
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
