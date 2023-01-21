@@ -121,9 +121,6 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(269.0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-      public static SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(Math.sqrt(2.0), new Rotation2d(-1.0, 1.0));
-      }
     }
 
     /* Front Right Module - Module 1 */
@@ -134,9 +131,6 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(211.8);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-    public static SwerveModulePosition getPosition() {
-      return new SwerveModulePosition(Math.sqrt(2.0), new Rotation2d(1.0, 1.0));
-    }
     }
 
     /* Back Left Module - Module 2 */
@@ -147,9 +141,6 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(11.5);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-    public static SwerveModulePosition getPosition() {
-      return new SwerveModulePosition(Math.sqrt(2.0), new Rotation2d(-1.0, -1.0));
-    }
     }
 
     /* Back Right Module - Module 3 */
@@ -160,9 +151,6 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(149.9);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-    public static SwerveModulePosition getPosition() {
-      return new SwerveModulePosition(Math.sqrt(2.0), new Rotation2d(1.0, -1.0));
-    }
     }
   }
 

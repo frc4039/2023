@@ -45,10 +45,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.Swerve.Mod0;
-import frc.robot.Constants.Swerve.Mod1;
-import frc.robot.Constants.Swerve.Mod2;
-import frc.robot.Constants.Swerve.Mod3;
 
 public class Swerve extends SubsystemBase {
   private final WPI_PigeonIMU gyro;
@@ -71,7 +67,12 @@ public class Swerve extends SubsystemBase {
     };
 
     swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
-        new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() },
+        new SwerveModulePosition[] {
+            mSwerveMods[0].getPosition(),
+            mSwerveMods[1].getPosition(),
+            mSwerveMods[2].getPosition(),
+            mSwerveMods[3].getPosition()
+        },
         new Pose2d());
 
     field = new Field2d();
@@ -107,7 +108,12 @@ public class Swerve extends SubsystemBase {
 
   public void resetPoseEstimator(Pose2d pose) {
     swervePoseEstimator.resetPosition(getYaw(),
-        new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() },
+        new SwerveModulePosition[] {
+            mSwerveMods[0].getPosition(),
+            mSwerveMods[1].getPosition(),
+            mSwerveMods[2].getPosition(),
+            mSwerveMods[3].getPosition()
+        },
         getPose());
   }
 
@@ -131,7 +137,14 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swervePoseEstimator.update(getYaw(), new SwerveModulePosition[] { Mod0.getPosition(), Mod1.getPosition(), Mod2.getPosition(), Mod3.getPosition() }); // get the rotation and offset for encoder
+    swervePoseEstimator.update(getYaw(),
+        new SwerveModulePosition[] {
+            mSwerveMods[0].getPosition(),
+            mSwerveMods[1].getPosition(),
+            mSwerveMods[2].getPosition(),
+            mSwerveMods[3].getPosition()
+        }); // get the rotation and offset for encoder
+
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
@@ -141,6 +154,10 @@ public class Swerve extends SubsystemBase {
           "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+      SmartDashboard.putString(
+          "Mod " + mod.moduleNumber + " Position", mod.getPosition().toString());
     }
+
+    SmartDashboard.putString("Pose", getPose().toString());
   }
 }
