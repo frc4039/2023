@@ -72,6 +72,7 @@ public class SwerveModule {
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
+    driveMotorInvert = moduleConstants.driveMotorInvert;
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
@@ -87,7 +88,6 @@ public class SwerveModule {
     driveMotor = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
     driveEncoder = driveMotor.getEncoder();
     driveController = driveMotor.getPIDController();
-    driveMotorInvert = moduleConstants.driveMotorInvert;
     configDriveMotor();
 
     lastAngle = getState().angle;
@@ -183,6 +183,6 @@ public class SwerveModule {
   }
 
   public SwerveModulePosition getPosition(){
-    return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(angleEncoder.getPosition()));
+    return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(Math.toRadians(angleEncoder.getPosition())));
   }
 }

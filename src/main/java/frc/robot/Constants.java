@@ -130,7 +130,7 @@ public final class Constants {
       public static final int angleMotorID = 14; // Angle Motor Controller - [FRA]
       public static final int canCoderID = 15; // Front Right Encoder - [FRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(211.8);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(390.8);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -152,7 +152,7 @@ public final class Constants {
       public static final int angleMotorID = 20; // Angle Motor Controller - [BRA]
       public static final int canCoderID = 21; // Back Right Encoder - [BRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(149.9);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(329.9);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
