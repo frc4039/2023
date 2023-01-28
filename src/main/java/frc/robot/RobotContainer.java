@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
@@ -35,10 +36,15 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton yButton =
+      new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton aButton =
       new JoystickButton(driver, XboxController.Button.kA.value);
   private final JoystickButton bButton =
       new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton xButton =
+      new JoystickButton(driver, XboxController.Button.kX.value);
+  
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
@@ -55,6 +61,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis),
             () -> (robotCentric).getAsBoolean()));
 
+    CommandScheduler.getInstance().registerSubsystem(s_Pivot);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -68,8 +76,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    aButton.onTrue(new InstantCommand(() -> s_Pivot.goTo0()));
-    bButton.onTrue(new InstantCommand(() -> s_Pivot.goTo90()));
+    yButton.onTrue(new InstantCommand(() -> s_Pivot.goToTravel()));
+    aButton.onTrue(new InstantCommand(() -> s_Pivot.goToPickup()));
+    bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
+    xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
   }
 
   /**

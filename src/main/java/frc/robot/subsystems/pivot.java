@@ -3,56 +3,93 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.math.geometry.Rotation2d;
-import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.math.geometry.Rotation2d;
+//import com.revrobotics.RelativeEncoder;
 import frc.lib.util.CANSparkMaxUtil;
 import com.revrobotics.CANSparkMax.ControlType;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import com.revrobotics.RelativeEncoder;
 
 public class Pivot extends SubsystemBase {
     
-    private CANSparkMax angleMotor;
-    private final SparkMaxPIDController angleController;
-    private RelativeEncoder integratedAngleEncoder;
+    private CANSparkMax m_pivotMotor;
+    private final SparkMaxPIDController m_pivotController;
+    private RelativeEncoder m_integratedPivotEncoder;
+    private double dashboardTargetPivotPositionValue = 0.0;
+
     public Pivot(){//intialization method
-        angleMotor = new CANSparkMax(40,MotorType.kBrushless);//need to move constant
-        integratedAngleEncoder = angleMotor.getEncoder();
-        angleController = angleMotor.getPIDController();
-        configAngleMotor();
+        m_pivotMotor = new CANSparkMax(Constants.PivotConstants.pivotMotorID, MotorType.kBrushless);//need to move constant
+        m_pivotMotor.restoreFactoryDefaults();
+        m_pivotMotor.setSmartCurrentLimit(Constants.PivotConstants.smartCurrentLimit);
+        m_integratedPivotEncoder = m_pivotMotor.getEncoder();
+        m_integratedPivotEncoder.setPosition(0.0);
+        m_pivotController = m_pivotMotor.getPIDController();
+        configPivotMotor();
     }
 
-    private void configAngleMotor() {
-        angleMotor.restoreFactoryDefaults();
-        CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
-        angleMotor.setSmartCurrentLimit(1);//set current limit in amps
-        angleMotor.setInverted(false);
-        angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
-        integratedAngleEncoder.setPositionConversionFactor(1);//ticks to rotations
-       // angleController.setP(Constants.Swerve.angleKP);
-       // angleController.setI(Constants.Swerve.angleKI);
-        //angleController.setD(Constants.Swerve.angleKD);
-       // angleController.setFF(Constants.Swerve.angleKFF);
-        angleMotor.enableVoltageCompensation(1.0);//voltage compensation
-        angleMotor.burnFlash();
-        integratedAngleEncoder.setPosition(0.0);
+    public void goToHorizontal(){
+        goToPosition(Constants.PivotConstants.positionHorizontal);
+    }
+    
+    public void goToPickup(){
+        goToPosition(Constants.PivotConstants.positionPickup);
+    }
+
+    public void goToScoring(){
+        goToPosition(Constants.PivotConstants.positionScoring);
+    }
+
+    public void goToTravel(){
+        goToPosition(Constants.PivotConstants.positionTravel);
+    }
+
+    private void goToPosition(double position){
+        dashboardTargetPivotPositionValue = position;
+        m_pivotController.setReference(position, ControlType.kPosition);
+    }
+
+    public void moveForward(){
+        m_pivotMotor.set(Constants.PivotConstants.speedForward);
+    }
+
+    public void moveBack(){
+        m_pivotMotor.set(Constants.PivotConstants.speedBack);
+    }
+
+    public void stop(){
+        m_pivotMotor.set(Constants.PivotConstants.speedStop);
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("pivot encoder", m_integratedPivotEncoder.getPosition());
+        SmartDashboard.putNumber("target pivot position", dashboardTargetPivotPositionValue);
+    }
+
+    private void configPivotMotor() {
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(m_pivotMotor, Usage.kPositionOnly);
+        m_pivotMotor.setInverted(false);
+        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
+        m_integratedPivotEncoder.setPositionConversionFactor(1);//ticks to rotations
+        m_pivotController.setP(Constants.Swerve.angleKP);
+        m_pivotController.setI(Constants.Swerve.angleKI);
+        m_pivotController.setD(Constants.Swerve.angleKD);
+        m_pivotController.setFF(Constants.Swerve.angleKFF);
+        m_pivotMotor.enableVoltageCompensation(1.0);//voltage compensation
+        m_pivotMotor.burnFlash();
+        m_integratedPivotEncoder.setPosition(0.0);
       }
     
-    private Rotation2d getAngle(){
+    /*private Rotation2d getAngle(){
         return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
     }
 
-    private void setAngle(double desiredAngle){
+   private void setAngle(double desiredAngle){
         angleController.setReference(desiredAngle, ControlType.kPosition);
-    }
+    }*/
 
-    public void goTo90(){
-        System.out.print("90");
-        angleController.setReference(90, ControlType.kPosition);
-    }
-
-    public void goTo0(){
-        System.out.print("0");
-        angleController.setReference(0, ControlType.kPosition);
-    }
 }
