@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -8,10 +7,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import com.revrobotics.RelativeEncoder;
 import frc.lib.util.CANSparkMaxUtil;
 import com.revrobotics.CANSparkMax.ControlType;
+import frc.lib.util.CANSparkMaxUtil.Usage;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Pivot {
+public class Pivot extends SubsystemBase {
     
-    private double currentAngle;
     private CANSparkMax angleMotor;
     private final SparkMaxPIDController angleController;
     private RelativeEncoder integratedAngleEncoder;
@@ -44,5 +44,15 @@ public class Pivot {
 
     private void setAngle(double desiredAngle){
         angleController.setReference(desiredAngle, ControlType.kPosition);
+    }
+
+    public void goTo90(){
+        System.out.print("90");
+        angleController.setReference(90, ControlType.kPosition);
+    }
+
+    public void goTo0(){
+        System.out.print("0");
+        angleController.setReference(0, ControlType.kPosition);
     }
 }
