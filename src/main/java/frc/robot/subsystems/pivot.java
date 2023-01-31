@@ -75,10 +75,10 @@ public class Pivot extends SubsystemBase {
         m_pivotMotor.setInverted(false);
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
         m_integratedPivotEncoder.setPositionConversionFactor(1);//ticks to rotations
-        m_pivotController.setP(Constants.Swerve.angleKP);
-        m_pivotController.setI(Constants.Swerve.angleKI);
-        m_pivotController.setD(Constants.Swerve.angleKD);
-        m_pivotController.setFF(Constants.Swerve.angleKFF);
+        m_pivotController.setP(Constants.PivotConstants.pivotKP);
+        m_pivotController.setI(Constants.PivotConstants.pivotKI);
+        m_pivotController.setD(Constants.PivotConstants.pivotKD);
+        m_pivotController.setFF(Constants.PivotConstants.pivotKFF);
         m_pivotMotor.enableVoltageCompensation(1.0);//voltage compensation
         m_pivotMotor.burnFlash();
         m_integratedPivotEncoder.setPosition(0.0);

@@ -180,5 +180,9 @@ public final class Constants {
     public static final double positionPickup = -16.1427;
     public static final double positionScoring = 9.3333;
     public static final double positionTravel = 34.214;
+    public static final double pivotKP = 0.6;
+    public static final double pivotKI = 0.00;
+    public static final double pivotKD = 0.00;
+    public static final double pivotKFF = 0.00;
   }
 }
