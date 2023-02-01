@@ -62,12 +62,18 @@ public class Pivot extends SubsystemBase {
 
     public void stop(){
         m_pivotMotor.set(Constants.PivotConstants.speedStop);
+    
     }
 
+    public void setZero(){
+        m_integratedPivotEncoder.setPosition(0.0);
+    }
+    
     @Override
     public void periodic(){
         SmartDashboard.putNumber("pivot encoder", m_integratedPivotEncoder.getPosition());
         SmartDashboard.putNumber("target pivot position", dashboardTargetPivotPositionValue);
+        SmartDashboard.putNumber("pivot output current", m_pivotMotor.getOutputCurrent());
     }
 
     private void configPivotMotor() {
@@ -79,10 +85,11 @@ public class Pivot extends SubsystemBase {
         m_pivotController.setI(Constants.PivotConstants.pivotKI);
         m_pivotController.setD(Constants.PivotConstants.pivotKD);
         m_pivotController.setFF(Constants.PivotConstants.pivotKFF);
-        m_pivotMotor.enableVoltageCompensation(1.0);//voltage compensation
+        m_pivotMotor.enableVoltageCompensation(12.0);//voltage compensation
         m_pivotMotor.burnFlash();
         m_integratedPivotEncoder.setPosition(0.0);
       }
+    
     
     /*private Rotation2d getAngle(){
         return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
