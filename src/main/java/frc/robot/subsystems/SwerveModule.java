@@ -53,6 +53,7 @@ public class SwerveModule {
   public int moduleNumber;
   private Rotation2d lastAngle;
   private Rotation2d angleOffset;
+  private boolean driveMotorInvert;
 
   private CANSparkMax angleMotor;
   private CANSparkMax driveMotor;
@@ -71,6 +72,7 @@ public class SwerveModule {
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
+    driveMotorInvert = moduleConstants.driveMotorInvert;
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
@@ -131,7 +133,7 @@ public class SwerveModule {
     driveMotor.restoreFactoryDefaults();
     CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
     driveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
-    driveMotor.setInverted(Constants.Swerve.driveInvert);
+    driveMotor.setInverted(this.driveMotorInvert);
     driveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
     driveEncoder.setVelocityConversionFactor(Constants.Swerve.driveConversionVelocityFactor);
     driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionPositionFactor);
@@ -181,6 +183,6 @@ public class SwerveModule {
   }
 
   public SwerveModulePosition getPosition(){
-    return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(angleEncoder.getPosition()));
+    return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(Math.toRadians(angleEncoder.getPosition())));
   }
 }
