@@ -173,4 +173,20 @@ public final class Constants {
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
+
+  public static final class PivotConstants {
+    public static final int pivotMotorID = 40;
+    public static final int smartCurrentLimit = 30;
+    public static final double speedForward = 10;
+    public static final double speedBack = -10;
+    public static final double speedStop = 0;
+    public static final double positionHorizontal = 0.0;
+    public static final double positionPickup = -16.1427;
+    public static final double positionScoring = 9.3333;
+    public static final double positionTravel = 34.214;
+    public static final double pivotKP = 0.025;
+    public static final double pivotKI = 0.00;
+    public static final double pivotKD = 0.00;
+    public static final double pivotKFF = 0.00;
+  }
 }

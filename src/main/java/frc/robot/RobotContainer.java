@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
+  private final Joystick operator = new Joystick(1);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -35,9 +37,24 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-
+ 
+/* Operator Buttons */
+  private final JoystickButton yButton =
+      new JoystickButton(operator, XboxController.Button.kY.value);
+ // private final Button upDPad = operator.getPOV
+  private final JoystickButton aButton =
+      new JoystickButton(operator, XboxController.Button.kA.value);
+  private final JoystickButton bButton =
+      new JoystickButton(operator, XboxController.Button.kB.value);
+  private final JoystickButton xButton =
+      new JoystickButton(operator, XboxController.Button.kX.value);
+  private final JoystickButton backButton = 
+      new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+     
+  
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final Pivot s_Pivot = new Pivot();
 
   public class setDefaultCommand{}
 
@@ -50,6 +67,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
             () -> (robotCentric).getAsBoolean()));
+
+    CommandScheduler.getInstance().registerSubsystem(s_Pivot);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -64,7 +83,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+    /* operator Buttons */
+    yButton.onTrue(new InstantCommand(() -> s_Pivot.goToTravel()));
+    aButton.onTrue(new InstantCommand(() -> s_Pivot.goToPickup()));
+    bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
+    xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
+    backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
