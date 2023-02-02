@@ -50,11 +50,16 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton leftTrigger =
+      new JoystickButton(operator, XboxController.Button.kLeftTrigger.value);
+  private final JoystickButton rightTrigger =
+      new JoystickButton(operator, XboxController.Button.kRightTrigger.value);
      
   
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
+  private final Gripper s_Gripper = new Gripper();
 
   public class setDefaultCommand{}
 
@@ -90,6 +95,8 @@ public class RobotContainer {
     bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
+    leftTrigger.onTrue(new InstantCommand(()-> s_Gripper.setForward()));
+    rightTrigger.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
   }
 
 
