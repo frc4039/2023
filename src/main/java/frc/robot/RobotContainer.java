@@ -39,8 +39,9 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
  
 /* Operator Buttons */
-      private final JoystickButton yButton =
+  private final JoystickButton yButton =
       new JoystickButton(operator, XboxController.Button.kY.value);
+ // private final Button upDPad = operator.getPOV
   private final JoystickButton aButton =
       new JoystickButton(operator, XboxController.Button.kA.value);
   private final JoystickButton bButton =
@@ -49,7 +50,7 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-  
+     
   
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
