@@ -44,7 +44,7 @@ public final class Constants {
 
   public static final class Swerve {
     public static final double translationStickDeadband = 0.1;
-    public static final double rotationStickDeadband = 0.2;
+    public static final double rotationStickDeadband = 0.4;
 
    public static final int pigeonID = 30;
    public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
