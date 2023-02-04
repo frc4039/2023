@@ -185,4 +185,8 @@ public class SwerveModule {
   public SwerveModulePosition getPosition(){
     return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(Math.toRadians(angleEncoder.getPosition())));
   }
+
+  public SwerveModulePosition getOdometryPosition(){
+    return new SwerveModulePosition(driveEncoder.getPosition(), new Rotation2d(Math.toRadians(angleEncoder.getPosition())).minus(angleOffset));
+  }
 }
