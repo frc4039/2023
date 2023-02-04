@@ -42,6 +42,9 @@ import frc.lib.config.SwerveModuleConstants;
 
 public final class Constants {
 
+  /* Solenoid constants */
+  public static final int solenoidCanID = 7;
+
   public static final class Swerve {
     public static final double translationStickDeadband = 0.1;
     public static final double rotationStickDeadband = 0.2;
@@ -209,5 +212,11 @@ public final class Constants {
     //
     public static final double kForwardPercent = 0.15;
     public static final double kReversePercent = -0.15;
+  }
+
+  public static final class GripperConstants {
+    public static final int tosserMotorID = 41;
+    public static final double tosserMotorForwardPercent = 0.15;
+    public static final double tosserMotorReversePercent = -0.15;
   }
 }

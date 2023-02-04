@@ -104,8 +104,8 @@ public class RobotContainer {
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
-    xDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setForward()));
-    bDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
+    xDriverButton.whileTrue(new GripperRelease(s_Gripper));
+    bDriverButton.onTrue(new GripperRetrieve(s_Gripper));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
