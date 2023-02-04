@@ -39,6 +39,10 @@ public class Telescopic extends SubsystemBase {
             m_Falcon.set(ControlMode.PercentOutput, TelescopicConstants.kReversePercent);
         }
 
+        public void armStop(){
+            m_Falcon.set(ControlMode.PercentOutput, 0);
+        }
+
         @Override
         public void periodic(){
             SmartDashboard.putNumber("Telescopic Encoder Value", m_Falcon.getSelectedSensorPosition());

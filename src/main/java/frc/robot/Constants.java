@@ -208,6 +208,6 @@ public final class Constants {
     public static final double telescopicKFF = 0.00;
     //
     public static final double kForwardPercent = 0.15;
-    public static final double kReversePercent = 0.15;
+    public static final double kReversePercent = -0.15;
   }
 }
