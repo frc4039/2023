@@ -190,4 +190,24 @@ public final class Constants {
     public static final double pivotKD = 0.00;
     public static final double pivotKFF = 0.00;
   }
+
+  public static final class TelescopicConstants {
+    public static final int telescopicMotorID = 40; // Falcon motor ID
+    public static final int smartCurrentLimit = 30;
+    public static final double telescopicSpeedForward = 5;
+    public static final double telescopicSpeedBack = -5;
+    public static final double telescopicStop = 0;
+    //
+    public static final double telescopicForward = 0.0;
+    public static final double telescopicBack = -10.0;
+    public static final double telescopicTravel = 30.0;
+    //
+    public static final double telescopicKP = 0.6;
+    public static final double telescopicKI = 0.00;
+    public static final double telescopicKD = 0.00;
+    public static final double telescopicKFF = 0.00;
+    //
+    public static final double kForwardPercent = 0.15;
+    public static final double kReversePercent = 0.15;
+  }
 }

@@ -63,6 +63,7 @@ public class RobotContainer {
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
   private final Gripper s_Gripper = new Gripper();
+  private final Telescopic s_Telescopic = new Telescopic();
 
   public class setDefaultCommand{}
 
@@ -77,6 +78,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationYAxis)));
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
+    CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
 
     // Configure the button bindings
     configureButtonBindings();
