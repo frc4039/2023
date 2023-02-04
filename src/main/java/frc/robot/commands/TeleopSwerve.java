@@ -48,8 +48,7 @@ public class TeleopSwerve extends CommandBase {
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
-  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(8);
-  private PIDController rotationController = new PIDController(0.02, 0, 0);
+  private PIDController rotationController = new PIDController(4.0, 0, 0);
   private double lastSetPoint;
 
   public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationXSup, DoubleSupplier rotationYSup) {
@@ -60,7 +59,7 @@ public class TeleopSwerve extends CommandBase {
     this.strafeSup = strafeSup;
     this.rotationXSup = rotationXSup;
     this.rotationYSup = rotationYSup;
-
+    
     rotationController.enableContinuousInput(0, 2 * Math.PI);
   }
 
@@ -72,7 +71,7 @@ public class TeleopSwerve extends CommandBase {
 
   @Override
   public void execute() {
-    if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.stickDeadband){
+    if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband){
       double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
       rotationController.setSetpoint(curSetPoint);
       lastSetPoint = curSetPoint;
@@ -84,10 +83,10 @@ public class TeleopSwerve extends CommandBase {
 
     /* Get Values, Deadband */
     double translationVal = translationLimiter.calculate(
-        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
     double strafeVal = strafeLimiter.calculate(
-        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double rotationVal = rotationLimiter.calculate(rotationOutput);
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.rotationStickDeadband));
+    double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
     /* Drive */
     s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal, true);
