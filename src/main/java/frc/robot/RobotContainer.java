@@ -37,6 +37,9 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+   
+     
+     
  
 /* Operator Buttons */
   private final JoystickButton yButton =
@@ -50,10 +53,10 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton leftTrigger =
-      new JoystickButton(operator, XboxController.Button.kLeftTrigger.value);
-  private final JoystickButton rightTrigger =
-      new JoystickButton(operator, XboxController.Button.kRightTrigger.value);
+  private final JoystickButton xDriverButton = 
+      new JoystickButton(driver, XboxController.Button.kX.value);
+  private final JoystickButton bDriverButton = 
+      new JoystickButton(driver, XboxController.Button.kB.value);
      
   
   /* Subsystems */
@@ -95,8 +98,8 @@ public class RobotContainer {
     bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
-    leftTrigger.onTrue(new InstantCommand(()-> s_Gripper.setForward()));
-    rightTrigger.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
+    xDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setForward()));
+    bDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
   }
 
 
