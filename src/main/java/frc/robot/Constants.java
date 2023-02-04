@@ -178,8 +178,8 @@ public final class Constants {
   public static final class PivotConstants {
     public static final int pivotMotorID = 40;
     public static final int smartCurrentLimit = 30;
-    public static final double speedForward = 10;
-    public static final double speedBack = -10;
+    public static final double speedForward = 0.25;
+    public static final double speedBack = -0.25;
     public static final double speedStop = 0;
     public static final double positionHorizontal = 0.0;
     public static final double positionPickup = -16.1427;

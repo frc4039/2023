@@ -13,6 +13,7 @@ public class Gripper extends SubsystemBase {
     DoubleSolenoid gripperDoublePCM = new DoubleSolenoid(7,PneumaticsModuleType.REVPH, 0, 1);
     int solenoid_0 = 0;
     int solenoid_1 = 0;
+    
 
     public Gripper(){
     }
