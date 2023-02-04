@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
-import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.*;
 
 /**
@@ -53,16 +52,22 @@ public class RobotContainer {
   private final JoystickButton xButton =
       new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
-      new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+      new JoystickButton(operator, XboxController.Button.kBack.value);
   private final JoystickButton xDriverButton = 
       new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton bDriverButton = 
       new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton operatorLeftBumperButton = 
+      new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton operatorRightBumperButton = 
+      new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
      
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
   private final Gripper s_Gripper = new Gripper();
+  private final Telescopic s_Telescopic = new Telescopic();
 
   public class setDefaultCommand{}
 
@@ -77,6 +82,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationYAxis)));
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
+    CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -100,6 +106,8 @@ public class RobotContainer {
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
     xDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setForward()));
     bDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
+    operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
+    operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
   }
 
 
