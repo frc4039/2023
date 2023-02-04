@@ -216,7 +216,7 @@ public final class Constants {
 
   public static final class GripperConstants {
     public static final int tosserMotorID = 41;
-    public static final double tosserMotorForwardPercent = 0.15;
-    public static final double tosserMotorReversePercent = -0.15;
+    public static final double tosserMotorForwardPercent = -1;
+    public static final double tosserMotorReversePercent = 1;
   }
 }
