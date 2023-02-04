@@ -51,6 +51,10 @@ public class Pivot extends SubsystemBase {
         m_pivotController.setReference(position, ControlType.kPosition);
     }
 
+    public void setSpeed(double speed){
+        m_pivotMotor.set(speed);
+    }
+
     public void moveForward(){
         m_pivotMotor.set(Constants.PivotConstants.speedForward);
     }
