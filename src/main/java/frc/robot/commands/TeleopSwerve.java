@@ -31,58 +31,69 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerve extends CommandBase {
   private Swerve s_Swerve;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
-  private DoubleSupplier rotationSup;
-  private BooleanSupplier robotCentricSup;
+  private DoubleSupplier rotationXSup;
+  private DoubleSupplier rotationYSup;
 
-  private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
+  private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
+  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
+  private PIDController rotationController = new PIDController(4.0, 0, 0);
+  private double lastSetPoint;
 
-  public TeleopSwerve(
-      Swerve s_Swerve,
-      DoubleSupplier translationSup,
-      DoubleSupplier strafeSup,
-      DoubleSupplier rotationSup,
-      BooleanSupplier robotCentricSup) {
+  public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationXSup, DoubleSupplier rotationYSup) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
 
     this.translationSup = translationSup;
     this.strafeSup = strafeSup;
-    this.rotationSup = rotationSup;
-    this.robotCentricSup = robotCentricSup;
+    this.rotationXSup = rotationXSup;
+    this.rotationYSup = rotationYSup;
+    
+    rotationController.enableContinuousInput(0, 2 * Math.PI);
   }
-  
-@Override
+
+  @Override
+  public void initialize(){
+    rotationController.reset();
+    lastSetPoint = s_Swerve.getYaw().getRadians();
+  }
+
+  @Override
   public void execute() {
-    /* Get Values, Deadband*/
-    double translationVal =
-        translationLimiter.calculate(
-            MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double strafeVal =
-        strafeLimiter.calculate(
-            MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double rotationVal =
-        rotationLimiter.calculate(
-            MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband){
+      double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
+      rotationController.setSetpoint(curSetPoint);
+      lastSetPoint = curSetPoint;
+    } else {
+      rotationController.setSetpoint(lastSetPoint);
+    }
+
+    double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
+
+    /* Get Values, Deadband */
+    double translationVal = translationLimiter.calculate(
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
+    double strafeVal = strafeLimiter.calculate(
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.rotationStickDeadband));
+    double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
     /* Drive */
-    s_Swerve.drive(
-        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
-        rotationVal * Constants.Swerve.maxAngularVelocity,
-        !robotCentricSup.getAsBoolean(),
-        true);
+    s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal, true);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    s_Swerve.drive(new Translation2d(0, 0), 0, false);
   }
 }

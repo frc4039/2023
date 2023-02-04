@@ -43,14 +43,15 @@ import frc.lib.config.SwerveModuleConstants;
 public final class Constants {
 
   public static final class Swerve {
-    public static final double stickDeadband = 0.1;
+    public static final double translationStickDeadband = 0.1;
+    public static final double rotationStickDeadband = 0.2;
 
    public static final int pigeonID = 30;
-   public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
+   public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
-    public static final double trackWidth = Units.inchesToMeters(21.73);
-    public static final double wheelBase = Units.inchesToMeters(21.73);
+    public static final double trackWidth = Units.inchesToMeters(17.75);
+    public static final double wheelBase = Units.inchesToMeters(17.75);
     public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -119,7 +120,7 @@ public final class Constants {
       public static final int angleMotorID = 11; // Angle Motor Controller - [FLA]
       public static final int canCoderID = 12; // Front Left Encoder - [FLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(269.0);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(268);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -130,7 +131,7 @@ public final class Constants {
       public static final int angleMotorID = 14; // Angle Motor Controller - [FRA]
       public static final int canCoderID = 15; // Front Right Encoder - [FRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(390.8);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -141,7 +142,7 @@ public final class Constants {
       public static final int angleMotorID = 17; // Angle Motor Controller - [BLA]
       public static final int canCoderID = 18; // Back Left Encoder - [BLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(11.5);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(10);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -152,7 +153,7 @@ public final class Constants {
       public static final int angleMotorID = 20; // Angle Motor Controller - [BRA]
       public static final int canCoderID = 21; // Back Right Encoder - [BRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(329.9);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(329);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -188,5 +189,25 @@ public final class Constants {
     public static final double pivotKI = 0.00;
     public static final double pivotKD = 0.00;
     public static final double pivotKFF = 0.00;
+  }
+
+  public static final class TelescopicConstants {
+    public static final int telescopicMotorID = 40; // Falcon motor ID
+    public static final int smartCurrentLimit = 30;
+    public static final double telescopicSpeedForward = 5;
+    public static final double telescopicSpeedBack = -5;
+    public static final double telescopicStop = 0;
+    //
+    public static final double telescopicForward = 0.0;
+    public static final double telescopicBack = -10.0;
+    public static final double telescopicTravel = 30.0;
+    //
+    public static final double telescopicKP = 0.6;
+    public static final double telescopicKI = 0.00;
+    public static final double telescopicKD = 0.00;
+    public static final double telescopicKFF = 0.00;
+    //
+    public static final double kForwardPercent = 0.15;
+    public static final double kReversePercent = -0.15;
   }
 }

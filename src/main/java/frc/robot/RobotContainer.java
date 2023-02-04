@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
-import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.*;
 
 /**
@@ -30,7 +29,8 @@ public class RobotContainer {
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  private final int rotationXAxis = XboxController.Axis.kRightX.value;
+  private final int rotationYAxis = XboxController.Axis.kRightY.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro =
@@ -52,17 +52,22 @@ public class RobotContainer {
   private final JoystickButton xButton =
       new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
-      new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+      new JoystickButton(operator, XboxController.Button.kBack.value);
   private final JoystickButton xDriverButton = 
       new JoystickButton(driver, XboxController.Button.kX.value);
   private final JoystickButton bDriverButton = 
       new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton operatorLeftBumperButton = 
+      new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton operatorRightBumperButton = 
+      new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
      
-  
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
   private final Gripper s_Gripper = new Gripper();
+  private final Telescopic s_Telescopic = new Telescopic();
 
   public class setDefaultCommand{}
 
@@ -73,10 +78,11 @@ public class RobotContainer {
             s_Swerve,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
-            () -> (robotCentric).getAsBoolean()));
+            () -> -driver.getRawAxis(rotationXAxis),
+            () -> -driver.getRawAxis(rotationYAxis)));
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
+    CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -90,7 +96,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
 
     /* operator Buttons */
     //yButton.onTrue(new InstantCommand(() -> s_Pivot.goToTravel()));
@@ -102,6 +108,8 @@ public class RobotContainer {
     bDriverButton.onTrue(new InstantCommand(()-> s_Gripper.setReverse()));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
+    operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
+    operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
   }
 
 
