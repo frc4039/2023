@@ -37,6 +37,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
+
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerve extends CommandBase {
@@ -45,13 +47,14 @@ public class TeleopSwerve extends CommandBase {
   private DoubleSupplier strafeSup;
   private DoubleSupplier rotationXSup;
   private DoubleSupplier rotationYSup;
+  private BooleanSupplier zeroGyroSup;
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
   private PIDController rotationController = new PIDController(4.0, 0, 0);
   private double lastSetPoint;
 
-  public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationXSup, DoubleSupplier rotationYSup) {
+  public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationXSup, DoubleSupplier rotationYSup, BooleanSupplier zeroGyroBtn) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
 
@@ -59,6 +62,7 @@ public class TeleopSwerve extends CommandBase {
     this.strafeSup = strafeSup;
     this.rotationXSup = rotationXSup;
     this.rotationYSup = rotationYSup;
+    this.zeroGyroSup = zeroGyroBtn;
     
     rotationController.enableContinuousInput(0, 2 * Math.PI);
   }
@@ -71,7 +75,10 @@ public class TeleopSwerve extends CommandBase {
 
   @Override
   public void execute() {
-    if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband){
+    if (zeroGyroSup.getAsBoolean()){
+      lastSetPoint = 0;
+      rotationController.setSetpoint(0);
+    } else if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband){
       double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
       rotationController.setSetpoint(curSetPoint);
       lastSetPoint = curSetPoint;
@@ -85,7 +92,7 @@ public class TeleopSwerve extends CommandBase {
     double translationVal = translationLimiter.calculate(
         MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
     double strafeVal = strafeLimiter.calculate(
-        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.rotationStickDeadband));
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
     double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
     /* Drive */

@@ -79,7 +79,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationXAxis),
-            () -> -driver.getRawAxis(rotationYAxis)));
+            () -> -driver.getRawAxis(rotationYAxis),
+            () -> zeroGyro.getAsBoolean()));
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
     CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
