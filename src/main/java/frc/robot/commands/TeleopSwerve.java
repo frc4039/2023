@@ -92,7 +92,7 @@ public class TeleopSwerve extends CommandBase {
     double translationVal = translationLimiter.calculate(
         MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
     double strafeVal = strafeLimiter.calculate(
-        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.rotationStickDeadband));
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
     double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
     /* Drive */
