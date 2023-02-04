@@ -30,7 +30,8 @@ public class RobotContainer {
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  private final int rotationXAxis = XboxController.Axis.kRightX.value;
+  private final int rotationYAxis = XboxController.Axis.kRightY.value;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro =
@@ -58,7 +59,6 @@ public class RobotContainer {
   private final JoystickButton bDriverButton = 
       new JoystickButton(driver, XboxController.Button.kB.value);
      
-  
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
@@ -73,8 +73,8 @@ public class RobotContainer {
             s_Swerve,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
-            () -> (robotCentric).getAsBoolean()));
+            () -> -driver.getRawAxis(rotationXAxis),
+            () -> -driver.getRawAxis(rotationYAxis)));
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
 
@@ -90,7 +90,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
 
     /* operator Buttons */
     yButton.onTrue(new InstantCommand(() -> s_Pivot.goToTravel()));
