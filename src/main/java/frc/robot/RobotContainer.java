@@ -68,6 +68,7 @@ public class RobotContainer {
   private final Pivot s_Pivot = new Pivot();
   private final Gripper s_Gripper = new Gripper();
   private final Telescopic s_Telescopic = new Telescopic();
+  private final Intake s_Intake = new Intake();
 
   public class setDefaultCommand{}
 
@@ -111,6 +112,10 @@ public class RobotContainer {
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
     operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
+
+    /*************************************
+        TO-DO: map buttons for the intake
+    **************************************/
   }
 
 
