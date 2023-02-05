@@ -47,16 +47,12 @@ public class RobotContainer {
  // private final Button upDPad = operator.getPOV
   private final JoystickButton aButton =
       new JoystickButton(operator, XboxController.Button.kA.value);
-  private final JoystickButton bButton =
-      new JoystickButton(operator, XboxController.Button.kB.value);
-  private final JoystickButton xButton =
-      new JoystickButton(operator, XboxController.Button.kX.value);
   private final JoystickButton backButton = 
       new JoystickButton(operator, XboxController.Button.kBack.value);
-  private final JoystickButton xDriverButton = 
-      new JoystickButton(driver, XboxController.Button.kX.value);
-  private final JoystickButton bDriverButton = 
-      new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton xOperatorButton = 
+      new JoystickButton(operator, XboxController.Button.kX.value);
+  private final JoystickButton bOperatorButton = 
+      new JoystickButton(operator, XboxController.Button.kB.value);
   private final JoystickButton operatorLeftBumperButton = 
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
@@ -105,8 +101,8 @@ public class RobotContainer {
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
-    xDriverButton.whileTrue(new GripperRelease(s_Gripper));
-    bDriverButton.whileTrue(new GripperRetrieve(s_Gripper));
+    xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
+    bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
