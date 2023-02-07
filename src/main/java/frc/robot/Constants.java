@@ -195,7 +195,7 @@ public final class Constants {
   }
 
   public static final class TelescopicConstants {
-    public static final int telescopicMotorID = 40; // Falcon motor ID
+    public static final int telescopicMotorID = 45; // Falcon motor ID
     public static final int smartCurrentLimit = 30;
     public static final double telescopicSpeedForward = 5;
     public static final double telescopicSpeedBack = -5;
@@ -215,7 +215,7 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
-    public static final int tosserMotorID = 41;
+    public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
   }
