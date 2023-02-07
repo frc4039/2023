@@ -219,4 +219,10 @@ public final class Constants {
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
   }
+  public static final class IntakeConstants {
+    public static final int spinningIntakeMotorID = 42;
+    public static final double intakeSpinningMotorForward = 0.2;
+  //  public static final double intakeMotorReversePercent = 0.2;
+    public static final double intakeSpinningMotorOff = 0;
+  }
 }
