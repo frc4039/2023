@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -43,8 +45,7 @@ public class RobotContainer {
  
 /* Operator Buttons */
   private final JoystickButton yButton =
-      new JoystickButton(operator, XboxController.Button.kY.value);
- // private final Button upDPad = operator.getPOV
+          new JoystickButton(operator, XboxController.Button.kY.value);
   private final JoystickButton aButton =
       new JoystickButton(operator, XboxController.Button.kA.value);
   private final JoystickButton backButton = 
@@ -57,13 +58,16 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
       new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-
+  private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
+  private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
+  private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
      
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Pivot s_Pivot = new Pivot();
   private final Gripper s_Gripper = new Gripper();
   private final Telescopic s_Telescopic = new Telescopic();
+  private final Intake s_Intake = new Intake();
   private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
   public class setDefaultCommand{}
@@ -109,6 +113,9 @@ public class RobotContainer {
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
     operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
+    operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
+    operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
+    operatorLeftButton.whileTrue(new IntakeSpin(s_Intake));
   }
 
 
