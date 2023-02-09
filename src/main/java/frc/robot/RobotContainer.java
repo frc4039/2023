@@ -68,6 +68,7 @@ public class RobotContainer {
   private final Gripper s_Gripper = new Gripper();
   private final Telescopic s_Telescopic = new Telescopic();
   private final Intake s_Intake = new Intake();
+  private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
   public class setDefaultCommand{}
 
@@ -84,6 +85,7 @@ public class RobotContainer {
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
     CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
+    CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
 
     // Configure the button bindings
     configureButtonBindings();
