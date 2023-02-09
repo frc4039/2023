@@ -219,9 +219,19 @@ public final class Constants {
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
   }
+
   public static final class IntakeConstants {
+    public static final int kIntakeMotor1 = 53;
+    public static final int kIntakeMotor2 = 54;
+    public static final boolean kIntakeMotor1Inverted = true;
+    public static final boolean kIntakeMotor2Inverted = false;
+    public static final double kIntakeMotorPercentExtend = 1.0;
+    public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
+    public static final double kIntakeExtendTimeout = 0.75;
+    public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
     public static final int spinningIntakeMotorID = 55;
-    public static final double intakeSpinningMotorForward = 0.2;
+    public static final boolean kSpinningIntakeMotorInverted = true;
+    public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
     public static final double intakeSpinningMotorOff = 0;
   }
