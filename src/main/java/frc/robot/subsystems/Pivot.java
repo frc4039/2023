@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.math.geometry.Rotation2d;
 //import com.revrobotics.RelativeEncoder;
@@ -18,13 +20,16 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotMotor;
     private final SparkMaxPIDController m_pivotController;
     private RelativeEncoder m_integratedPivotEncoder;
+    private DutyCycleEncoder m_pivotEncoder;
     private double dashboardTargetPivotPositionValue = 0.0;
+    private double pivotAbsolutePosition;
 
     public Pivot(){//intialization method
         m_pivotMotor = new CANSparkMax(Constants.PivotConstants.pivotMotorID, MotorType.kBrushless);//need to move constant
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setSmartCurrentLimit(Constants.PivotConstants.smartCurrentLimit);
         m_integratedPivotEncoder = m_pivotMotor.getEncoder();
+        m_pivotEncoder = new DutyCycleEncoder(Constants.PivotConstants.encoderChannel);
         m_integratedPivotEncoder.setPosition(0.0);
         m_pivotController = m_pivotMotor.getPIDController();
         configPivotMotor();
@@ -47,6 +52,9 @@ public class Pivot extends SubsystemBase {
     }
 
     private void goToPosition(double position){
+        //add a double to store the current pivot encoder position
+        //compare current position to desired new position => it'll give us the direction we'll move the motor
+        //while current position <> desired position move the pivot
         dashboardTargetPivotPositionValue = position;
         m_pivotController.setReference(position, ControlType.kPosition);
     }
