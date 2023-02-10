@@ -15,21 +15,25 @@ import frc.robot.Constants.TelescopicConstants;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Telescopic extends SubsystemBase {
    private TalonFX m_Falcon = new TalonFX(Constants.TelescopicConstants.telescopicMotorID); // creates a new TalonFX, ID can be found in Line 190(ish) of Constants.java
-   // private TalonFX m_Falcon;
+   TalonFXConfiguration m_FalconConfig = new TalonFXConfiguration();
+           // m_Falcon.setInverted()
 
     public Telescopic() {
         m_Falcon.configFactoryDefault();
-        // m_Falcon.setInverted()
-         TalonFXConfiguration m_Falcon = new TalonFXConfiguration();
-         m_Falcon.supplyCurrLimit.enable = false; // TODO: talk to the electrical subteam to see if this is really needed
-         m_Falcon.supplyCurrLimit.triggerThresholdCurrent = 40; // the peak supply current, in amps
-         m_Falcon.supplyCurrLimit.triggerThresholdTime = 1.5; // the time at the peak supply current before the limit triggers, in sec
-         m_Falcon.supplyCurrLimit.currentLimit = 30; // the current to maintain if the peak supply limit is triggered
-        }
+        m_FalconConfig.supplyCurrLimit.enable = false; // TODO: talk to the electrical subteam to see if this is really needed
+        m_FalconConfig.supplyCurrLimit.triggerThresholdCurrent = 40; // the peak supply current, in amps
+        m_FalconConfig.supplyCurrLimit.triggerThresholdTime = 1.5; // the time at the peak supply current before the limit triggers, in sec
+        m_FalconConfig.supplyCurrLimit.currentLimit = 30; // the current to maintain if the peak supply limit is triggered
+        m_FalconConfig.primaryPID.selectedFeedbackSensor = TalonFXFeedbackDevice.IntegratedSensor.toFeedbackDevice();
+        m_Falcon.configAllSettings(m_FalconConfig);
+        m_Falcon.config_kP(0, TelescopicConstants.telescopicKP, 0);
+  }
         
         public void armForward(){
             m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicForward);

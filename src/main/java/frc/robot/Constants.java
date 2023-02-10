@@ -205,7 +205,7 @@ public final class Constants {
     public static final double kTelescopicBack = 294;
     public static final double telescopicTravel = 30.0;
     //
-    public static final double telescopicKP = 0.6;
+    public static final double telescopicKP = 0.2;
     public static final double telescopicKI = 0.00;
     public static final double telescopicKD = 0.00;
     public static final double telescopicKFF = 0.00;
