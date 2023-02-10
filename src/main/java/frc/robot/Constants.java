@@ -201,8 +201,8 @@ public final class Constants {
     public static final double telescopicSpeedBack = -5;
     public static final double telescopicStop = 0;
     //
-    public static final double telescopicForward = 0.0;
-    public static final double telescopicBack = -10.0;
+    public static final double kTelescopicForward = -30.0;
+    public static final double kTelescopicBack = 294;
     public static final double telescopicTravel = 30.0;
     //
     public static final double telescopicKP = 0.6;

@@ -32,11 +32,11 @@ public class Telescopic extends SubsystemBase {
         }
         
         public void armForward(){
-            m_Falcon.set(ControlMode.Position, TelescopicConstants.telescopicForward);
+            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicForward);
         }
 
         public void armReverse(){
-            m_Falcon.set(ControlMode.Position, TelescopicConstants.telescopicBack);
+            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicBack);
         }
 
         public void armStop(){
