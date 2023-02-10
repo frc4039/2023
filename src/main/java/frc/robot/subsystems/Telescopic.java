@@ -32,11 +32,11 @@ public class Telescopic extends SubsystemBase {
         }
         
         public void armForward(){
-            m_Falcon.set(ControlMode.PercentOutput, TelescopicConstants.kForwardPercent);
+            m_Falcon.set(ControlMode.Position, TelescopicConstants.telescopicForward);
         }
 
         public void armReverse(){
-            m_Falcon.set(ControlMode.PercentOutput, TelescopicConstants.kReversePercent);
+            m_Falcon.set(ControlMode.Position, TelescopicConstants.telescopicBack);
         }
 
         public void armStop(){
@@ -49,5 +49,5 @@ public class Telescopic extends SubsystemBase {
         }
 }
 
-// full extension: 
-// full retract: 294
+// full extension: -30 (still might need calibration as of Feb 10/23)
+// full retract: 294 (still might need calibration as of Feb 10/23)
