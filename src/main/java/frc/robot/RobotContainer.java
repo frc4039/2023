@@ -111,7 +111,7 @@ private final JoystickButton driverLeftBumperButton =
     operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
     yOperatorButton.onTrue(new TravelPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
-    xOperatorButton.onTrue(new CubePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
+    xOperatorButton.onTrue(new CubePickupPosition(s_Telescopic, s_Intake, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
     aOperatorButton.onTrue(new ConePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
     bOperatorButton.onTrue(new ConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
