@@ -44,7 +44,7 @@ public class Telescopic extends SubsystemBase {
   }
         
         public void armForward(){
-            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicForward);
+            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicMid);
         }
 
         public void armReverse(){
@@ -72,5 +72,6 @@ public class Telescopic extends SubsystemBase {
         }
 }
 
-// full extension: -30 (still might need calibration as of Feb 10/23)
-// full retract: 294 (still might need calibration as of Feb 10/23)
+// full extension: 52300
+// mid: 28748
+// full retract: 5 (it is actually 2, but to be safe, it's 5 right now)
