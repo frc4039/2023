@@ -12,9 +12,9 @@ import frc.robot.subsystems.Telescopic;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ConeScoringPosition extends SequentialCommandGroup {
+public class SeqCmdConeScoringPosition extends SequentialCommandGroup {
   /** Creates a new ConeScoringPosition. */
-  public ConeScoringPosition(Telescopic s_Telescopic,Pivot s_Pivot) {
+  public SeqCmdConeScoringPosition(Telescopic s_Telescopic,Pivot s_Pivot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
