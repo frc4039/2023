@@ -26,8 +26,6 @@ public class Telescopic extends SubsystemBase {
     private TalonFX m_Falcon; // creates a new TalonFX, ID can be found in Line 190(ish) of Constants.java
     TalonFXConfiguration m_FalconConfig;
 
-    PIDController m_controller;
-
     public Telescopic() {
         m_Falcon = new TalonFX(Constants.TelescopicConstants.telescopicMotorID);
         m_Falcon.configFactoryDefault();
@@ -36,19 +34,31 @@ public class Telescopic extends SubsystemBase {
         m_FalconConfig.supplyCurrLimit.enable = false; // TODO: talk to the electrical subteam to see if this is really needed
         m_FalconConfig.supplyCurrLimit.triggerThresholdCurrent = 40; // the peak supply current, in amps
         m_FalconConfig.supplyCurrLimit.triggerThresholdTime = 1.5; // the time at the peak supply current before the limit triggers, in sec
-        m_FalconConfig.supplyCurrLimit.currentLimit = 30; // the current to maintain if the peak supply limit is
-                                                          // triggered
-        m_Falcon.configAllSettings(m_FalconConfig);
+        m_FalconConfig.supplyCurrLimit.currentLimit = 30; // the current to maintain if the peak supply limit is triggered
+        m_FalconConfig.primaryPID.selectedFeedbackSensor = TalonFXFeedbackDevice.IntegratedSensor.toFeedbackDevice();
 
-        m_controller = new PIDController(TelescopicConstants.telescopicKP, 0, 0);
+      //  m_FalconConfig.peakOutputForward = 0.1;
+      //  m_FalconConfig.peakOutputReverse = -0.1;
+        m_Falcon.configAllSettings(m_FalconConfig);
+      //  m_Falcon.configNominalOutputForward(0,0);
+      //  m_Falcon.configNominalOutputReverse(0,0);
+        m_Falcon.configPeakOutputForward(12, 0);
+        m_Falcon.configPeakOutputReverse(-12, 0);
+        m_Falcon.config_kP(0, TelescopicConstants.telescopicKP, 0);
+        m_Falcon.config_kI(0, TelescopicConstants.telescopicKI, 0);
+        m_Falcon.config_kD(0, TelescopicConstants.telescopicKD, 0);
+        m_Falcon.config_kF(0, TelescopicConstants.telescopicKFF, 0);
+        m_Falcon.configClosedLoopPeakOutput(0, 0.2);
+        m_Falcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+        m_Falcon.setNeutralMode(NeutralMode.Brake);
   }
-        
-        public void armForward(){
-            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicMid);
+
+        public void armSetPosition(double position){
+            m_Falcon.set(ControlMode.Position, position);
         }
 
-        public void armReverse(){
-            m_Falcon.set(ControlMode.Position, TelescopicConstants.kTelescopicBack);
+        public double getEncoderPosition(){
+            return m_Falcon.getSelectedSensorPosition();
         }
 
         public void armStop() {
@@ -58,17 +68,11 @@ public class Telescopic extends SubsystemBase {
         public void zeroEncoder(){
             m_Falcon.setSelectedSensorPosition(0);
         }
-                    
-
-        public void setSetPoint(double setpoint) {
-            m_controller.setSetpoint(setpoint);
-        }
 
         @Override
         public void periodic(){
             SmartDashboard.putNumber("Telescopic", m_Falcon.getSelectedSensorPosition());
-            m_Falcon.set(TalonFXControlMode.PercentOutput,
-                    m_controller.calculate(m_Falcon.getSelectedSensorPosition()));
+            SmartDashboard.putNumber("Closed Loop Error", m_Falcon.getClosedLoopError(0));
         }
 }
 

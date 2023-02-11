@@ -109,13 +109,13 @@ private final JoystickButton driverLeftBumperButton =
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
-    driverLeftBumperButton.onTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
+    driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
     xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
     bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
-    operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
-    operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
+    operatorLeftBumperButton.onTrue(new TelescopicRetract(s_Telescopic));
+    operatorRightBumperButton.onTrue(new TelescopicExtend(s_Telescopic));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
     operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
     operatorLeftButton.whileTrue(new IntakeSpin(s_Intake));
