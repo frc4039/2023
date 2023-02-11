@@ -184,7 +184,6 @@ public final class Constants {
     public static final double speedForward = 0.25;
     public static final double speedBack = -0.25;
     public static final double speedStop = 0;
-    //public static final double positionHorizontal = 0.0;
     public static final double positionPickupCone = -52.714;
     public static final double positionPickupCube = 58.738;
     public static final double positionScoringCone = -17.48;

@@ -29,10 +29,6 @@ public class Pivot extends SubsystemBase {
         m_pivotController = m_pivotMotor.getPIDController();
         configPivotMotor();
     }
-
-    /*public void goToHorizontal(){
-        goToPosition(Constants.PivotConstants.positionHorizontal);
-    }*/
     
     public void goToPickup(){
         goToPosition(Constants.PivotConstants.positionPickupCone);

@@ -7,15 +7,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Telescopic;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ConePickup extends SequentialCommandGroup {
-  /** Creates a new ConePickup. */
-  public ConePickup(Pivot s_Pivot) {
+public class CubePickupPosition extends SequentialCommandGroup {
+  /** Creates a new CubePickup. */
+  public CubePickupPosition(Telescopic s_Telescopic, Pivot s_Pivot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
+    addCommands(
+      new TelescopicRetract(s_Telescopic),
+      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube)
+    );
   }
 }
