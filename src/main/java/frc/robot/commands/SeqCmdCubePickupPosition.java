@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
@@ -15,12 +16,14 @@ import frc.robot.subsystems.Telescopic;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
   /** Creates a new CubePickup. */
-  public SeqCmdCubePickupPosition(Telescopic s_Telescopic, Intake s_Intake, Pivot s_Pivot) {
+  public SeqCmdCubePickupPosition(Telescopic s_Telescopic, Intake s_Intake, Gripper s_Gripper, Pivot s_Pivot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new TelescopicRetract(s_Telescopic),
       new IntakeExtend(s_Intake).withTimeout(Constants.IntakeConstants.kIntakeExtendTimeout),
+      new IntakeMotorSpin(s_Intake),
+      new GripperRelease(s_Gripper),
       new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube)
     );
   }

@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Intake;
 
-public class GripperRelease extends CommandBase {
-  private final Gripper m_Gripper;
-  
-  /** Creates a new GripperRelease. */
-  public GripperRelease(Gripper gripper) {
+public class IntakeMotorSpin extends CommandBase {
+  private final Intake m_intake;
+
+  /** Creates a new IntakeMotorSpin. */
+  public IntakeMotorSpin(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Gripper = gripper;
-    addRequirements(gripper);
+    m_intake = intake;
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -24,14 +24,12 @@ public class GripperRelease extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Gripper.setForward();
+    m_intake.setSpinningMotorOn();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_Gripper.setOff();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

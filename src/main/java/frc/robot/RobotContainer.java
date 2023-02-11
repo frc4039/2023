@@ -110,9 +110,9 @@ private final JoystickButton driverLeftBumperButton =
     SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot set to zero"));
     operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
-    yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
-    xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_Intake, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
-    aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
+    yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_Pivot, s_Intake));
+    xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_Intake, s_Gripper, s_Pivot));
+    aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_Pivot, s_Intake));
     bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
     operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
