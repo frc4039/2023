@@ -30,23 +30,23 @@ public class Pivot extends SubsystemBase {
         configPivotMotor();
     }
 
-    public void goToHorizontal(){
+    /*public void goToHorizontal(){
         goToPosition(Constants.PivotConstants.positionHorizontal);
-    }
+    }*/
     
     public void goToPickup(){
-        goToPosition(Constants.PivotConstants.positionPickup);
+        goToPosition(Constants.PivotConstants.positionPickupCone);
     }
 
     public void goToScoring(){
-        goToPosition(Constants.PivotConstants.positionScoring);
+        goToPosition(Constants.PivotConstants.positionScoringCone);
     }
 
     public void goToTravel(){
         goToPosition(Constants.PivotConstants.positionTravel);
     }
 
-    private void goToPosition(double position){
+    public void goToPosition(double position){
         dashboardTargetPivotPositionValue = position;
         m_pivotController.setReference(position, ControlType.kPosition);
     }

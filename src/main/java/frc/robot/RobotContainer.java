@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -106,11 +107,15 @@ public class RobotContainer {
     //aButton.onTrue(new InstantCommand(() -> s_Pivot.goToPickup()));
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
-    backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
-    xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
+    SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot set to zero"));
+    /*xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
     bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
-    aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));
+    aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));*/
+    yButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
+    xOperatorButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
+    aButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
+    bOperatorButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));
     operatorRightBumperButton.whileTrue(new TelescopicExtend(s_Telescopic));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));

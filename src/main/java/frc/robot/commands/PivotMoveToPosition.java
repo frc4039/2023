@@ -10,11 +10,11 @@ import frc.robot.subsystems.Pivot;
 public class PivotMoveToPosition extends CommandBase {
   /** Creates a new PivotMoveToPosition. */
   Pivot m_pivot;
-  double m_speed;
-  public PivotMoveToPosition(Pivot pivot, double speed) {
+  double m_position;
+  public PivotMoveToPosition(Pivot pivot, double position) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_pivot = pivot;
-    m_speed = speed;
+    m_position = position;
     addRequirements(m_pivot);
   }
 
@@ -25,7 +25,7 @@ public class PivotMoveToPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_pivot.setSpeed(m_speed);
+    m_pivot.goToPosition(m_position);
   }
 
   // Called once the command ends or is interrupted.
