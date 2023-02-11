@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TelescopicConstants;
 import frc.robot.subsystems.Telescopic;
 
 public class TelescopicRetract extends CommandBase {
@@ -24,7 +25,7 @@ public class TelescopicRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Telescopic.armReverse();
+    m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicBack);
   }
 
   // Called once the command ends or is interrupted.

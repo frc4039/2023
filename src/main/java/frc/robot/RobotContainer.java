@@ -59,6 +59,8 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
       new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+private final JoystickButton driverLeftBumperButton = 
+      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
   private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
   private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
@@ -107,11 +109,11 @@ public class RobotContainer {
     //aButton.onTrue(new InstantCommand(() -> s_Pivot.goToPickup()));
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
+    backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
+    driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
     SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot set to zero"));
     /*xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
-    bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));
-    yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
-    aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));*/
+    bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));*/
     yButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
     xOperatorButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
     aButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
