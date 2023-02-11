@@ -25,10 +25,7 @@ public class TelescopicRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicRetracted) <= 700){
-      m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicMid);
-    }
-    else m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
+    m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +36,6 @@ public class TelescopicRetract extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicBack) < 700;
+    return Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicRetracted) < 700;
   }
 }
