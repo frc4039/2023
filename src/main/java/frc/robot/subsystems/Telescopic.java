@@ -66,7 +66,7 @@ public class Telescopic extends SubsystemBase {
 
         @Override
         public void periodic(){
-            SmartDashboard.putNumber("Telescopic Encoder Value", m_Falcon.getSelectedSensorPosition());
+            SmartDashboard.putNumber("Telescopic", m_Falcon.getSelectedSensorPosition());
             m_Falcon.set(TalonFXControlMode.PercentOutput,
                     m_controller.calculate(m_Falcon.getSelectedSensorPosition()));
         }
