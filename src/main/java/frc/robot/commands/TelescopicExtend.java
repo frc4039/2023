@@ -25,7 +25,10 @@ public class TelescopicExtend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicMid);
+    if (Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicMid) <= 700){
+      m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicFar);
+    }
+    else m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicMid);
   }
 
   // Called once the command ends or is interrupted.

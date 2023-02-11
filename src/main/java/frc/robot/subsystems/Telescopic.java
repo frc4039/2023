@@ -51,6 +51,7 @@ public class Telescopic extends SubsystemBase {
         m_Falcon.configClosedLoopPeakOutput(0, 0.2);
         m_Falcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         m_Falcon.setNeutralMode(NeutralMode.Brake);
+       // m_Falcon.configAllowableClosedloopError(0, 700, 0);
   }
 
         public void armSetPosition(double position){

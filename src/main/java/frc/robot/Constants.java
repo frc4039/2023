@@ -201,11 +201,11 @@ public final class Constants {
     public static final double telescopicSpeedBack = -5;
     public static final double telescopicStop = 0;
     //
-    public static final double kTelescopicForward = 50000;
-    public static final double kTelescopicBack = 5;
+    public static final double kTelescopicFar = 50000;
+    public static final double kTelescopicRetracted = 5;
     public static final double kTelescopicMid = 28748;
     //
-    public static final double telescopicKP = 0.09;
+    public static final double telescopicKP = 0.05;
     public static final double telescopicKI = 0.00;
     public static final double telescopicKD = 0.00;
     public static final double telescopicKFF = 0.00;
