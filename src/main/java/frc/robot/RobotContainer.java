@@ -108,8 +108,8 @@ private final JoystickButton driverLeftBumperButton =
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
     driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
     SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot set to zero"));
-    /*xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
-    bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));*/
+    operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
+    operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
     yOperatorButton.onTrue(new TravelPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
     xOperatorButton.onTrue(new CubePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
     aOperatorButton.onTrue(new ConePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
