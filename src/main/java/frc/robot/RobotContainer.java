@@ -113,7 +113,7 @@ public class RobotContainer {
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
     aButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedBack));*/
     yButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
-    xOperatorButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
+    xOperatorButton.onTrue(new ConePickup(s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
     aButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
     bOperatorButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorLeftBumperButton.whileTrue(new TelescopicRetract(s_Telescopic));

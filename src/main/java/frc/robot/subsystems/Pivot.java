@@ -70,6 +70,10 @@ public class Pivot extends SubsystemBase {
     public void setZero(){
         m_integratedPivotEncoder.setPosition(0.0);
     }
+
+    public double GetPivotPosition(){
+        return m_integratedPivotEncoder.getPosition();
+    }
     
     @Override
     public void periodic(){

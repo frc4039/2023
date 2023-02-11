@@ -31,12 +31,18 @@ public class PivotMoveToPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //
     m_pivot.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Math.abs(m_position - m_pivot.GetPivotPosition()) <= 1)
+    {
+      return true;
+    }
+
     return false;
   }
 }
