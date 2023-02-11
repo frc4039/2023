@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Telescopic extends SubsystemBase {
@@ -53,6 +54,11 @@ public class Telescopic extends SubsystemBase {
         public void armStop() {
             m_Falcon.set(ControlMode.PercentOutput, 0);
         }
+
+        public void zeroEncoder(){
+            m_Falcon.setSelectedSensorPosition(0);
+        }
+                    
 
         public void setSetPoint(double setpoint) {
             m_controller.setSetpoint(setpoint);

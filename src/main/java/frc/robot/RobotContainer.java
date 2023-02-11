@@ -58,6 +58,8 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
       new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+private final JoystickButton driverLeftBumperButton = 
+      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
   private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
   private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
@@ -107,6 +109,7 @@ public class RobotContainer {
     //bButton.onTrue(new InstantCommand(() -> s_Pivot.goToHorizontal()));
     //xButton.onTrue(new InstantCommand(() -> s_Pivot.goToScoring()));
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
+    driverLeftBumperButton.onTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
     xOperatorButton.whileTrue(new GripperRelease(s_Gripper));
     bOperatorButton.whileTrue(new GripperRetrieve(s_Gripper));
     yButton.whileTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.speedForward));
