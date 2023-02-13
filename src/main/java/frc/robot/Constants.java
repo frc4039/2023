@@ -184,11 +184,12 @@ public final class Constants {
     public static final double speedForward = 0.25;
     public static final double speedBack = -0.25;
     public static final double speedStop = 0;
-    public static final double positionHorizontal = 0.0;
-    public static final double positionPickup = -16.1427;
-    public static final double positionScoring = 9.3333;
-    public static final double positionTravel = 34.214;
-    public static final double pivotKP = 0.025;
+    public static final double positionPickupCone = -52.714;
+    public static final double positionPickupCube = 58.738;
+    public static final double positionScoringCone = -18;
+    public static final double positionScoringCube = 27.285;
+    public static final double positionTravel = 0.0;
+    public static final double pivotKP = 0.015;
     public static final double pivotKI = 0.00;
     public static final double pivotKD = 0.00;
     public static final double pivotKFF = 0.00;
@@ -202,13 +203,13 @@ public final class Constants {
     public static final double telescopicSpeedBack = -5;
     public static final double telescopicStop = 0;
     //
-    public static final double telescopicForward = 0.0;
-    public static final double telescopicBack = -10.0;
-    public static final double telescopicTravel = 30.0;
+    public static final double kTelescopicFar = 50000;
+    public static final double kTelescopicRetracted = 5;
+    public static final double kTelescopicMid = 28748;
     //
-    public static final double telescopicKP = 0.6;
+    public static final double telescopicKP = 0.07;
     public static final double telescopicKI = 0.00;
-    public static final double telescopicKD = 0.00;
+    public static final double telescopicKD = 0.04;
     public static final double telescopicKFF = 0.00;
     //
     public static final double kForwardPercent = 0.15;
@@ -219,5 +220,21 @@ public final class Constants {
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
+  }
+
+  public static final class IntakeConstants {
+    public static final int kIntakeMotor1 = 53;
+    public static final int kIntakeMotor2 = 54;
+    public static final boolean kIntakeMotor1Inverted = true;
+    public static final boolean kIntakeMotor2Inverted = false;
+    public static final double kIntakeMotorPercentExtend = 1.0;
+    public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
+    public static final double kIntakeExtendTimeout = 0.75;
+    public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
+    public static final int spinningIntakeMotorID = 55;
+    public static final boolean kSpinningIntakeMotorInverted = true;
+    public static final double intakeSpinningMotorForward = 0.5;
+  //  public static final double intakeMotorReversePercent = 0.2;
+    public static final double intakeSpinningMotorOff = 0;
   }
 }

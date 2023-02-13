@@ -34,27 +34,20 @@ public class Pivot extends SubsystemBase {
         m_pivotController = m_pivotMotor.getPIDController();
         configPivotMotor();
     }
-
-    public void goToHorizontal(){
-        goToPosition(Constants.PivotConstants.positionHorizontal);
-    }
     
     public void goToPickup(){
-        goToPosition(Constants.PivotConstants.positionPickup);
+        goToPosition(Constants.PivotConstants.positionPickupCone);
     }
 
     public void goToScoring(){
-        goToPosition(Constants.PivotConstants.positionScoring);
+        goToPosition(Constants.PivotConstants.positionScoringCone);
     }
 
     public void goToTravel(){
         goToPosition(Constants.PivotConstants.positionTravel);
     }
 
-    private void goToPosition(double position){
-        //add a double to store the current pivot encoder position
-        //compare current position to desired new position => it'll give us the direction we'll move the motor
-        //while current position <> desired position move the pivot
+    public void goToPosition(double position){
         dashboardTargetPivotPositionValue = position;
         m_pivotController.setReference(position, ControlType.kPosition);
     }
@@ -77,6 +70,10 @@ public class Pivot extends SubsystemBase {
 
     public void setZero(){
         m_integratedPivotEncoder.setPosition(0.0);
+    }
+
+    public double GetPivotPosition(){
+        return m_integratedPivotEncoder.getPosition();
     }
     
     @Override

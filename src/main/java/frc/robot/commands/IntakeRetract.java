@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.TelescopicConstants;
-import frc.robot.subsystems.Telescopic;
+import frc.robot.subsystems.Intake;
 
-public class TelescopicRetract extends CommandBase {
-  private final Telescopic m_Telescopic;
+public class IntakeRetract extends CommandBase {
+  private final Intake m_Intake;
   
-  /** Creates a new TelescopicRetract. */
-  public TelescopicRetract(Telescopic telescopic) {
+  /** Creates a new IntakeRetract. */
+  public IntakeRetract(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Telescopic = telescopic;
-    addRequirements(m_Telescopic);
+    m_Intake = intake;
+    addRequirements(m_Intake);
   }
 
   // Called when the command is initially scheduled.
@@ -25,17 +24,18 @@ public class TelescopicRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
+    m_Intake.retract();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_Intake.stopIntake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicRetracted) < 700;
+    return false;
   }
 }
