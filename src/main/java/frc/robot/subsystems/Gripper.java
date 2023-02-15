@@ -16,6 +16,9 @@ public class Gripper extends SubsystemBase {
     private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.solenoidCanID,PneumaticsModuleType.REVPH, 0, 1);
     private TalonSRX m_tosserMotor;
 
+    //forwardChannel = 0 => closes gripper
+    //reverseChannel = 1 => opens gripper
+
     public Gripper(){
         m_tosserMotor = new TalonSRX(Constants.GripperConstants.tosserMotorID);
         m_tosserMotor.configFactoryDefault();        
@@ -26,12 +29,12 @@ public class Gripper extends SubsystemBase {
         m_tosserMotor.set(TalonSRXControlMode.PercentOutput,0);
     }
 
-    public void setForward(){
+    public void setClose(){
         gripperPneumatic.set(DoubleSolenoid.Value.kForward);
         m_tosserMotor.set(TalonSRXControlMode.PercentOutput, Constants.GripperConstants.tosserMotorForwardPercent);
     }
 
-    public void setReverse(){
+    public void setOpen(){
         gripperPneumatic.set(DoubleSolenoid.Value.kReverse);
         m_tosserMotor.set(TalonSRXControlMode.PercentOutput, Constants.GripperConstants.tosserMotorReversePercent);
     }

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -89,6 +90,8 @@ private final JoystickButton driverLeftBumperButton =
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
     CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
     CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
+
+    CameraServer.startAutomaticCapture();
 
     // Configure the button bindings
     configureButtonBindings();

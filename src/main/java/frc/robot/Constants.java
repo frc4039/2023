@@ -216,6 +216,7 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
+    public static final double kGripperReleaseTimeout = 0.5;
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
