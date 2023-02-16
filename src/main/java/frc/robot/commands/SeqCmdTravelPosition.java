@@ -20,9 +20,9 @@ public class SeqCmdTravelPosition extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new TelescopicRetract(s_Telescopic),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel),
       new IntakeMotorStop(s_Intake),
-      new IntakeRetract(s_Intake).withTimeout(Constants.IntakeConstants.kIntakeRetractTimeout)
-    );
+      new IntakeExtend(s_Intake),
+      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel),
+      new IntakeRetract(s_Intake));
   }
 }

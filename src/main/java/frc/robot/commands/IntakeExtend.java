@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class IntakeExtend extends CommandBase {
@@ -37,6 +38,11 @@ public class IntakeExtend extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Math.abs(IntakeConstants.kIntakeExtended - m_Intake.GetIntakePosition()) <= 0.2)
+    {
+      return true;
+    }
+
     return false;
   }
 }

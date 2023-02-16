@@ -223,8 +223,8 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotor1 = 53;
-    public static final int kIntakeMotor2 = 54;
+    public static final int kIntakeMotorID1 = 53;
+    public static final int kIntakeMotorID2 = 54;
     public static final boolean kIntakeMotor1Inverted = true;
     public static final boolean kIntakeMotor2Inverted = false;
     public static final double kIntakeMotorPercentExtend = 1.0;
@@ -236,5 +236,9 @@ public final class Constants {
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
     public static final double intakeSpinningMotorOff = 0;
+    public static final int smartCurrentLimit = 30;
+    public static final double kIntakeRetracted = 0;
+    public static final double kIntakePickup = -11.714;
+    public static final double kIntakeExtended = -12.761;
   }
 }
