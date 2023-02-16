@@ -241,4 +241,9 @@ public final class Constants {
     public static final double kIntakePickup = -11.714;
     public static final double kIntakeExtended = -12.761;
   }
+
+  public static final class ConeGuideConstants {
+    public static final int coneGuideForwardChannel = 2;
+    public static final int coneGuideReverseChannel = 3;
+  }
 }

@@ -4,8 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.math.geometry.Rotation2d;
-//import com.revrobotics.RelativeEncoder;
 import frc.lib.util.CANSparkMaxUtil;
 import com.revrobotics.CANSparkMax.ControlType;
 import frc.lib.util.CANSparkMaxUtil.Usage;
@@ -90,15 +88,5 @@ public class Pivot extends SubsystemBase {
         m_pivotMotor.enableVoltageCompensation(12.0);//voltage compensation
         m_pivotMotor.burnFlash();
         m_integratedPivotEncoder.setPosition(0.0);
-      }
-    
-    
-    /*private Rotation2d getAngle(){
-        return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
     }
-
-   private void setAngle(double desiredAngle){
-        angleController.setReference(desiredAngle, ControlType.kPosition);
-    }*/
-
 }
