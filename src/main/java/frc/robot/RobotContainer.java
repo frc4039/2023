@@ -115,7 +115,7 @@ public class RobotContainer {
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
     driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
     SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot to 0"));
-    operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
+    operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper, s_Pivot));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
     yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
     xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
