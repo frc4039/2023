@@ -231,7 +231,7 @@ public final class Constants {
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int spinningIntakeMotorID = 55;
+    public static final int kSpinningIntakeMotorID = 55;
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
@@ -243,7 +243,9 @@ public final class Constants {
   }
 
   public static final class ConeGuideConstants {
-    public static final int coneGuideForwardChannel = 2;
-    public static final int coneGuideReverseChannel = 3;
+    public static final int kConeGuideForwardChannel = 2;
+    public static final int kConeGuideReverseChannel = 3;
+    public static final double kConeGuideRetractTimeout = 0.5;
+    public static final double kConeGuideDeployTimeout = 0.5;
   }
 }

@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class ConeGuide extends SubsystemBase {
 
     DoubleSolenoid coneGuidePneumatic = new DoubleSolenoid(Constants.solenoidCanID,PneumaticsModuleType.REVPH, 
-                                                            Constants.ConeGuideConstants.coneGuideForwardChannel, 
-                                                            Constants.ConeGuideConstants.coneGuideReverseChannel);
+                                                            Constants.ConeGuideConstants.kConeGuideForwardChannel, 
+                                                            Constants.ConeGuideConstants.kConeGuideReverseChannel);
 
     public ConeGuide(){
     }

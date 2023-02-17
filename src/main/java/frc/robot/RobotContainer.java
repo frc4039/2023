@@ -60,7 +60,7 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
       new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-private final JoystickButton driverLeftBumperButton = 
+  private final JoystickButton driverLeftBumperButton = 
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
   private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
@@ -72,6 +72,7 @@ private final JoystickButton driverLeftBumperButton =
   private final Gripper s_Gripper = new Gripper();
   private final Telescopic s_Telescopic = new Telescopic();
   private final Intake s_Intake = new Intake();
+  private final ConeGuide s_ConeGuide = new ConeGuide();
   private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
   public class setDefaultCommand{}
@@ -89,6 +90,9 @@ private final JoystickButton driverLeftBumperButton =
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
     CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
+    CommandScheduler.getInstance().registerSubsystem(s_Gripper);
+    CommandScheduler.getInstance().registerSubsystem(s_Intake);
+    CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
     CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
 
     CameraServer.startAutomaticCapture();
@@ -113,9 +117,9 @@ private final JoystickButton driverLeftBumperButton =
     SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot to 0"));
     operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
-    yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_Pivot, s_Intake));
-    xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_Intake, s_Gripper, s_Pivot));
-    aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_Pivot, s_Intake));
+    yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
+    xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
+    aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
     bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
     operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));

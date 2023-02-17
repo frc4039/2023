@@ -50,7 +50,7 @@ public class Intake extends SubsystemBase {
         m_intakeMotor1.setNeutralMode(NeutralMode.Brake);
         m_intakeMotor2.setNeutralMode(NeutralMode.Brake);*/
 
-        m_spinningIntakeMotor = new TalonSRX(IntakeConstants.spinningIntakeMotorID);
+        m_spinningIntakeMotor = new TalonSRX(IntakeConstants.kSpinningIntakeMotorID);
         m_spinningIntakeMotor.configFactoryDefault();
         m_spinningIntakeMotor.setInverted(IntakeConstants.kSpinningIntakeMotorInverted);
     }
