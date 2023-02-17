@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
-public class IntakeRetract extends CommandBase {
-  private final Intake m_Intake;
-  
-  /** Creates a new IntakeRetract. */
-  public IntakeRetract(Intake intake) {
+public class IntakeMotorSpin extends CommandBase {
+  private final Intake m_intake;
+
+  /** Creates a new IntakeMotorSpin. */
+  public IntakeMotorSpin(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Intake = intake;
-    addRequirements(m_Intake);
+    m_intake = intake;
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -25,23 +24,16 @@ public class IntakeRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.retract();
+    m_intake.setSpinningMotorOn();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_Intake.stopIntake();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakeRetracted - m_Intake.GetIntakePosition()) <= 0.2)
-    {
-      return true;
-    }
-
-    return false;
+    return true;
   }
 }

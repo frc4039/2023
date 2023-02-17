@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ConeGuide;
 
-public class IntakeRetract extends CommandBase {
-  private final Intake m_Intake;
-  
-  /** Creates a new IntakeRetract. */
-  public IntakeRetract(Intake intake) {
+public class ConeGuideRetract extends CommandBase {
+  private final ConeGuide m_ConeGuide;
+
+  /** Creates a new ConeGuideRetract. */
+  public ConeGuideRetract(ConeGuide coneGuide) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Intake = intake;
-    addRequirements(m_Intake);
+    m_ConeGuide = coneGuide;
+    addRequirements(m_ConeGuide);
   }
 
   // Called when the command is initially scheduled.
@@ -25,23 +24,18 @@ public class IntakeRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.retract();
+    m_ConeGuide.setReverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stopIntake();
+    m_ConeGuide.setOff();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakeRetracted - m_Intake.GetIntakePosition()) <= 0.2)
-    {
-      return true;
-    }
-
     return false;
   }
 }

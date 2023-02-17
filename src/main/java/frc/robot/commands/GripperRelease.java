@@ -14,7 +14,7 @@ public class GripperRelease extends CommandBase {
   public GripperRelease(Gripper gripper) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Gripper = gripper;
-    addRequirements(gripper);
+    addRequirements(m_Gripper);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +24,7 @@ public class GripperRelease extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Gripper.setForward();
+    m_Gripper.setOpen();
   }
 
   // Called once the command ends or is interrupted.

@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
-public class IntakeRetract extends CommandBase {
+public class IntakePickup extends CommandBase {
   private final Intake m_Intake;
-  
-  /** Creates a new IntakeRetract. */
-  public IntakeRetract(Intake intake) {
+
+  /** Creates a new IntakePickup. */
+  public IntakePickup(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = intake;
     addRequirements(m_Intake);
@@ -25,7 +25,7 @@ public class IntakeRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.retract();
+    m_Intake.pickup();
   }
 
   // Called once the command ends or is interrupted.
@@ -37,7 +37,7 @@ public class IntakeRetract extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakeRetracted - m_Intake.GetIntakePosition()) <= 0.2)
+    if(Math.abs(IntakeConstants.kIntakePickup - m_Intake.GetIntakePosition()) <= 0.2)
     {
       return true;
     }
