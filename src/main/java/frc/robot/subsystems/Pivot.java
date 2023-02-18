@@ -16,7 +16,7 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotMotor;
     private final SparkMaxPIDController m_pivotController;
     private RelativeEncoder m_integratedPivotEncoder;
-    private double dashboardTargetPivotPositionValue = 0.0;
+    private double m_targetPivotPositionValue = 0.0;
 
     public Pivot(){//intialization method
         m_pivotMotor = new CANSparkMax(Constants.PivotConstants.pivotMotorID, MotorType.kBrushless);//need to move constant
@@ -41,7 +41,7 @@ public class Pivot extends SubsystemBase {
     }
 
     public void goToPosition(double position){
-        dashboardTargetPivotPositionValue = position;
+        m_targetPivotPositionValue = position;
         m_pivotController.setReference(position, ControlType.kPosition);
     }
 
@@ -68,11 +68,15 @@ public class Pivot extends SubsystemBase {
     public double GetPivotPosition(){
         return m_integratedPivotEncoder.getPosition();
     }
+
+    public double GetTargetPosition() {
+        return m_targetPivotPositionValue;
+    }
     
     @Override
     public void periodic(){
         SmartDashboard.putNumber("pivot encoder", m_integratedPivotEncoder.getPosition());
-        SmartDashboard.putNumber("target pivot position", dashboardTargetPivotPositionValue);
+        SmartDashboard.putNumber("target pivot position", m_targetPivotPositionValue);
         SmartDashboard.putNumber("pivot output current", m_pivotMotor.getOutputCurrent());
     }
 
