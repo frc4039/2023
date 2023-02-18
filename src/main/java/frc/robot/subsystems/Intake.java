@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase {
         m_integratedIntakeEncoder2 = m_intakeMotor2.getEncoder();
         m_integratedIntakeEncoder2.setPosition(0.0);
         m_intakeController2 = m_intakeMotor2.getPIDController();
-        m_intakeMotor2.follow(m_intakeMotor1);
+        //m_intakeMotor2.follow(m_intakeMotor1, true);
 
         ConfigIntakeMotor(m_intakeMotor1, IntakeConstants.kIntakeMotor1Inverted, m_integratedIntakeEncoder1, m_intakeController1);
         ConfigIntakeMotor(m_intakeMotor2, IntakeConstants.kIntakeMotor2Inverted, m_integratedIntakeEncoder2, m_intakeController2);
@@ -65,7 +65,8 @@ public class Intake extends SubsystemBase {
     }
 
     public void goToPosition(double position){
-        m_intakeController1.setReference(position, ControlType.kPosition);
+        m_intakeController1.setReference(50, ControlType.kVelocity);
+        m_intakeController2.setReference(50, ControlType.kVelocity);
     }
 
     public void extend() {
@@ -114,6 +115,10 @@ public class Intake extends SubsystemBase {
         controller.setI(IntakeConstants.intakeKI);
         controller.setD(IntakeConstants.intakeKD);
         controller.setFF(IntakeConstants.intakeKFF);
+        controller.setSmartMotionMaxVelocity(78, 0);
+        controller.setSmartMotionMinOutputVelocity(0, 0);
+        controller.setSmartMotionMaxAccel(78, 0);
+        controller.setSmartMotionAllowedClosedLoopError(0, 0);
         motor.enableVoltageCompensation(12.0);//voltage compensation
         motor.burnFlash();
         integratedEncoder.setPosition(0.0);

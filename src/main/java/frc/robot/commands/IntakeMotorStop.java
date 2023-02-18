@@ -5,9 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Intake;
 
-public class IntakeMotorStop extends CommandBase {
+public class IntakeMotorStop extends InstantCommand {
   private final Intake m_intake;
 
   /** Creates a new IntakeMotorStop. */
@@ -19,9 +20,11 @@ public class IntakeMotorStop extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_intake.setSpinningMotorOff();
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
+/*   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_intake.setSpinningMotorOff();
@@ -35,5 +38,5 @@ public class IntakeMotorStop extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-}
+  }*/
+} 
