@@ -226,15 +226,15 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotorID1 = 53; //55 for compbot
-    public static final int kIntakeMotorID2 = 54; //60 for compbot
+    public static final int kIntakeMotorID1 = 55;
+    public static final int kIntakeMotorID2 = 60;
     public static final boolean kIntakeMotor1Inverted = false;
     public static final boolean kIntakeMotor2Inverted = true;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int kSpinningIntakeMotorID = 55; //65 for compbot
+    public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
