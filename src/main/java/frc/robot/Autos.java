@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.List;
 
+import javax.tools.ForwardingFileObject;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,11 +21,11 @@ import frc.robot.subsystems.Swerve;
 public class Autos {
     private RobotContainer container;
 
-    private TrajectoryConfig forwardConfig = new TrajectoryConfig(
+    private static TrajectoryConfig forwardConfig = new TrajectoryConfig(
             Constants.AutoConstants.kMaxSpeedMetersPerSecond,
             Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             .setKinematics(Constants.Swerve.swerveKinematics).setReversed(false);
-    private TrajectoryConfig reverseConfig = new TrajectoryConfig(
+    private static TrajectoryConfig reverseConfig = new TrajectoryConfig(
             Constants.AutoConstants.kMaxSpeedMetersPerSecond,
             Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             .setKinematics(Constants.Swerve.swerveKinematics).setReversed(true);
@@ -45,11 +47,12 @@ public class Autos {
         command.addCommands(
                 (new SeqCmdCubeScoringPosition(container.getTelescopic(),
                         container.getPivot()).withTimeout(4)));
-        command.addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
+        command.addCommands((new GripperRelease(container.getGripper(), container.getPivot())).withTimeout(2));
         command.addCommands(
                 (new SeqCmdTravelPosition(container.getTelescopic(),
                         container.getConeGuide(), container.getPivot(),
                         container.getIntake())).withTimeout(3));
+        command.addCommands(new ResetRobotPose(container.getSwerve(), tDropNDrive[0].getInitialPose()));
         command.addCommands(follow(container.getSwerve(), tDropNDrive[0]));
 
         reset(container.getSwerve(), tDropNDrive[0]);
@@ -70,12 +73,12 @@ public class Autos {
         return swerveControllerCommand;
     }
 
-    private Trajectory[] tDropNDrive = new Trajectory[] {
+    public static Trajectory[] tDropNDrive = new Trajectory[] {
             TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(3.75, 0, new Rotation2d(0)),
+                    new Pose2d(0, 0, Rotation2d.fromDegrees(180)),
                     List.of(
                             new Translation2d(1.5, 0)),
-                    new Pose2d(0, 0, new Rotation2d(0)),
+                    new Pose2d(3.75, 0, Rotation2d.fromDegrees(180)),
                     reverseConfig),
     };
 
