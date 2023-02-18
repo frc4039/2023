@@ -11,6 +11,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import frc.lib.util.CANSparkMaxUtil;
+import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 
@@ -20,7 +22,7 @@ public class Intake extends SubsystemBase {
     private final SparkMaxPIDController m_intakeController1;
     private RelativeEncoder m_integratedIntakeEncoder1;
     private CANSparkMax m_intakeMotor2;
-    //private final SparkMaxPIDController m_intakeController2;
+    private final SparkMaxPIDController m_intakeController2;
     private RelativeEncoder m_integratedIntakeEncoder2;
     //private final VictorSPX m_intakeMotor1;
     //private final VictorSPX m_intakeMotor2;
@@ -38,8 +40,11 @@ public class Intake extends SubsystemBase {
         m_intakeMotor2.setSmartCurrentLimit(Constants.IntakeConstants.smartCurrentLimit);
         m_integratedIntakeEncoder2 = m_intakeMotor2.getEncoder();
         m_integratedIntakeEncoder2.setPosition(0.0);
-        //m_intakeController2 = m_intakeMotor2.getPIDController();
-        m_intakeMotor2.follow(m_intakeMotor1);
+        m_intakeController2 = m_intakeMotor2.getPIDController();
+        //m_intakeMotor2.follow(m_intakeMotor1, true);
+
+        ConfigIntakeMotor(m_intakeMotor1, IntakeConstants.kIntakeMotor1Inverted, m_integratedIntakeEncoder1, m_intakeController1);
+        ConfigIntakeMotor(m_intakeMotor2, IntakeConstants.kIntakeMotor2Inverted, m_integratedIntakeEncoder2, m_intakeController2);
 
         /*m_intakeMotor1 = new VictorSPX(IntakeConstants.kIntakeMotor1);
         m_intakeMotor2 = new VictorSPX(IntakeConstants.kIntakeMotor2);
@@ -60,7 +65,8 @@ public class Intake extends SubsystemBase {
     }
 
     public void goToPosition(double position){
-        m_intakeController1.setReference(position, ControlType.kPosition);
+        m_intakeController1.setReference(position, ControlType.kSmartMotion);
+        m_intakeController2.setReference(position, ControlType.kSmartMotion);
     }
 
     public void extend() {
@@ -97,5 +103,24 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Intake encoder", GetIntakePosition());
+    }
+
+    private void ConfigIntakeMotor(CANSparkMax motor, boolean invertedMode, RelativeEncoder integratedEncoder, SparkMaxPIDController controller)
+    {
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(motor, Usage.kPositionOnly);
+        motor.setInverted(invertedMode);
+        motor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
+        integratedEncoder.setPositionConversionFactor(1);//ticks to rotations
+        controller.setP(IntakeConstants.intakeKP);
+        controller.setI(IntakeConstants.intakeKI);
+        controller.setD(IntakeConstants.intakeKD);
+        controller.setFF(IntakeConstants.intakeKFF);
+        controller.setSmartMotionMaxVelocity(800, 0);
+        controller.setSmartMotionMinOutputVelocity(0, 0);
+        controller.setSmartMotionMaxAccel(2500, 0);
+        controller.setSmartMotionAllowedClosedLoopError(IntakeConstants.intakeAllowableError, 0);
+        motor.enableVoltageCompensation(12.0);//voltage compensation
+        motor.burnFlash();
+        integratedEncoder.setPosition(0.0);
     }
 }
