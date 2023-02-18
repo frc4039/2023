@@ -234,7 +234,7 @@ public final class Constants {
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int kSpinningIntakeMotorID = 55;
+    public static final int kSpinningIntakeMotorID = 55; //65 for compbot
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
@@ -243,6 +243,10 @@ public final class Constants {
     public static final double kIntakeRetracted = 0;
     public static final double kIntakePickup = -11.714;
     public static final double kIntakeExtended = -12.761;
+    public static final double intakeKP = 0.015;
+    public static final double intakeKI = 0.00;
+    public static final double intakeKD = 0.00;
+    public static final double intakeKFF = 0.00;
   }
 
   public static final class ConeGuideConstants {
