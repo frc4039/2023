@@ -243,10 +243,11 @@ public final class Constants {
     public static final double kIntakeRetracted = 0;
     public static final double kIntakePickup = -11.714;
     public static final double kIntakeExtended = -12.761;
-    public static final double intakeKP = 0.000015;
+    public static final double intakeKP = 0.0002;
     public static final double intakeKI = 0.00;
     public static final double intakeKD = 0.00;
-    public static final double intakeKFF = 0.00025;
+    public static final double intakeKFF = 0.00015;
+    public static final double intakeAllowableError = 0.2;
   }
 
   public static final class ConeGuideConstants {

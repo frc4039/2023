@@ -65,8 +65,8 @@ public class Intake extends SubsystemBase {
     }
 
     public void goToPosition(double position){
-        m_intakeController1.setReference(50, ControlType.kVelocity);
-        m_intakeController2.setReference(50, ControlType.kVelocity);
+        m_intakeController1.setReference(position, ControlType.kSmartMotion);
+        m_intakeController2.setReference(position, ControlType.kSmartMotion);
     }
 
     public void extend() {
@@ -115,10 +115,10 @@ public class Intake extends SubsystemBase {
         controller.setI(IntakeConstants.intakeKI);
         controller.setD(IntakeConstants.intakeKD);
         controller.setFF(IntakeConstants.intakeKFF);
-        controller.setSmartMotionMaxVelocity(78, 0);
+        controller.setSmartMotionMaxVelocity(800, 0);
         controller.setSmartMotionMinOutputVelocity(0, 0);
-        controller.setSmartMotionMaxAccel(78, 0);
-        controller.setSmartMotionAllowedClosedLoopError(0, 0);
+        controller.setSmartMotionMaxAccel(2500, 0);
+        controller.setSmartMotionAllowedClosedLoopError(IntakeConstants.intakeAllowableError, 0);
         motor.enableVoltageCompensation(12.0);//voltage compensation
         motor.burnFlash();
         integratedEncoder.setPosition(0.0);
