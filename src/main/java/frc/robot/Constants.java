@@ -256,15 +256,4 @@ public final class Constants {
     public static final double kConeGuideRetractTimeout = 0.5;
     public static final double kConeGuideDeployTimeout = 0.5;
   }
-
-  /* BabyCakes contant values */
-/*   static final class NameTBD {
-    static final int test = 2;
-  }
- */
-
-  /* CompBot constant values */
-/*   static final class NameTBD {
-    static final int test = 3;
-  } */
 }
