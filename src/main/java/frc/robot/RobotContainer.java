@@ -126,15 +126,32 @@ public class RobotContainer {
     operatorLeftButton.whileTrue(new IntakeSpin(s_Intake));
   }
 
+  public Swerve getSwerve() {
+      return s_Swerve;
+  }
 
+  public Gripper getGripper() {
+      return s_Gripper;
+  }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
- // public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous // RE-ENABLE WHEN AUTO BECOMES AVAILABLE
-   // return new exampleAuto(s_Swerve);
- // }
+  public Telescopic getTelescopic() {
+      return s_Telescopic;
+  }
+
+  public Pivot getPivot() {
+      return s_Pivot;
+  }
+
+  public ConeGuide getConeGuide() {
+      return s_ConeGuide;
+  }
+
+  public Intake getIntake() {
+      return s_Intake;
+  }
+
+  public Command getAutonomousCommand() {
+      Autos autos = new Autos(this);
+      return autos.dropNDrive();
+  }
 }

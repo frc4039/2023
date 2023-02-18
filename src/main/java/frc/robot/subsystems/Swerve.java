@@ -127,6 +127,17 @@ public class Swerve extends SubsystemBase {
         getPose());
   }
 
+  public void setPoseEstimator(Pose2d pose) {
+    swervePoseEstimator.resetPosition(pose.getRotation(),
+        new SwerveModulePosition[] {
+            mSwerveMods[0].getOdometryPosition(),
+            mSwerveMods[1].getOdometryPosition(),
+            mSwerveMods[2].getOdometryPosition(),
+            mSwerveMods[3].getOdometryPosition()
+        },
+        pose);
+  }
+
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     for (SwerveModule mod : mSwerveMods) {
