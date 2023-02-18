@@ -29,7 +29,7 @@ public class GripperRelease extends CommandBase {
   @Override
   public void execute() {
     if(m_Pivot.GetPivotPosition() == PivotConstants.positionScoringCone) {
-      m_Pivot.goToPosition(-19.5);
+      m_Pivot.goToPosition(PivotConstants.positionScoringConeRelease);
     }
     m_Gripper.setOpen();
   }

@@ -187,6 +187,7 @@ public final class Constants {
     public static final double positionPickupCone = -52.714;
     public static final double positionPickupCube = 58.738;
     public static final double positionScoringCone = -18;
+    public static final double positionScoringConeRelease = -19.5;
     public static final double positionScoringCube = 27.285;
     public static final double positionTravel = 0.0;
     public static final double pivotKP = 0.015;
@@ -216,6 +217,8 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
+    public static final int kGripperForwardChannel = 0;
+    public static final int kGripperReverseChannel = 1;
     public static final double kGripperReleaseTimeout = 0.5;
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
@@ -223,8 +226,8 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotorID1 = 53;
-    public static final int kIntakeMotorID2 = 54;
+    public static final int kIntakeMotorID1 = 53; //55 for compbot
+    public static final int kIntakeMotorID2 = 54; //60 for compbot
     public static final boolean kIntakeMotor1Inverted = true;
     public static final boolean kIntakeMotor2Inverted = false;
     public static final double kIntakeMotorPercentExtend = 1.0;

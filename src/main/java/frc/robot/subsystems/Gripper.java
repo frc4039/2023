@@ -11,7 +11,9 @@ public class Gripper extends SubsystemBase {
 
     //forwardChannel = 0 => closes gripper
     //reverseChannel = 1 => opens gripper
-    private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.solenoidCanID,PneumaticsModuleType.REVPH, 0, 1);
+    private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.solenoidCanID,PneumaticsModuleType.REVPH, 
+                                                                    Constants.GripperConstants.kGripperForwardChannel, 
+                                                                    Constants.GripperConstants.kGripperReverseChannel);
     private TalonSRX m_tosserMotor;
 
     public Gripper(){
