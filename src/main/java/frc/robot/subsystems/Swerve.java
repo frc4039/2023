@@ -44,6 +44,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Autos;
 import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
@@ -76,6 +77,7 @@ public class Swerve extends SubsystemBase {
         new Pose2d());
 
     field = new Field2d();
+    field.getObject("Auto path").setTrajectory(Autos.tDropNDrive[0]);
     SmartDashboard.putData("Field", field);
   }
 
@@ -125,6 +127,17 @@ public class Swerve extends SubsystemBase {
             mSwerveMods[3].getOdometryPosition()
         },
         getPose());
+  }
+
+  public void setPoseEstimator(Pose2d pose) {
+    swervePoseEstimator.resetPosition(getYaw(),
+        new SwerveModulePosition[] {
+            mSwerveMods[0].getOdometryPosition(),
+            mSwerveMods[1].getOdometryPosition(),
+            mSwerveMods[2].getOdometryPosition(),
+            mSwerveMods[3].getOdometryPosition()
+        },
+        pose);
   }
 
   public SwerveModuleState[] getStates() {

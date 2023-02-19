@@ -6,8 +6,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.math.geometry.Rotation2d;
-//import com.revrobotics.RelativeEncoder;
 import frc.lib.util.CANSparkMaxUtil;
 import com.revrobotics.CANSparkMax.ControlType;
 import frc.lib.util.CANSparkMaxUtil.Usage;
@@ -21,7 +19,7 @@ public class Pivot extends SubsystemBase {
     private final SparkMaxPIDController m_pivotController;
     private RelativeEncoder m_integratedPivotEncoder;
     private DutyCycleEncoder m_pivotEncoder;
-    private double dashboardTargetPivotPositionValue = 0.0;
+    private double m_targetPivotPositionValue = 0.0;
     private double pivotAbsolutePosition;
 
     public Pivot(){//intialization method
@@ -48,7 +46,7 @@ public class Pivot extends SubsystemBase {
     }
 
     public void goToPosition(double position){
-        dashboardTargetPivotPositionValue = position;
+        m_targetPivotPositionValue = position;
         m_pivotController.setReference(position, ControlType.kPosition);
     }
 
@@ -75,11 +73,15 @@ public class Pivot extends SubsystemBase {
     public double GetPivotPosition(){
         return m_integratedPivotEncoder.getPosition();
     }
+
+    public double GetTargetPosition() {
+        return m_targetPivotPositionValue;
+    }
     
     @Override
     public void periodic(){
         SmartDashboard.putNumber("pivot encoder", m_integratedPivotEncoder.getPosition());
-        SmartDashboard.putNumber("target pivot position", dashboardTargetPivotPositionValue);
+        SmartDashboard.putNumber("target pivot position", m_targetPivotPositionValue);
         SmartDashboard.putNumber("pivot output current", m_pivotMotor.getOutputCurrent());
     }
 
@@ -95,15 +97,5 @@ public class Pivot extends SubsystemBase {
         m_pivotMotor.enableVoltageCompensation(12.0);//voltage compensation
         m_pivotMotor.burnFlash();
         m_integratedPivotEncoder.setPosition(0.0);
-      }
-    
-    
-    /*private Rotation2d getAngle(){
-        return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
     }
-
-   private void setAngle(double desiredAngle){
-        angleController.setReference(desiredAngle, ControlType.kPosition);
-    }*/
-
 }

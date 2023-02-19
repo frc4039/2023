@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.ConeGuide;
 
-public class GripperRetrieve extends CommandBase {
-  private final Gripper m_Gripper;
-  
-  /** Creates a new GripperRetrieve. */
-  public GripperRetrieve(Gripper gripper) {
+public class ConeGuideRetract extends CommandBase {
+  private final ConeGuide m_ConeGuide;
+
+  /** Creates a new ConeGuideRetract. */
+  public ConeGuideRetract(ConeGuide coneGuide) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_Gripper = gripper;
-    addRequirements(m_Gripper);
+    m_ConeGuide = coneGuide;
+    addRequirements(m_ConeGuide);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +24,13 @@ public class GripperRetrieve extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Gripper.setClose();
+    m_ConeGuide.setReverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Gripper.setOff();
+    m_ConeGuide.setOff();
   }
 
   // Returns true when the command should end.

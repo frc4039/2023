@@ -123,7 +123,7 @@ public final class Constants {
       public static final int angleMotorID = 11; // Angle Motor Controller - [FLA]
       public static final int canCoderID = 12; // Front Left Encoder - [FLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(204.35);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(268.5);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -134,7 +134,7 @@ public final class Constants {
       public static final int angleMotorID = 14; // Angle Motor Controller - [FRA]
       public static final int canCoderID = 15; // Front Right Encoder - [FRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(257.08);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(212.0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -145,7 +145,7 @@ public final class Constants {
       public static final int angleMotorID = 17; // Angle Motor Controller - [BLA]
       public static final int canCoderID = 18; // Back Left Encoder - [BLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-201.45);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(241.5);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -156,7 +156,7 @@ public final class Constants {
       public static final int angleMotorID = 20; // Angle Motor Controller - [BRA]
       public static final int canCoderID = 21; // Back Right Encoder - [BRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(19.95);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(280.3);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -187,6 +187,7 @@ public final class Constants {
     public static final double positionPickupCone = -52.714;
     public static final double positionPickupCube = 58.738;
     public static final double positionScoringCone = -18;
+    public static final double positionScoringConeRelease = -21;
     public static final double positionScoringCube = 27.285;
     public static final double positionTravel = 0.0;
     public static final double pivotKP = 0.015;
@@ -217,24 +218,43 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
+    public static final int kGripperForwardChannel = 0;
+    public static final int kGripperReverseChannel = 1;
+    public static final double kGripperReleaseTimeout = 0.5;
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
     public static final double tosserMotorReversePercent = 1;
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotor1 = 53;
-    public static final int kIntakeMotor2 = 54;
-    public static final boolean kIntakeMotor1Inverted = true;
-    public static final boolean kIntakeMotor2Inverted = false;
+    public static final int kIntakeMotorID1 = 55;
+    public static final int kIntakeMotorID2 = 60;
+    public static final boolean kIntakeMotor1Inverted = false;
+    public static final boolean kIntakeMotor2Inverted = true;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int spinningIntakeMotorID = 55;
+    public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
     public static final double intakeSpinningMotorOff = 0;
+    public static final int smartCurrentLimit = 10;
+    public static final double kIntakeRetracted = 0;
+    public static final double kIntakePickup = -11.714;
+    public static final double kIntakeExtended = -12.761;
+    public static final double intakeKP = 0.0002;
+    public static final double intakeKI = 0.00;
+    public static final double intakeKD = 0.00;
+    public static final double intakeKFF = 0.00015;
+    public static final double intakeAllowableError = 0.2;
+  }
+
+  public static final class ConeGuideConstants {
+    public static final int kConeGuideForwardChannel = 2;
+    public static final int kConeGuideReverseChannel = 3;
+    public static final double kConeGuideRetractTimeout = 0.5;
+    public static final double kConeGuideDeployTimeout = 0.5;
   }
 }

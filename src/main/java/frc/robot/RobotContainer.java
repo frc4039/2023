@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -59,7 +60,7 @@ public class RobotContainer {
       new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
   private final JoystickButton operatorRightBumperButton = 
       new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-private final JoystickButton driverLeftBumperButton = 
+  private final JoystickButton driverLeftBumperButton = 
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
   private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
@@ -71,6 +72,7 @@ private final JoystickButton driverLeftBumperButton =
   private final Gripper s_Gripper = new Gripper();
   private final Telescopic s_Telescopic = new Telescopic();
   private final Intake s_Intake = new Intake();
+  private final ConeGuide s_ConeGuide = new ConeGuide();
   private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
   public class setDefaultCommand{}
@@ -88,7 +90,12 @@ private final JoystickButton driverLeftBumperButton =
 
     CommandScheduler.getInstance().registerSubsystem(s_Pivot);
     CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
+    CommandScheduler.getInstance().registerSubsystem(s_Gripper);
+    CommandScheduler.getInstance().registerSubsystem(s_Intake);
+    CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
     CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
+
+    CameraServer.startAutomaticCapture();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -107,27 +114,44 @@ private final JoystickButton driverLeftBumperButton =
     /* operator Buttons */
     backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
     driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
-    SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot set to zero"));
-    operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper));
+    SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot to 0"));
+    operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper, s_Pivot));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
-    yOperatorButton.onTrue(new TravelPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel));
-    xOperatorButton.onTrue(new CubePickupPosition(s_Telescopic, s_Intake, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube));
-    aOperatorButton.onTrue(new ConePickupPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone));
-    bOperatorButton.onTrue(new ConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
+    yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
+    xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
+    aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
+    bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
     operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
     operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
     operatorLeftButton.whileTrue(new IntakeSpin(s_Intake));
   }
 
+  public Swerve getSwerve() {
+      return s_Swerve;
+  }
 
+  public Gripper getGripper() {
+      return s_Gripper;
+  }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
- // public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous // RE-ENABLE WHEN AUTO BECOMES AVAILABLE
-   // return new exampleAuto(s_Swerve);
- // }
+  public Telescopic getTelescopic() {
+      return s_Telescopic;
+  }
+
+  public Pivot getPivot() {
+      return s_Pivot;
+  }
+
+  public ConeGuide getConeGuide() {
+      return s_ConeGuide;
+  }
+
+  public Intake getIntake() {
+      return s_Intake;
+  }
+
+  public Command getAutonomousCommand() {
+      Autos autos = new Autos(this);
+      return autos.dropNDrive();
+  }
 }

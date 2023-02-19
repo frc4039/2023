@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.subsystems.ConeGuide;
+import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
@@ -13,15 +15,19 @@ import frc.robot.subsystems.Telescopic;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CubePickupPosition extends SequentialCommandGroup {
-  /** Creates a new CubePickup. */
-  public CubePickupPosition(Telescopic s_Telescopic, Intake m_Intake, Pivot s_Pivot) {
+public class SeqCmdConePickupPosition extends SequentialCommandGroup {
+  /** Creates a new ConePickup. */
+  public SeqCmdConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new TelescopicRetract(s_Telescopic),
-      new IntakeExtend(m_Intake).withTimeout(Constants.IntakeConstants.kIntakeExtendTimeout),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube)
+      new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+      new ConeGuideDeploy(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
+      new IntakeMotorStop(s_Intake),
+      //new IntakeExtend(s_Intake),
+      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone),
+      new IntakeRetract(s_Intake)
     );
   }
 }
