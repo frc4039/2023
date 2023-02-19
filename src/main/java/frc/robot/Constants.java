@@ -194,7 +194,8 @@ public final class Constants {
     public static final double pivotKI = 0.00;
     public static final double pivotKD = 0.00;
     public static final double pivotKFF = 0.00;
-    public static final int encoderChannel = 1;
+    public static final int encoderChannel = 0;
+    public static final double pivotAllowableError = 0.2;
   }
 
   public static final class TelescopicConstants {

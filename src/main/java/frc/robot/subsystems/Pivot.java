@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -11,13 +13,15 @@ import com.revrobotics.CANSparkMax.ControlType;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.PivotConstants;
+
 import com.revrobotics.RelativeEncoder;
 
 public class Pivot extends SubsystemBase {
     
     private CANSparkMax m_pivotMotor;
     private final SparkMaxPIDController m_pivotController;
-    private RelativeEncoder m_integratedPivotEncoder;
+    //private RelativeEncoder m_integratedPivotEncoder;
     private DutyCycleEncoder m_pivotEncoder;
     private double m_targetPivotPositionValue = 0.0;
     private double pivotAbsolutePosition;
@@ -26,9 +30,9 @@ public class Pivot extends SubsystemBase {
         m_pivotMotor = new CANSparkMax(Constants.PivotConstants.pivotMotorID, MotorType.kBrushless);//need to move constant
         m_pivotMotor.restoreFactoryDefaults();
         m_pivotMotor.setSmartCurrentLimit(Constants.PivotConstants.smartCurrentLimit);
-        m_integratedPivotEncoder = m_pivotMotor.getEncoder();
+        //m_integratedPivotEncoder = m_pivotMotor.getEncoder();
         m_pivotEncoder = new DutyCycleEncoder(Constants.PivotConstants.encoderChannel);
-        m_integratedPivotEncoder.setPosition(0.0);
+        //m_integratedPivotEncoder.setPosition(0.0);
         m_pivotController = m_pivotMotor.getPIDController();
         configPivotMotor();
     }
@@ -50,12 +54,12 @@ public class Pivot extends SubsystemBase {
         m_pivotController.setReference(position, ControlType.kPosition);
     }
 
-    public void setSpeed(double speed){
-        m_pivotMotor.set(speed);
-    }
-
     public void moveForward(){
         m_pivotMotor.set(Constants.PivotConstants.speedForward);
+    }
+
+    public void runAtSpeed(double speed) {
+        m_pivotMotor.set(speed);
     }
 
     public void moveBack(){
@@ -67,11 +71,11 @@ public class Pivot extends SubsystemBase {
     }
 
     public void setZero(){
-        m_integratedPivotEncoder.setPosition(0.0);
+        m_pivotEncoder.reset();
     }
 
     public double GetPivotPosition(){
-        return m_integratedPivotEncoder.getPosition();
+        return m_pivotEncoder.getAbsolutePosition();
     }
 
     public double GetTargetPosition() {
@@ -80,7 +84,7 @@ public class Pivot extends SubsystemBase {
     
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("pivot encoder", m_integratedPivotEncoder.getPosition());
+        SmartDashboard.putNumber("pivot encoder", GetPivotPosition());
         SmartDashboard.putNumber("target pivot position", m_targetPivotPositionValue);
         SmartDashboard.putNumber("pivot output current", m_pivotMotor.getOutputCurrent());
     }
@@ -89,13 +93,11 @@ public class Pivot extends SubsystemBase {
         CANSparkMaxUtil.setCANSparkMaxBusUsage(m_pivotMotor, Usage.kPositionOnly);
         m_pivotMotor.setInverted(false);
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
-        m_integratedPivotEncoder.setPositionConversionFactor(1);//ticks to rotations
         m_pivotController.setP(Constants.PivotConstants.pivotKP);
         m_pivotController.setI(Constants.PivotConstants.pivotKI);
         m_pivotController.setD(Constants.PivotConstants.pivotKD);
         m_pivotController.setFF(Constants.PivotConstants.pivotKFF);
         m_pivotMotor.enableVoltageCompensation(12.0);//voltage compensation
         m_pivotMotor.burnFlash();
-        m_integratedPivotEncoder.setPosition(0.0);
     }
 }
