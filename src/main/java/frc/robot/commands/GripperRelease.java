@@ -36,7 +36,7 @@ public class GripperRelease extends CommandBase {
   public void execute() {
   // Called once the command ends or is interrupted.
     if(m_Pivot.GetTargetPosition() == PivotConstants.positionScoringCone) {
-      m_Pivot.goToPosition(PivotConstants.positionScoringConeRelease);
+      m_Pivot.setSetpoint(PivotConstants.positionScoringConeRelease);
     }
     if(m_Pivot.GetTargetPosition() == PivotConstants.positionScoringConeRelease)
     {

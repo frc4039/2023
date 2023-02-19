@@ -112,9 +112,7 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
 
     /* operator Buttons */
-    backButton.onTrue(new InstantCommand(()-> s_Pivot.setZero()));
     driverLeftBumperButton.whileTrue(new InstantCommand(()-> s_Telescopic.zeroEncoder()));
-    SmartDashboard.putData(new InstantCommand(()-> s_Pivot.setZero()).ignoringDisable(true).withName("Pivot to 0"));
     operatorLeftBumperButton.onTrue(new GripperRelease(s_Gripper, s_Pivot));
     operatorRightBumperButton.onTrue(new GripperRetrieve(s_Gripper));
     yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
