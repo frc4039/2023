@@ -45,25 +45,29 @@ public class Intake extends SubsystemBase {
         m_spinningIntakeMotor.setInverted(IntakeConstants.kSpinningIntakeMotorInverted);
     }
 
-    public double GetIntakePosition(){
+    public double GetIntakePositionRight(){
         return m_integratedIntakeEncoderRight.getPosition();
     }
 
-    public void goToPosition(double position){
-        m_intakeControllerRight.setReference(position, ControlType.kSmartMotion);
-        m_intakeControllerLeft.setReference(position, ControlType.kSmartMotion);
+    public double GetIntakePositionLeft(){
+        return m_integratedIntakeEncoderLeft.getPosition();
+    }
+
+    public void goToPosition(double positionRight, double positionLeft){
+        m_intakeControllerRight.setReference(positionRight, ControlType.kSmartMotion);
+        m_intakeControllerLeft.setReference(positionLeft, ControlType.kSmartMotion);
     }
 
     public void extend() {
-        goToPosition(IntakeConstants.kIntakePositionExtended);
+        goToPosition(IntakeConstants.kIntakePositionRightExtended, IntakeConstants.kIntakePositionLeftExtended);
     }
 
     public void retract() {
-       goToPosition(IntakeConstants.kIntakePositionRetracted);
+       goToPosition(IntakeConstants.kIntakePositionRightRetracted, IntakeConstants.kIntakePositionLeftRetracted);
     }
 
     public void pickup() {
-        goToPosition(IntakeConstants.kIntakePositionPickup);
+        goToPosition(IntakeConstants.kIntakePositionRightPickup, IntakeConstants.kIntakePositionLeftPickup);
      }
  
     public void setSpinningMotorOn() {
@@ -75,17 +79,14 @@ public class Intake extends SubsystemBase {
     }
 
     public void stopIntake() {
-        m_intakeMotorRight.set(0);
-    }
-
-    public void stop() {
-        m_intakeMotorRight.set(0);
-        m_spinningIntakeMotor.set(TalonSRXControlMode.PercentOutput, 0);
+        m_intakeMotorRight.set(IntakeConstants.kStoppedSpeed);
+        m_intakeMotorLeft.set(IntakeConstants.kStoppedSpeed);
     }
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Intake encoder", GetIntakePosition());
+        SmartDashboard.putNumber("Intake Right", GetIntakePositionRight());
+        SmartDashboard.putNumber("Intake Left", GetIntakePositionLeft());
     }
 
     private void ConfigIntakeMotor(CANSparkMax motor, boolean invertedMode, RelativeEncoder integratedEncoder, SparkMaxPIDController controller)
@@ -104,6 +105,6 @@ public class Intake extends SubsystemBase {
         controller.setSmartMotionAllowedClosedLoopError(IntakeConstants.kIntakeAllowableError, IntakeConstants.kSlotId);
         motor.enableVoltageCompensation(IntakeConstants.kNominalVoltage);//voltage compensation
         motor.burnFlash();
-        integratedEncoder.setPosition(IntakeConstants.kIntakePositionRetracted);
+        integratedEncoder.setPosition(IntakeConstants.kIntakePositionRightRetracted);
     }
 }

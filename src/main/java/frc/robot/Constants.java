@@ -256,10 +256,14 @@ public final class Constants {
     public static final double kIntakeSpinningMotorForward = 0.5;
     public static final double kIntakeSpinningMotorOff = 0;
     public static final int kSmartCurrentLimit = 10;
+    public static final double kStoppedSpeed = 0;
 
-    public static final double kIntakePositionRetracted = 0;
-    public static final double kIntakePositionPickup = 14.26;
-    public static final double kIntakePositionExtended = 15;
+    public static final double kIntakePositionRightRetracted = 0.07;
+    public static final double kIntakePositionRightPickup = 14.64;
+    public static final double kIntakePositionRightExtended = 16.78;
+    public static final double kIntakePositionLeftRetracted = 0.09;
+    public static final double kIntakePositionLeftPickup = 14.73;
+    public static final double kIntakePositionLeftExtended = 16.9;
     public static final double kPositionConversionFactor = 1;
 
     public static final double kIntakeKP = 0.0002;
