@@ -38,7 +38,7 @@ public class IntakeExtend extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakeExtended - m_Intake.GetIntakePosition()) <= IntakeConstants.intakeAllowableError)
+    if(Math.abs(IntakeConstants.kIntakePositionExtended - m_Intake.GetIntakePosition()) <= IntakeConstants.kIntakeAllowableError)
     {
       return true;
     }
