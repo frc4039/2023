@@ -199,23 +199,38 @@ public final class Constants {
   }
 
   public static final class TelescopicConstants {
-    public static final int telescopicMotorID = 45; // Falcon motor ID
-    public static final int smartCurrentLimit = 30;
-    public static final double telescopicSpeedForward = 5;
-    public static final double telescopicSpeedBack = -5;
-    public static final double telescopicStop = 0;
-    //
-    public static final double kTelescopicFar = 50000;
-    public static final double kTelescopicRetracted = 5;
-    public static final double kTelescopicMid = 28748;
-    //
-    public static final double telescopicKP = 0.07;
-    public static final double telescopicKI = 0.00;
-    public static final double telescopicKD = 0.04;
-    public static final double telescopicKFF = 0.00;
-    //
-    public static final double kForwardPercent = 0.15;
-    public static final double kReversePercent = -0.15;
+    public static final int kTelescopicMotorID = 45; // Falcon motor ID
+    public static final int kCurrentLimit = 30;
+    public static final int kTriggerThresholdCurrent = 40;
+    public static final double kTriggerThresholdTime = 1.5;
+    public static final double kTelescopicSpeedForward = 5;
+    public static final double kTelescopicSpeedBack = -5;
+    public static final double kTelescopicStop = 0;
+    public static final int kTimeoutMs = 0;
+
+    public static final double kPeakOutputForwardPercent = 12;
+    public static final double kPeakOutputReversePercent = -12;
+    
+    public static final double kTelescopicFar = 71131; // 50000;
+    public static final double kTelescopicRetracted = 577; // 5;
+    public static final double kTelescopicMid = 38465; // 28748;
+    
+    public static final double kTelescopicKP = 0.07;
+    public static final double kTelescopicKI = 0.00;
+    public static final double kTelescopicKD = 0.04;
+    public static final double kTelescopicKFF = 0.00;
+    public static final int kTelescopicSlotIdxKP = 0;
+    public static final int kTelescopicSlotIdxKI = 0;
+    public static final int kTelescopicSlotIdxKD = 0;
+    public static final int kTelescopicSlotIdxKFF = 0;
+    
+    public static final double kClosedLoopPeakOutputPercent = 0.2;
+    public static final int kClosedLoopPeakOutputSlotIdx = 0;
+    public static final int kSelectedFeedbackSensorPidIdx = 0;
+    public static final double kAllowableClosedloopError = 100;
+    public static final int kAllowableClosedloopErrorSlotIdx = 0;
+
+    public static final int kPrimaryClosedLoopErrorPidx = 0;
   }
 
   public static final class GripperConstants {
