@@ -243,28 +243,39 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotorID1 = 55;
-    public static final int kIntakeMotorID2 = 60;
-    public static final boolean kIntakeMotor1Inverted = false;
-    public static final boolean kIntakeMotor2Inverted = true;
+    public static final int kIntakeRightMotorID = 55;
+    public static final int kIntakeLeftMotorID = 60;
+    public static final boolean kIntakeRightMotorInverted = false;
+    public static final boolean kIntakeLeftMotorInverted = false;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
     public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
     public static final boolean kSpinningIntakeMotorInverted = true;
-    public static final double intakeSpinningMotorForward = 0.5;
-  //  public static final double intakeMotorReversePercent = 0.2;
-    public static final double intakeSpinningMotorOff = 0;
-    public static final int smartCurrentLimit = 10;
-    public static final double kIntakeRetracted = 0;
-    public static final double kIntakePickup = -11.714;
-    public static final double kIntakeExtended = -12.761;
-    public static final double intakeKP = 0.0002;
-    public static final double intakeKI = 0.00;
-    public static final double intakeKD = 0.00;
-    public static final double intakeKFF = 0.00015;
-    public static final double intakeAllowableError = 0.2;
+    public static final double kIntakeSpinningMotorForward = 0.5;
+    public static final double kIntakeSpinningMotorOff = 0;
+    public static final int kSmartCurrentLimit = 10;
+
+    public static final double kIntakePositionRetracted = 0;
+    public static final double kIntakePositionPickup = 14.26;
+    public static final double kIntakePositionExtended = 15;
+    public static final double kPositionConversionFactor = 1;
+
+    public static final double kIntakeKP = 0.0002;
+    public static final double kIntakeKI = 0.00;
+    public static final double kIntakeKD = 0.00;
+    public static final double kIntakeKFF = 0.00015;
+
+    public static final double kSmartMotionMaxVelocity = 800;
+    public static final double kSmartMotionMaxAccel = 2500;
+    public static final double kSmartMotionMinOutputVelocity = 0;
+
+    public static final double kNominalVoltage = 12.0;
+
+    public static final int kSlotId = 0;
+
+    public static final double kIntakeAllowableError = 0.2;
   }
 
   public static final class ConeGuideConstants {

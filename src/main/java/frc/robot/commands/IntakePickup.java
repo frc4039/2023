@@ -37,7 +37,7 @@ public class IntakePickup extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakePickup - m_Intake.GetIntakePosition()) <= IntakeConstants.intakeAllowableError)
+    if(Math.abs(IntakeConstants.kIntakePositionPickup - m_Intake.GetIntakePosition()) <= IntakeConstants.kIntakeAllowableError)
     {
       return true;
     }
