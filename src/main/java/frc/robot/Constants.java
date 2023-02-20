@@ -123,7 +123,7 @@ public final class Constants {
       public static final int angleMotorID = 11; // Angle Motor Controller - [FLA]
       public static final int canCoderID = 12; // Front Left Encoder - [FLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(204.35);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(280.3); //old 268.5
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -134,7 +134,7 @@ public final class Constants {
       public static final int angleMotorID = 14; // Angle Motor Controller - [FRA]
       public static final int canCoderID = 15; // Front Right Encoder - [FRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(257.08);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(241.5); //old 212.0
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -145,7 +145,7 @@ public final class Constants {
       public static final int angleMotorID = 17; // Angle Motor Controller - [BLA]
       public static final int canCoderID = 18; // Back Left Encoder - [BLE]
       public static final boolean driveMotorInvert = false;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-201.45);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(212.0); //old 241.5
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -156,7 +156,7 @@ public final class Constants {
       public static final int angleMotorID = 20; // Angle Motor Controller - [BRA]
       public static final int canCoderID = 21; // Back Right Encoder - [BRE]
       public static final boolean driveMotorInvert = true;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(19.95);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(268.5); //old 280.3
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveMotorInvert);
     }
@@ -184,36 +184,53 @@ public final class Constants {
     public static final double speedForward = 0.25;
     public static final double speedBack = -0.25;
     public static final double speedStop = 0;
-    public static final double positionPickupCone = -52.714;
-    public static final double positionPickupCube = 58.738;
-    public static final double positionScoringCone = -18;
-    public static final double positionScoringConeRelease = -21;
-    public static final double positionScoringCube = 27.285;
-    public static final double positionTravel = 0.0;
+    public static final double positionPickupCone = 0.857;
+    public static final double positionPickupCube = 0.136;
+    public static final double positionScoringCone = 0.640;
+    public static final double positionScoringConeRelease = 0.678;
+    public static final double positionScoringCube = 0.294;
+    public static final double positionTravel = 0.487;
     public static final double pivotKP = 0.015;
     public static final double pivotKI = 0.00;
     public static final double pivotKD = 0.00;
     public static final double pivotKFF = 0.00;
+    public static final int encoderChannel = 1;
+    public static final double pivotAllowableError = 0.2;
   }
 
   public static final class TelescopicConstants {
-    public static final int telescopicMotorID = 45; // Falcon motor ID
-    public static final int smartCurrentLimit = 30;
-    public static final double telescopicSpeedForward = 5;
-    public static final double telescopicSpeedBack = -5;
-    public static final double telescopicStop = 0;
-    //
-    public static final double kTelescopicFar = 50000;
-    public static final double kTelescopicRetracted = 5;
-    public static final double kTelescopicMid = 28748;
-    //
-    public static final double telescopicKP = 0.07;
-    public static final double telescopicKI = 0.00;
-    public static final double telescopicKD = 0.04;
-    public static final double telescopicKFF = 0.00;
-    //
-    public static final double kForwardPercent = 0.15;
-    public static final double kReversePercent = -0.15;
+    public static final int kTelescopicMotorID = 45; // Falcon motor ID
+    public static final int kCurrentLimit = 30;
+    public static final int kTriggerThresholdCurrent = 40;
+    public static final double kTriggerThresholdTime = 1.5;
+    public static final double kTelescopicSpeedForward = 5;
+    public static final double kTelescopicSpeedBack = -5;
+    public static final double kTelescopicStop = 0;
+    public static final int kTimeoutMs = 0;
+
+    public static final double kPeakOutputForwardPercent = 12;
+    public static final double kPeakOutputReversePercent = -12;
+    
+    public static final double kTelescopicFar = 71131; // 50000;
+    public static final double kTelescopicRetracted = 577; // 5;
+    public static final double kTelescopicMid = 38465; // 28748;
+    
+    public static final double kTelescopicKP = 0.07;
+    public static final double kTelescopicKI = 0.00;
+    public static final double kTelescopicKD = 0.04;
+    public static final double kTelescopicKFF = 0.00;
+    public static final int kTelescopicSlotIdxKP = 0;
+    public static final int kTelescopicSlotIdxKI = 0;
+    public static final int kTelescopicSlotIdxKD = 0;
+    public static final int kTelescopicSlotIdxKFF = 0;
+    
+    public static final double kClosedLoopPeakOutputPercent = 0.2;
+    public static final int kClosedLoopPeakOutputSlotIdx = 0;
+    public static final int kSelectedFeedbackSensorPidIdx = 0;
+    public static final double kAllowableClosedloopError = 100;
+    public static final int kAllowableClosedloopErrorSlotIdx = 0;
+
+    public static final int kPrimaryClosedLoopErrorPidx = 0;
   }
 
   public static final class GripperConstants {
@@ -226,15 +243,15 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int kIntakeMotorID1 = 53; //55 for compbot
-    public static final int kIntakeMotorID2 = 54; //60 for compbot
+    public static final int kIntakeMotorID1 = 55;
+    public static final int kIntakeMotorID2 = 60;
     public static final boolean kIntakeMotor1Inverted = false;
     public static final boolean kIntakeMotor2Inverted = true;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int kSpinningIntakeMotorID = 55; //65 for compbot
+    public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double intakeSpinningMotorForward = 0.5;
   //  public static final double intakeMotorReversePercent = 0.2;
@@ -256,15 +273,4 @@ public final class Constants {
     public static final double kConeGuideRetractTimeout = 0.5;
     public static final double kConeGuideDeployTimeout = 0.5;
   }
-
-  /* BabyCakes contant values */
-/*   static final class NameTBD {
-    static final int test = 2;
-  }
- */
-
-  /* CompBot constant values */
-/*   static final class NameTBD {
-    static final int test = 3;
-  } */
 }
