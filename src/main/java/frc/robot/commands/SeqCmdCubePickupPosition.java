@@ -26,7 +26,7 @@ public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
       new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
       new IntakePickup(s_Intake),
       new IntakeMotorSpin(s_Intake),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCube)
+      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCube)
     );
   }
 }

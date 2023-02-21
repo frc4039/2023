@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.RelativeEncoder;
@@ -23,7 +23,7 @@ public class Intake extends SubsystemBase {
     private CANSparkMax m_intakeMotorLeft;
     private final SparkMaxPIDController m_intakeControllerLeft;
     private RelativeEncoder m_integratedIntakeEncoderLeft;
-    private final TalonSRX m_spinningIntakeMotor;
+    private final VictorSPX m_spinningIntakeMotor;
 
     public Intake() {
         m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeRightMotorID, MotorType.kBrushless);//need to move constant
@@ -40,7 +40,7 @@ public class Intake extends SubsystemBase {
         ConfigIntakeMotor(m_intakeMotorRight, IntakeConstants.kIntakeRightMotorInverted, m_integratedIntakeEncoderRight, m_intakeControllerRight);
         ConfigIntakeMotor(m_intakeMotorLeft, IntakeConstants.kIntakeLeftMotorInverted, m_integratedIntakeEncoderLeft, m_intakeControllerLeft);
 
-        m_spinningIntakeMotor = new TalonSRX(IntakeConstants.kSpinningIntakeMotorID);
+        m_spinningIntakeMotor = new VictorSPX(IntakeConstants.kSpinningIntakeMotorID);
         m_spinningIntakeMotor.configFactoryDefault();
         m_spinningIntakeMotor.setInverted(IntakeConstants.kSpinningIntakeMotorInverted);
     }
@@ -71,11 +71,11 @@ public class Intake extends SubsystemBase {
      }
  
     public void setSpinningMotorOn() {
-        m_spinningIntakeMotor.set(TalonSRXControlMode.PercentOutput, IntakeConstants.kIntakeSpinningMotorForward);
+        m_spinningIntakeMotor.set(VictorSPXControlMode.PercentOutput, IntakeConstants.kIntakeSpinningMotorForward);
     }
 
     public void setSpinningMotorOff() {
-        m_spinningIntakeMotor.set(TalonSRXControlMode.PercentOutput, IntakeConstants.kIntakeSpinningMotorOff);
+        m_spinningIntakeMotor.set(VictorSPXControlMode.PercentOutput, IntakeConstants.kIntakeSpinningMotorOff);
     }
 
     public void stopIntake() {
