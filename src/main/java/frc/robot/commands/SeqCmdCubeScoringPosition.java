@@ -18,7 +18,7 @@ public class SeqCmdCubeScoringPosition extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCube),
+        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCube),
         new TelescopicExtendFar(s_Telescopic));
   }
 }

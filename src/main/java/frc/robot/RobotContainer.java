@@ -118,10 +118,11 @@ public class RobotContainer {
     yOperatorButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
     xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
     aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
-    bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot)); //new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionScoringCone));
-    operatorUpButton.onTrue(new IntakeExtend(s_Intake).withTimeout(IntakeConstants.kIntakeExtendTimeout));
-    operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
-    operatorLeftButton.whileTrue(new IntakeSpin(s_Intake));
+    bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot));
+    operatorUpButton.onTrue(new IntakeExtend(s_Intake));//.withTimeout(IntakeConstants.kIntakeExtendTimeout));
+    operatorDownButton.onTrue(new IntakeRetract(s_Intake));//.withTimeout(IntakeConstants.kIntakeRetractTimeout));
+    //operatorLeftButton.onTrue(new IntakePickup(s_Intake));//.withTimeout(IntakeConstants.kIntakeRetractTimeout));
+    operatorLeftButton.whileTrue(new IntakeMotorSpin(s_Intake));
   }
 
   public Swerve getSwerve() {

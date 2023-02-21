@@ -179,23 +179,24 @@ public final class Constants {
   }
 
   public static final class PivotConstants {
-    public static final int pivotMotorID = 40;
-    public static final int smartCurrentLimit = 30;
-    public static final double speedForward = 0.25;
-    public static final double speedBack = -0.25;
-    public static final double speedStop = 0;
-    public static final double positionPickupCone = 0.857;
-    public static final double positionPickupCube = 0.136;
-    public static final double positionScoringCone = 0.640;
-    public static final double positionScoringConeRelease = 0.678;
-    public static final double positionScoringCube = 0.294;
-    public static final double positionTravel = 0.487;
-    public static final double pivotKP = 0.015;
-    public static final double pivotKI = 0.00;
-    public static final double pivotKD = 0.00;
-    public static final double pivotKFF = 0.00;
-    public static final int encoderChannel = 1;
-    public static final double pivotAllowableError = 0.2;
+    public static final int kPivotMotorID = 40;
+    public static final int kSmartCurrentLimit = 30;
+    public static final double kSpeedForward = 0.25;
+    public static final double kSpeedBack = -0.25;
+    public static final double kSpeedStop = 0;
+    public static final double kPositionPickupCone = 0.831;
+    public static final double kPositionPickupCube = 0.118;
+    public static final double kPositionScoringCone = 0.640;
+    public static final double kPositionScoringConeRelease = 0.678;
+    public static final double kPositionScoringCube = 0.294;
+    public static final double kPositionTravel = 0.487;
+    public static final double kPivotKP = 0.015;
+    public static final double kPivotKI = 0.00;
+    public static final double kPivotKD = 0.00;
+    public static final double kPivotKFF = 0.00;
+    public static final int kEncoderChannel = 1;
+    public static final double kPivotAllowableError = 0.2;
+    public static final double kNominalVoltage = 12.0;
   }
 
   public static final class TelescopicConstants {
@@ -234,8 +235,8 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
-    public static final int kGripperForwardChannel = 0;
-    public static final int kGripperReverseChannel = 1;
+    public static final int kGripperForwardChannel = 1;
+    public static final int kGripperReverseChannel = 0;
     public static final double kGripperReleaseTimeout = 0.5;
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
@@ -245,21 +246,25 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int kIntakeRightMotorID = 55;
     public static final int kIntakeLeftMotorID = 60;
-    public static final boolean kIntakeRightMotorInverted = false;
+    public static final boolean kIntakeRightMotorInverted = true;
     public static final boolean kIntakeLeftMotorInverted = false;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
-    public static final boolean kSpinningIntakeMotorInverted = true;
+    public static final int kSpinningIntakeMotorID = 62; // Falcom motor ID
+    public static final boolean kSpinningIntakeMotorInverted = false;
     public static final double kIntakeSpinningMotorForward = 0.5;
     public static final double kIntakeSpinningMotorOff = 0;
     public static final int kSmartCurrentLimit = 10;
+    public static final double kStoppedSpeed = 0;
 
-    public static final double kIntakePositionRetracted = 0;
-    public static final double kIntakePositionPickup = 14.26;
-    public static final double kIntakePositionExtended = 15;
+    public static final double kIntakePositionRightRetracted = 0.07;
+    public static final double kIntakePositionRightPickup = 14.52;
+    public static final double kIntakePositionRightExtended = 16.00;
+    public static final double kIntakePositionLeftRetracted = 0.07;
+    public static final double kIntakePositionLeftPickup = 14.76;
+    public static final double kIntakePositionLeftExtended = 16.25;
     public static final double kPositionConversionFactor = 1;
 
     public static final double kIntakeKP = 0.0002;

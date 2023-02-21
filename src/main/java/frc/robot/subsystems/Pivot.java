@@ -18,13 +18,13 @@ public class Pivot extends SubsystemBase {
     private PIDController controller;
 
     public Pivot(){
-        m_pivotMotor = new CANSparkMax(PivotConstants.pivotMotorID, MotorType.kBrushless);
+        m_pivotMotor = new CANSparkMax(PivotConstants.kPivotMotorID, MotorType.kBrushless);
         m_pivotMotor.restoreFactoryDefaults();
-        m_pivotMotor.setSmartCurrentLimit(PivotConstants.smartCurrentLimit);
-        m_pivotEncoder = new DutyCycleEncoder(PivotConstants.encoderChannel);
+        m_pivotMotor.setSmartCurrentLimit(PivotConstants.kSmartCurrentLimit);
+        m_pivotEncoder = new DutyCycleEncoder(PivotConstants.kEncoderChannel);
         configPivotMotor();
         controller = new PIDController(2.0, 0, 0);
-        controller.setSetpoint(PivotConstants.positionTravel);
+        controller.setSetpoint(PivotConstants.kPositionTravel);
     }
 
     public void stop(){
@@ -55,6 +55,6 @@ public class Pivot extends SubsystemBase {
         CANSparkMaxUtil.setCANSparkMaxBusUsage(m_pivotMotor, Usage.kPositionOnly);
         m_pivotMotor.setInverted(false);
         m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);//set idlemode to brake, can be kCoast
-        m_pivotMotor.enableVoltageCompensation(12.0);//voltage compensation
+        m_pivotMotor.enableVoltageCompensation(PivotConstants.kNominalVoltage);//voltage compensation
     }
 }

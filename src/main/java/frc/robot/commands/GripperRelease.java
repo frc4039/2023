@@ -35,10 +35,10 @@ public class GripperRelease extends CommandBase {
   @Override
   public void execute() {
   // Called once the command ends or is interrupted.
-    if(m_Pivot.GetTargetPosition() == PivotConstants.positionScoringCone) {
-      m_Pivot.setSetpoint(PivotConstants.positionScoringConeRelease);
+    if(m_Pivot.GetTargetPosition() == PivotConstants.kPositionScoringCone) {
+      m_Pivot.setSetpoint(PivotConstants.kPositionScoringConeRelease);
     }
-    if(m_Pivot.GetTargetPosition() == PivotConstants.positionScoringConeRelease)
+    if(m_Pivot.GetTargetPosition() == PivotConstants.kPositionScoringConeRelease)
     {
       if(pivotTimer.get() > 0.5)
       {
