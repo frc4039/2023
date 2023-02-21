@@ -25,7 +25,7 @@ public class SeqCmdConePickupPosition extends SequentialCommandGroup {
       new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
       new ConeGuideDeploy(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
       new IntakeMotorStop(s_Intake),
-      //new IntakeExtend(s_Intake),
+      new IntakeExtend(s_Intake),
       new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionPickupCone),
       new IntakeRetract(s_Intake)
     );

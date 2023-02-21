@@ -184,7 +184,7 @@ public final class Constants {
     public static final double speedForward = 0.25;
     public static final double speedBack = -0.25;
     public static final double speedStop = 0;
-    public static final double positionPickupCone = 0.857;
+    public static final double positionPickupCone = 0.831;
     public static final double positionPickupCube = 0.136;
     public static final double positionScoringCone = 0.640;
     public static final double positionScoringConeRelease = 0.678;
@@ -234,8 +234,8 @@ public final class Constants {
   }
 
   public static final class GripperConstants {
-    public static final int kGripperForwardChannel = 0;
-    public static final int kGripperReverseChannel = 1;
+    public static final int kGripperForwardChannel = 1;
+    public static final int kGripperReverseChannel = 0;
     public static final double kGripperReleaseTimeout = 0.5;
     public static final int tosserMotorID = 50;
     public static final double tosserMotorForwardPercent = -1;
@@ -245,13 +245,13 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int kIntakeRightMotorID = 55;
     public static final int kIntakeLeftMotorID = 60;
-    public static final boolean kIntakeRightMotorInverted = false;
+    public static final boolean kIntakeRightMotorInverted = true;
     public static final boolean kIntakeLeftMotorInverted = false;
     public static final double kIntakeMotorPercentExtend = 1.0;
     public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
     public static final double kIntakeExtendTimeout = 0.75;
     public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-    public static final int kSpinningIntakeMotorID = 65; // Falcom motor ID
+    public static final int kSpinningIntakeMotorID = 62; // Falcom motor ID
     public static final boolean kSpinningIntakeMotorInverted = true;
     public static final double kIntakeSpinningMotorForward = 0.5;
     public static final double kIntakeSpinningMotorOff = 0;
@@ -259,11 +259,11 @@ public final class Constants {
     public static final double kStoppedSpeed = 0;
 
     public static final double kIntakePositionRightRetracted = 0.07;
-    public static final double kIntakePositionRightPickup = 14.64;
-    public static final double kIntakePositionRightExtended = 16.78;
-    public static final double kIntakePositionLeftRetracted = 0.09;
-    public static final double kIntakePositionLeftPickup = 14.73;
-    public static final double kIntakePositionLeftExtended = 16.9;
+    public static final double kIntakePositionRightPickup = 14.52;
+    public static final double kIntakePositionRightExtended = 16.74;
+    public static final double kIntakePositionLeftRetracted = 0.07;
+    public static final double kIntakePositionLeftPickup = 14.76;
+    public static final double kIntakePositionLeftExtended = 16.99;
     public static final double kPositionConversionFactor = 1;
 
     public static final double kIntakeKP = 0.0002;

@@ -23,7 +23,7 @@ public class SeqCmdTravelPosition extends SequentialCommandGroup {
       new TelescopicRetract(s_Telescopic),
       new ConeGuideRetract(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
       new IntakeMotorStop(s_Intake),
-      //new IntakeExtend(s_Intake),
+      new IntakeExtend(s_Intake),
       new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.positionTravel),
       new IntakeRetract(s_Intake));
   }
