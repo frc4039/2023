@@ -186,8 +186,8 @@ public final class Constants {
     public static final double kSpeedStop = 0;
     public static final double kPositionPickupCone = 0.831;
     public static final double kPositionPickupCube = 0.118;
-    public static final double kPositionScoringCone = 0.640;
-    public static final double kPositionScoringConeRelease = 0.678;
+    public static final double kPositionScoringCone = 0.620;
+    public static final double kPositionScoringConeRelease = 0.640;
     public static final double kPositionScoringCube = 0.294;
     public static final double kPositionTravel = 0.487;
     public static final double kPivotKP = 0.015;

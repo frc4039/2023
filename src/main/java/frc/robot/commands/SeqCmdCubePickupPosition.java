@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import frc.robot.Constants.ConeGuideConstants;
+import frc.robot.Constants.GripperConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
@@ -22,11 +24,10 @@ public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new TelescopicRetract(s_Telescopic),
-      new ConeGuideRetract(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-      new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+      new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+      new GripperRelease(s_Gripper, s_Pivot).withTimeout(GripperConstants.kGripperReleaseTimeout),
       new IntakePickup(s_Intake),
-      new IntakeMotorSpin(s_Intake),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCube)
+      new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube)
     );
   }
 }

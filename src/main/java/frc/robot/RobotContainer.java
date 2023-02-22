@@ -119,9 +119,8 @@ public class RobotContainer {
     xOperatorButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
     aOperatorButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
     bOperatorButton.onTrue(new SeqCmdConeScoringPosition(s_Telescopic, s_Pivot));
-    operatorUpButton.onTrue(new IntakeExtend(s_Intake));//.withTimeout(IntakeConstants.kIntakeExtendTimeout));
+    operatorUpButton.onTrue(new IntakeExtend(s_Intake, s_Pivot, true));//.withTimeout(IntakeConstants.kIntakeExtendTimeout));
     operatorDownButton.onTrue(new IntakeRetract(s_Intake));//.withTimeout(IntakeConstants.kIntakeRetractTimeout));
-    //operatorLeftButton.onTrue(new IntakePickup(s_Intake));//.withTimeout(IntakeConstants.kIntakeRetractTimeout));
     operatorLeftButton.whileTrue(new IntakeMotorSpin(s_Intake));
   }
 
