@@ -4,21 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Pivot;
 
-public class GripperRelease extends CommandBase {
-    private final Gripper m_Gripper;
+public class PivotConeRelease extends CommandBase {
+    /** Creates a new PivotMoveToPosition. */
+    Pivot m_pivot;
+    double m_position;
 
-    /** Creates a new GripperRelease. */
-    public GripperRelease(Gripper gripper) {
+    public PivotConeRelease(Pivot pivot) {
         // Use addRequirements() here to declare subsystem dependencies.
-        m_Gripper = gripper;
+        m_pivot = pivot;
 
-        addRequirements(m_Gripper);
+        addRequirements(m_pivot);
     }
 
     // Called when the command is initially scheduled.
@@ -29,13 +28,12 @@ public class GripperRelease extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_Gripper.setOpen();
+        m_pivot.setSetpoint(PivotConstants.kPositionScoringConeRelease);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_Gripper.setOff();
     }
 
     // Returns true when the command should end.

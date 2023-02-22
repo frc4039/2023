@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.ConeGuide;
@@ -16,16 +18,21 @@ import frc.robot.subsystems.Telescopic;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdConePickupPosition extends SequentialCommandGroup {
-  /** Creates a new ConePickup. */
-  public SeqCmdConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new TelescopicRetract(s_Telescopic),
-      new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-      new ConeGuideDeploy(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCone),
-      new IntakeRetract(s_Intake)
-    );
-  }
+    /** Creates a new ConePickup. */
+    public SeqCmdConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot,
+            Intake s_Intake) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new TelescopicRetract(s_Telescopic),
+                new ParallelCommandGroup(new Command[] {
+                        new PivotConeRelease(s_Pivot).withTimeout(.5),
+                        new GripperRelease(s_Gripper)
+                                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                        new ConeGuideDeploy(s_ConeGuide)
+                                .withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
+                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCone),
+                        new IntakeRetract(s_Intake)
+                }));
+    }
 }

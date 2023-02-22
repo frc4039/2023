@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.ConeGuide;
@@ -15,15 +17,18 @@ import frc.robot.subsystems.Telescopic;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdTravelPosition extends SequentialCommandGroup {
-  /** Creates a new TravelPosition. */
-  public SeqCmdTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new IntakeExtend(s_Intake, s_Pivot, false),
-      new TelescopicRetract(s_Telescopic),
-      new ConeGuideRetract(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel),
-      new IntakeRetract(s_Intake));
-  }
+    /** Creates a new TravelPosition. */
+    public SeqCmdTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new IntakeExtend(s_Intake, s_Pivot, false),
+                new ParallelCommandGroup(new Command[] {
+                        new TelescopicRetract(s_Telescopic),
+                        new ConeGuideRetract(s_ConeGuide)
+                                .withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
+                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel)
+                }),
+                new IntakeRetract(s_Intake));
+    }
 }

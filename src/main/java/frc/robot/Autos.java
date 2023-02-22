@@ -47,7 +47,7 @@ public class Autos {
         command.addCommands(
                 (new SeqCmdCubeScoringPosition(container.getTelescopic(),
                         container.getPivot()).withTimeout(4)));
-        command.addCommands((new GripperRelease(container.getGripper(), container.getPivot())).withTimeout(2));
+        command.addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
         command.addCommands(
                 (new SeqCmdTravelPosition(container.getTelescopic(),
                         container.getConeGuide(), container.getPivot(),

@@ -18,16 +18,17 @@ import frc.robot.subsystems.Telescopic;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
-  /** Creates a new CubePickup. */
-  public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake, Pivot s_Pivot) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new TelescopicRetract(s_Telescopic),
-      new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-      new GripperRelease(s_Gripper, s_Pivot).withTimeout(GripperConstants.kGripperReleaseTimeout),
-      new IntakePickup(s_Intake),
-      new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube)
-    );
-  }
+    /** Creates a new CubePickup. */
+    public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
+            Pivot s_Pivot) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new TelescopicRetract(s_Telescopic),
+                new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                new PivotConeRelease(s_Pivot).withTimeout(.5),
+                new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
+                new IntakePickup(s_Intake),
+                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube));
+    }
 }
