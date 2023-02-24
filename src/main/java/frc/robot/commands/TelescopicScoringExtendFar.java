@@ -32,8 +32,8 @@ public class TelescopicScoringExtendFar extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (m_Pivot.GetTargetPosition() == PivotConstants.kPositionScoringCone
-                || m_Pivot.GetTargetPosition() == PivotConstants.kPositionPickupCube)
+        if (m_Pivot.getSetpoint() == PivotConstants.kPositionScoringCone
+                || m_Pivot.getSetpoint() == PivotConstants.kPositionPickupCube)
             m_Telescopic.armSetPosition(targetPosition);
     }
 
