@@ -26,7 +26,6 @@ public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
         addCommands(
                 new TelescopicRetract(s_Telescopic),
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                new PivotConeRelease(s_Pivot).withTimeout(.5),
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
                 new IntakePickup(s_Intake),
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube));

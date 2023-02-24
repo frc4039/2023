@@ -59,6 +59,8 @@ public class RobotContainer {
     private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
     private final JoystickButton operatorBackButton = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton operatorStartButton = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final Trigger operatorRightTriggerDepressed = new Trigger(
+            () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > .1);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -116,10 +118,9 @@ public class RobotContainer {
         operatorXButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
         operatorBButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
-        operatorDownButton.onTrue(new IntakeRetract(s_Intake));
-        operatorLeftButton.whileTrue(new IntakeMotorSpin(s_Intake));
-        operatorBackButton.onTrue(new TelescopicExtendMid(s_Telescopic));
-        operatorStartButton.onTrue(new TelescopicExtendFar(s_Telescopic));
+        operatorRightTriggerDepressed.whileTrue(new IntakeMotorSpin(s_Intake));
+        operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
+        operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
     }
 
     public Swerve getSwerve() {

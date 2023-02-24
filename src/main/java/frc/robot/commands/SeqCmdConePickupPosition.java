@@ -26,7 +26,6 @@ public class SeqCmdConePickupPosition extends SequentialCommandGroup {
         addCommands(
                 new TelescopicRetract(s_Telescopic),
                 new ParallelCommandGroup(new Command[] {
-                        new PivotConeRelease(s_Pivot).withTimeout(.5),
                         new GripperRelease(s_Gripper)
                                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                         new ConeGuideDeploy(s_ConeGuide)
