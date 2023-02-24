@@ -212,8 +212,8 @@ public final class Constants {
         public static final double kPeakOutputForwardPercent = 12;
         public static final double kPeakOutputReversePercent = -12;
 
-        public static final double kTelescopicFar = 71131; // 50000;
-        public static final double kTelescopicRetracted = 577; // 5;
+        public static final double kTelescopicFar = 69500; // 50000;
+        public static final double kTelescopicRetracted = 0; // 5;
         public static final double kTelescopicMid = 38465; // 28748;
 
         public static final double kTelescopicKP = 0.07;
