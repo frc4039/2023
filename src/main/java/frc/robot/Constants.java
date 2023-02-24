@@ -33,7 +33,6 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -193,7 +192,7 @@ public final class Constants {
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringConeRelease = 69;
-        public static final double kPositionScoringCone = 56;
+        public static final double kPositionScoringCone = 50;
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = -132;
         public static final double kPositionTravel = 0;
@@ -212,9 +211,9 @@ public final class Constants {
         public static final double kPeakOutputForwardPercent = 12;
         public static final double kPeakOutputReversePercent = -12;
 
-        public static final double kTelescopicFar = 69500; // 50000;
-        public static final double kTelescopicRetracted = 0; // 5;
-        public static final double kTelescopicMid = 38465; // 28748;
+        public static final double kTelescopicFar = 70500;
+        public static final double kTelescopicRetracted = 0;
+        public static final double kTelescopicMid = 38465;
 
         public static final double kTelescopicKP = 0.07;
         public static final double kTelescopicKI = 0.00;

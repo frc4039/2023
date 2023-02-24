@@ -33,7 +33,7 @@ public class TelescopicScoringExtendFar extends CommandBase {
     @Override
     public void execute() {
         if (m_Pivot.getSetpoint() == PivotConstants.kPositionScoringCone
-                || m_Pivot.getSetpoint() == PivotConstants.kPositionPickupCube)
+                || m_Pivot.getSetpoint() == PivotConstants.kPositionScoringCube)
             m_Telescopic.armSetPosition(targetPosition);
     }
 
