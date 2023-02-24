@@ -5,17 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.TelescopicConstants;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-public class TelescopicExtendFar extends CommandBase {
+public class TelescopicScoringExtendFar extends CommandBase {
     private final Telescopic m_Telescopic;
+    private final Pivot m_Pivot;
     private double targetPosition;
 
     /** Creates a new TelescopicExtend. */
-    public TelescopicExtendFar(Telescopic telescopic) {
+    public TelescopicScoringExtendFar(Telescopic telescopic, Pivot pivot) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
+        m_Pivot = pivot;
         addRequirements(m_Telescopic);
     }
 
@@ -28,7 +32,9 @@ public class TelescopicExtendFar extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_Telescopic.armSetPosition(targetPosition);
+        if (m_Pivot.GetTargetPosition() == PivotConstants.kPositionScoringCone
+                || m_Pivot.GetTargetPosition() == PivotConstants.kPositionPickupCube)
+            m_Telescopic.armSetPosition(targetPosition);
     }
 
     // Called once the command ends or is interrupted.

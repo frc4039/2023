@@ -6,16 +6,22 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pivot;
 
 public class IntakeExtend extends CommandBase {
   private final Intake m_Intake;
+  private final Pivot m_Pivot;
+  private final boolean m_manualExtend;
 
   /** Creates a new IntakeDeploy. */
-  public IntakeExtend(Intake intake) {
+  public IntakeExtend(Intake intake, Pivot pivot, boolean manualExtend) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Intake = intake;
-    addRequirements(m_Intake);
+    m_Pivot = pivot;
+    m_manualExtend = manualExtend;
+    addRequirements(m_Intake, m_Pivot);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +32,10 @@ public class IntakeExtend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.extend();
+    if(m_manualExtend || m_Pivot.GetTargetPosition() == PivotConstants.kPositionPickupCube)
+    {
+      m_Intake.extend();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -38,11 +47,18 @@ public class IntakeExtend extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakePositionRightExtended - m_Intake.GetIntakePositionRight()) <= IntakeConstants.kIntakeAllowableError)
+    if(m_manualExtend || m_Pivot.GetTargetPosition() == PivotConstants.kPositionPickupCube)
+    {
+      if(Math.abs(IntakeConstants.kIntakePositionRightExtended - m_Intake.GetIntakePositionRight()) <= IntakeConstants.kIntakeAllowableError)
+      {
+        return true;
+      }
+  
+      return false;
+    }
+    else
     {
       return true;
     }
-
-    return false;
   }
 }

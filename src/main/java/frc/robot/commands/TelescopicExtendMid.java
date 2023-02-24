@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TelescopicConstants;
 import frc.robot.subsystems.Telescopic;
 
-public class TelescopicExtendFar extends CommandBase {
+public class TelescopicExtendMid extends CommandBase {
     private final Telescopic m_Telescopic;
     private double targetPosition;
 
     /** Creates a new TelescopicExtend. */
-    public TelescopicExtendFar(Telescopic telescopic) {
+    public TelescopicExtendMid(Telescopic telescopic) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
         addRequirements(m_Telescopic);
@@ -22,7 +22,7 @@ public class TelescopicExtendFar extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        targetPosition = TelescopicConstants.kTelescopicFar;
+        targetPosition = TelescopicConstants.kTelescopicMid;
     }
 
     // Called every time the scheduler runs while the command is scheduled.

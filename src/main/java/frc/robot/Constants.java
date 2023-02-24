@@ -289,4 +289,133 @@ public final class Constants {
         public static final double kConeGuideRetractTimeout = 0.5;
         public static final double kConeGuideDeployTimeout = 0.5;
     }
+  }
+
+  public static final class AutoConstants {
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+    public static final double kPXController = 1;
+    public static final double kPYController = 1;
+    public static final double kPThetaController = 1;
+
+    // Constraint for the motion profilied robot angle controller
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        new TrapezoidProfile.Constraints(
+            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  }
+
+  public static final class PivotConstants {
+    public static final int kPivotMotorID = 40;
+    public static final int kSmartCurrentLimit = 30;
+    public static final double kSpeedForward = 0.25;
+    public static final double kSpeedBack = -0.25;
+    public static final double kSpeedStop = 0;
+    public static final double kPositionPickupCone = 0.831;
+    public static final double kPositionPickupCube = 0.118;
+    public static final double kPositionScoringCone = 0.620;
+    public static final double kPositionScoringConeRelease = 0.640;
+    public static final double kPositionScoringCube = 0.294;
+    public static final double kPositionTravel = 0.487;
+    public static final double kPivotKP = 0.015;
+    public static final double kPivotKI = 0.00;
+    public static final double kPivotKD = 0.00;
+    public static final double kPivotKFF = 0.00;
+    public static final int kEncoderChannel = 1;
+    public static final double kPivotAllowableError = 0.2;
+    public static final double kNominalVoltage = 12.0;
+  }
+
+  public static final class TelescopicConstants {
+    public static final int kTelescopicMotorID = 45; // Falcon motor ID
+    public static final int kCurrentLimit = 30;
+    public static final int kTriggerThresholdCurrent = 40;
+    public static final double kTriggerThresholdTime = 1.5;
+    public static final double kTelescopicSpeedForward = 5;
+    public static final double kTelescopicSpeedBack = -5;
+    public static final double kTelescopicStop = 0;
+    public static final int kTimeoutMs = 0;
+
+    public static final double kPeakOutputForwardPercent = 12;
+    public static final double kPeakOutputReversePercent = -12;
+    
+    public static final double kTelescopicFar = 71131; // 50000;
+    public static final double kTelescopicRetracted = 577; // 5;
+    public static final double kTelescopicMid = 38465; // 28748;
+    
+    public static final double kTelescopicKP = 0.07;
+    public static final double kTelescopicKI = 0.00;
+    public static final double kTelescopicKD = 0.04;
+    public static final double kTelescopicKFF = 0.00;
+    public static final int kTelescopicSlotIdxKP = 0;
+    public static final int kTelescopicSlotIdxKI = 0;
+    public static final int kTelescopicSlotIdxKD = 0;
+    public static final int kTelescopicSlotIdxKFF = 0;
+    
+    public static final double kClosedLoopPeakOutputPercent = 0.2;
+    public static final int kClosedLoopPeakOutputSlotIdx = 0;
+    public static final int kSelectedFeedbackSensorPidIdx = 0;
+    public static final double kAllowableClosedloopError = 100;
+    public static final int kAllowableClosedloopErrorSlotIdx = 0;
+
+    public static final int kPrimaryClosedLoopErrorPidx = 0;
+  }
+
+  public static final class GripperConstants {
+    public static final int kGripperForwardChannel = 1;
+    public static final int kGripperReverseChannel = 0;
+    public static final double kGripperReleaseTimeout = 0.5;
+    public static final int tosserMotorID = 50;
+    public static final double tosserMotorForwardPercent = -1;
+    public static final double tosserMotorReversePercent = 1;
+  }
+
+  public static final class IntakeConstants {
+    public static final int kIntakeRightMotorID = 55;
+    public static final int kIntakeLeftMotorID = 60;
+    public static final boolean kIntakeRightMotorInverted = true;
+    public static final boolean kIntakeLeftMotorInverted = false;
+    public static final double kIntakeMotorPercentExtend = 1.0;
+    public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
+    public static final double kIntakeExtendTimeout = 0.75;
+    public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
+    public static final int kSpinningIntakeMotorID = 62; // Falcom motor ID
+    public static final boolean kSpinningIntakeMotorInverted = false;
+    public static final double kIntakeSpinningMotorForward = 0.5;
+    public static final double kIntakeSpinningMotorOff = 0;
+    public static final int kSmartCurrentLimit = 10;
+    public static final double kStoppedSpeed = 0;
+
+    public static final double kIntakePositionRightRetracted = 0.07;
+    public static final double kIntakePositionRightPickup = 14.52;
+    public static final double kIntakePositionRightExtended = 16.00;
+    public static final double kIntakePositionLeftRetracted = 0.07;
+    public static final double kIntakePositionLeftPickup = 14.76;
+    public static final double kIntakePositionLeftExtended = 16.25;
+    public static final double kPositionConversionFactor = 1;
+
+    public static final double kIntakeKP = 0.0002;
+    public static final double kIntakeKI = 0.00;
+    public static final double kIntakeKD = 0.00;
+    public static final double kIntakeKFF = 0.00015;
+
+    public static final double kSmartMotionMaxVelocity = 800;
+    public static final double kSmartMotionMaxAccel = 2500;
+    public static final double kSmartMotionMinOutputVelocity = 0;
+
+    public static final double kNominalVoltage = 12.0;
+
+    public static final int kSlotId = 0;
+
+    public static final double kIntakeAllowableError = 0.2;
+  }
+
+  public static final class ConeGuideConstants {
+    public static final int kConeGuideForwardChannel = 2;
+    public static final int kConeGuideReverseChannel = 3;
+    public static final double kConeGuideRetractTimeout = 0.5;
+    public static final double kConeGuideDeployTimeout = 0.5;
+  }
 }
