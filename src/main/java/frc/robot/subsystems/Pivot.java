@@ -20,7 +20,7 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotMotor;
     private DutyCycleEncoder m_pivotEncoder;
 
-    private PIDController controller = new PIDController(0.06, 0, 0);
+    private PIDController controller = new PIDController(0.3, 0, 0);
     private State goalState = new State(PivotConstants.kPositionTravel, 0);
     private State currentState = new State(PivotConstants.kPositionTravel, 0);
     private boolean pidRunning = false;
@@ -62,6 +62,8 @@ public class Pivot extends SubsystemBase {
     public void setSetpoint(double setpoint) {
         pidRunning = true;
 
+        currentState.velocity = 0;
+        currentState.position = getEncoder();
         goalState.position = setpoint;
         goalState.velocity = 0;
     }
@@ -98,21 +100,15 @@ public class Pivot extends SubsystemBase {
             // motion profile. A trapezoidal motion profile will ramp up, reach a
             // travelling speed, and then ramp down. This limits accelleration and
             // max speed during the motion.
-            currentState.position = getEncoder();
             TrapezoidProfile profile = new TrapezoidProfile(PivotConstants.kProfileConstraints,
                     goalState,
                     currentState);
             currentState = profile.calculate(Robot.kDefaultPeriod);
 
-            // The feed-forward is a prediction of the voldage required to get to
-            // the desired position and velocity.
-            double ffVolts = PivotConstants.kFeedforward.calculate(
-                    Math.toRadians(currentState.position + 90.0),
-                    Math.toRadians(currentState.velocity));
             // The PID will correct for errors in the feed-forward's prediction.
             double pidVolts = controller.calculate(getEncoder(), currentState.position);
 
-            m_pivotMotor.setVoltage(ffVolts + pidVolts);
+            m_pivotMotor.setVoltage(pidVolts);
         } else {
             // If the PID is disabled, stop outputting to the motor.
             m_pivotMotor.stopMotor();

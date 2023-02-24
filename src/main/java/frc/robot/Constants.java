@@ -180,12 +180,11 @@ public final class Constants {
         public static final int kPivotMotorID = 40;
         public static final int kSmartCurrentLimit = 30;
         public static final int kEncoderChannel = 1;
-        public static final double kPivotAllowableError = 5;
+        public static final double kPivotAllowableError = 2;
         public static final double kNominalVoltage = 12.0;
 
-        public static final ArmFeedforward kFeedforward = new ArmFeedforward(0, 0, 0);
         public static final TrapezoidProfile.Constraints kProfileConstraints = new TrapezoidProfile.Constraints(
-                10, 10);
+                200, 125);
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
