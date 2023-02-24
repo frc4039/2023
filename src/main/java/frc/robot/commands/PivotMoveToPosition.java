@@ -8,33 +8,36 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
 
 public class PivotMoveToPosition extends CommandBase {
-  /** Creates a new PivotMoveToPosition. */
-  Pivot m_pivot;
-  double m_position;
-  public PivotMoveToPosition(Pivot pivot, double position) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_pivot = pivot;
-    m_position = position;
-  }
+    /** Creates a new PivotMoveToPosition. */
+    Pivot m_pivot;
+    double m_position;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_pivot.setSetpoint(m_position);
-  }
+    public PivotMoveToPosition(Pivot pivot, double position) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(pivot);
+        m_pivot = pivot;
+        m_position = position;
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        m_pivot.setSetpoint(m_position);
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return m_pivot.atSetpoint();
+    }
 }
