@@ -5,37 +5,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeSpinner;
 
 public class IntakeMotorSpin extends CommandBase {
-  private final Intake m_intake;
+    private final IntakeSpinner m_intakeSpinner;
 
-  /** Creates a new IntakeMotorSpin. */
-  public IntakeMotorSpin(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_intake = intake;
-    addRequirements(m_intake);
-  }
+    /** Creates a new IntakeMotorSpin. */
+    public IntakeMotorSpin(IntakeSpinner intakeSpinner) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_intakeSpinner = intakeSpinner;
+        addRequirements(m_intakeSpinner);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_intake.setSpinningMotorOn();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_intakeSpinner.runSpinner();
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    m_intake.setSpinningMotorOff();
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_intakeSpinner.stop();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
