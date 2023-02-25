@@ -5,39 +5,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Gripper;
+import frc.robot.Constants.TelescopicConstants;
+import frc.robot.subsystems.Telescopic;
 
-public class GripperRelease extends CommandBase {
-    private final Gripper m_Gripper;
+public class TelescopicExtendMid extends CommandBase {
+    private final Telescopic m_Telescopic;
+    private double targetPosition;
 
-    /** Creates a new GripperRelease. */
-    public GripperRelease(Gripper gripper) {
+    /** Creates a new TelescopicExtend. */
+    public TelescopicExtendMid(Telescopic telescopic) {
         // Use addRequirements() here to declare subsystem dependencies.
-        m_Gripper = gripper;
-
-        addRequirements(m_Gripper);
+        m_Telescopic = telescopic;
+        addRequirements(m_Telescopic);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        targetPosition = TelescopicConstants.kTelescopicMid;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_Gripper.setOpen();
+        m_Telescopic.armSetPosition(targetPosition);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_Gripper.setOff();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return Math.abs(m_Telescopic.getEncoderPosition() - targetPosition) < 700;
     }
 }

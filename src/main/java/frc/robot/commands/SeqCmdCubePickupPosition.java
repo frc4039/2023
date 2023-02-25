@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import frc.robot.Constants.ConeGuideConstants;
+import frc.robot.Constants.GripperConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
@@ -16,17 +18,16 @@ import frc.robot.subsystems.Telescopic;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdCubePickupPosition extends SequentialCommandGroup {
-  /** Creates a new CubePickup. */
-  public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake, Pivot s_Pivot) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new TelescopicRetract(s_Telescopic),
-      new ConeGuideRetract(s_ConeGuide).withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-      new GripperRelease(s_Gripper, s_Pivot).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-      new IntakePickup(s_Intake),
-      new IntakeMotorSpin(s_Intake),
-      new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCube)
-    );
-  }
+    /** Creates a new CubePickup. */
+    public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
+            Pivot s_Pivot) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new TelescopicRetract(s_Telescopic),
+                new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
+                new IntakePickup(s_Intake),
+                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube));
+    }
 }
