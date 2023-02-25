@@ -6,7 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -101,7 +102,8 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
 
-        SmartDashboard.putData("AutoMode", autoModeSelector.getAutoChooser());
+        ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+        mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
 
         configureButtonBindings();
     }

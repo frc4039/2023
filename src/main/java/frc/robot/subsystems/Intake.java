@@ -1,16 +1,14 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants.IntakeConstants;
@@ -42,6 +40,10 @@ public class Intake extends SubsystemBase {
                 m_intakeControllerRight);
         ConfigIntakeMotor(m_intakeMotorLeft, IntakeConstants.kIntakeLeftMotorInverted, m_integratedIntakeEncoderLeft,
                 m_intakeControllerLeft);
+
+        ShuffleboardTab tab = Shuffleboard.getTab("Intake");
+        tab.addNumber("Intake left", () -> GetIntakePositionLeft());
+        tab.addNumber("Intake right", () -> GetIntakePositionRight());
     }
 
     public double GetIntakePositionRight() {
@@ -80,10 +82,7 @@ public class Intake extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Intake Right", GetIntakePositionRight());
-        SmartDashboard.putNumber("Intake Left", GetIntakePositionLeft());
-    }
+    public void periodic() {}
 
     private void ConfigIntakeMotor(CANSparkMax motor, boolean invertedMode, RelativeEncoder integratedEncoder,
             SparkMaxPIDController controller) {
