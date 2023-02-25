@@ -176,13 +176,13 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
-            kMaxSpeedMetersPerSecond,
-            kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Swerve.swerveKinematics).setReversed(false);
+                kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
         public static TrajectoryConfig reverseConfig = new TrajectoryConfig(
-            kMaxSpeedMetersPerSecond,
-            kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Swerve.swerveKinematics).setReversed(true);
+                kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(true);
     }
 
     public static final class PivotConstants {
@@ -224,7 +224,7 @@ public final class Constants {
 
         public static final double kTelescopicFar = 70500;
         public static final double kTelescopicRetracted = 0;
-        public static final double kTelescopicMid = 38465;
+        public static final double kTelescopicMid = 34940;
 
         public static final double kTelescopicKP = 0.07;
         public static final double kTelescopicKI = 0.00;
