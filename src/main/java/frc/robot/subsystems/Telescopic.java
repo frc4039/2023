@@ -1,13 +1,16 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.TelescopicConstants;
-
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.*;
-import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.TelescopicConstants;
 
 public class Telescopic extends SubsystemBase {
     private TalonFX m_Falcon;
@@ -35,6 +38,10 @@ public class Telescopic extends SubsystemBase {
         m_Falcon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, TelescopicConstants.kSelectedFeedbackSensorPidIdx, TelescopicConstants.kTimeoutMs);
         m_Falcon.setNeutralMode(NeutralMode.Brake);
        m_Falcon.configAllowableClosedloopError(TelescopicConstants.kAllowableClosedloopErrorSlotIdx, TelescopicConstants.kAllowableClosedloopError, TelescopicConstants.kTimeoutMs);
+
+        ShuffleboardTab tab = Shuffleboard.getTab("Telescopic");
+        tab.addNumber("Telescopic", () -> m_Falcon.getSelectedSensorPosition());
+        tab.addNumber("Closed Loop Error", () -> m_Falcon.getClosedLoopError(TelescopicConstants.kPrimaryClosedLoopErrorPidx));
   }
 
         public void armSetPosition(double position){
@@ -54,8 +61,5 @@ public class Telescopic extends SubsystemBase {
         }
 
         @Override
-        public void periodic(){
-            SmartDashboard.putNumber("Telescopic", m_Falcon.getSelectedSensorPosition());
-            SmartDashboard.putNumber("Closed Loop Error", m_Falcon.getClosedLoopError(TelescopicConstants.kPrimaryClosedLoopErrorPidx));
-        }
+        public void periodic(){}
 }

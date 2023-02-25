@@ -40,6 +40,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -77,7 +79,17 @@ public class Swerve extends SubsystemBase {
 
     field = new Field2d();
     field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
-    SmartDashboard.putData("Field", field);
+    // SmartDashboard.putData("Field", field);
+
+    ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
+    tab.add("Field", field);
+    for (SwerveModule mod : mSwerveMods) {
+        // tab.addNumber("Mod " + mod.moduleNumber + " Cancoder", () -> mod.getCanCoder().getDegrees());
+        // tab.addNumber("Mod " + mod.moduleNumber + " Integrated", () -> mod.getState().angle.getDegrees());
+        // tab.addNumber("Mod " + mod.moduleNumber + " Velocity", () -> mod.getState().speedMetersPerSecond);
+        tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
+    }
+    tab.addString("Pose", () -> getPose().toString());
   }
 
   public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
@@ -168,18 +180,5 @@ public class Swerve extends SubsystemBase {
         }); // get the rotation and offset for encoder
 
     field.setRobotPose(getPose());
-
-    for (SwerveModule mod : mSwerveMods) {
-    //   SmartDashboard.putNumber(
-    //       "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-    //   SmartDashboard.putNumber(
-    //       "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-    //   SmartDashboard.putNumber(
-    //       "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-      SmartDashboard.putString(
-          "Mod " + mod.moduleNumber + " Position", mod.getPosition().toString());
-    }
-
-    SmartDashboard.putString("Pose", getPose().toString());
   }
 }

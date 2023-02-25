@@ -19,7 +19,7 @@ public class SeqCmdConeScoringPosition extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone),
-      new TelescopicExtend(s_Telescopic)
+      new TelescopicExtendFar(s_Telescopic)
     );
   }
 }
