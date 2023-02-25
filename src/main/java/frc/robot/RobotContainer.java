@@ -40,6 +40,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driverLeftBumper = new JoystickButton(driver,
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
@@ -72,6 +73,8 @@ public class RobotContainer {
     private final ConeGuide s_ConeGuide = new ConeGuide();
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
+    private AutoModeSelector autoModeSelector;
+
     public class setDefaultCommand {
     }
 
@@ -88,6 +91,8 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(rotationYAxis),
                         () -> driverBackButton.getAsBoolean()));
 
+        autoModeSelector = new AutoModeSelector(this);
+
         CommandScheduler.getInstance().registerSubsystem(s_Pivot);
         CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
         CommandScheduler.getInstance().registerSubsystem(s_Gripper);
@@ -96,6 +101,8 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
 
         CameraServer.startAutomaticCapture();
+
+        SmartDashboard.putData("AutoMode", autoModeSelector.getAutoChooser());
 
         configureButtonBindings();
     }
@@ -117,6 +124,12 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis),
                 () -> -driver.getRawAxis(strafeAxis),
                 0));
+        driverAButton
+            .whileTrue(new TeleopSwerveAtFixedRotation(
+                s_Swerve,
+                () -> -driver.getRawAxis(translationAxis),
+                () -> -driver.getRawAxis(strafeAxis),
+                180));
 
         /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
@@ -154,8 +167,11 @@ public class RobotContainer {
         return s_Intake;
     }
 
+    public AutoModeSelector getAutoModeSelector(){
+        return autoModeSelector;
+    }
+
     public Command getAutonomousCommand() {
-        Autos autos = new Autos(this);
-        return autos.dropNDrive();
+        return autoModeSelector.getAutoChooser().getSelected();
     }
 }

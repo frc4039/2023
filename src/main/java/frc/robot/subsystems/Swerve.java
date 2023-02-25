@@ -43,8 +43,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Autos;
 import frc.robot.Constants;
+import frc.robot.autos.DropAndDriveYellowSide;
 
 public class Swerve extends SubsystemBase {
   private final Pigeon2 gyro;
@@ -76,7 +76,7 @@ public class Swerve extends SubsystemBase {
         new Pose2d());
 
     field = new Field2d();
-    field.getObject("Auto path").setTrajectory(Autos.tDropNDrive[0]);
+    field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
     SmartDashboard.putData("Field", field);
   }
 
