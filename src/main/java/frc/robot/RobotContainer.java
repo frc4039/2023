@@ -43,6 +43,7 @@ public class RobotContainer {
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
             XboxController.Button.kRightBumper.value);
+    private final JoystickButton driverBackButton = new JoystickButton(driver, XboxController.Button.kBack.value);
 
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -85,7 +86,7 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationXAxis),
                         () -> -driver.getRawAxis(rotationYAxis),
-                        () -> driverYButton.getAsBoolean()));
+                        () -> driverBackButton.getAsBoolean()));
 
         CommandScheduler.getInstance().registerSubsystem(s_Pivot);
         CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
@@ -100,7 +101,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         /* Driver Buttons */
-        driverYButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
+        driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
                 .onTrue(new SequentialCommandGroup(new Command[] {
@@ -109,6 +110,12 @@ public class RobotContainer {
                         new ParallelCommandGroup(new Command[] {
                                 new TelescopicRetract(s_Telescopic),
                                 new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel) }) }));
+        driverYButton
+            .whileTrue(new TeleopSwerveAtFixedRotation(
+                s_Swerve,
+                () -> -driver.getRawAxis(translationAxis),
+                () -> -driver.getRawAxis(strafeAxis),
+                0));
 
         /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
