@@ -7,7 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.Constants.ConeGuideConstants;
+import frc.robot.Constants.GripperConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
@@ -27,11 +30,15 @@ public class SeqCmdConePickupPosition extends SequentialCommandGroup {
                 new TelescopicRetract(s_Telescopic),
                 new ParallelCommandGroup(new Command[] {
                         new GripperRelease(s_Gripper)
-                                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                                .withTimeout(GripperConstants.kGripperReleaseTimeout),
                         new ConeGuideDeploy(s_ConeGuide)
-                                .withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionPickupCone),
-                        new IntakeRetract(s_Intake)
+                                .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCone),
+                        new SequentialCommandGroup(new Command[] {
+                                new WaitUntilCommand(
+                                        () -> s_Pivot.getEncoder() >= PivotConstants.kPositionPrePickupCube),
+                                new IntakeRetract(s_Intake)
+                        })
                 }));
     }
 }

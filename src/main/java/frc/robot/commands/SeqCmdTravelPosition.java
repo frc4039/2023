@@ -7,7 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.Constants.ConeGuideConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
@@ -26,9 +28,13 @@ public class SeqCmdTravelPosition extends SequentialCommandGroup {
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new ConeGuideRetract(s_ConeGuide)
-                                .withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel)
-                }),
-                new IntakeRetract(s_Intake));
+                                .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel),
+                        new SequentialCommandGroup(new Command[] {
+                                new WaitUntilCommand(
+                                        () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
+                                new IntakeRetract(s_Intake)
+                        })
+                }));
     }
 }

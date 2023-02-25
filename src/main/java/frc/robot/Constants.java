@@ -206,6 +206,7 @@ public final class Constants {
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = -132;
         public static final double kPositionPrePickupCube = -95;
+        public static final double kPositionForSafeIntakeRetract = -125;
         public static final double kPositionTravel = 0;
     }
 
@@ -282,7 +283,7 @@ public final class Constants {
         public static final double kIntakeKD = 0.00;
         public static final double kIntakeKFF = 0.00015;
 
-        public static final double kSmartMotionMaxVelocity = 800;
+        public static final double kSmartMotionMaxVelocity = 800 * 1.5;
         public static final double kSmartMotionMaxAccel = 2500;
         public static final double kSmartMotionMinOutputVelocity = 0;
 
