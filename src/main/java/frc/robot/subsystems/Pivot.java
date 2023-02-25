@@ -84,6 +84,14 @@ public class Pivot extends SubsystemBase {
     }
 
     /**
+     * Returns true when the Pivot has reached the position passed as a parameter.
+     */
+    public boolean atSetpoint(double position) {
+        return Math.abs(currentState.position - position) < controller.getPositionTolerance()
+                && Math.abs(currentState.velocity - goalState.velocity) < controller.getVelocityTolerance();
+    }
+
+    /**
      * Returns the current encoder reading. Given in degrees from vertical.
      */
     public double getEncoder() {

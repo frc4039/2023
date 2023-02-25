@@ -195,6 +195,7 @@ public final class Constants {
         public static final double kPositionScoringCone = 50;
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = -132;
+        public static final double kPositionPrePickupCube = -66;
         public static final double kPositionTravel = 0;
     }
 
