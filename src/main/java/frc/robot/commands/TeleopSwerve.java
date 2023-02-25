@@ -42,65 +42,69 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerve extends CommandBase {
-  private Swerve s_Swerve;
-  private DoubleSupplier translationSup;
-  private DoubleSupplier strafeSup;
-  private DoubleSupplier rotationXSup;
-  private DoubleSupplier rotationYSup;
-  private BooleanSupplier zeroGyroSup;
+    private Swerve s_Swerve;
+    private DoubleSupplier translationSup;
+    private DoubleSupplier strafeSup;
+    private DoubleSupplier rotationXSup;
+    private DoubleSupplier rotationYSup;
+    private BooleanSupplier zeroGyroSup;
 
-  private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
-  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
-  private PIDController rotationController = new PIDController(4.0, 0, 0);
-  private double lastSetPoint;
+    private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
+    private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
+    private PIDController rotationController = new PIDController(4.0, 0, 0);
+    private double lastSetPoint;
 
-  public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationXSup, DoubleSupplier rotationYSup, BooleanSupplier zeroGyroBtn) {
-    this.s_Swerve = s_Swerve;
-    addRequirements(s_Swerve);
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+            DoubleSupplier rotationXSup, DoubleSupplier rotationYSup, BooleanSupplier zeroGyroBtn) {
+        this.s_Swerve = s_Swerve;
+        addRequirements(s_Swerve);
 
-    this.translationSup = translationSup;
-    this.strafeSup = strafeSup;
-    this.rotationXSup = rotationXSup;
-    this.rotationYSup = rotationYSup;
-    this.zeroGyroSup = zeroGyroBtn;
-    
-    rotationController.enableContinuousInput(0, 2 * Math.PI);
-  }
+        this.translationSup = translationSup;
+        this.strafeSup = strafeSup;
+        this.rotationXSup = rotationXSup;
+        this.rotationYSup = rotationYSup;
+        this.zeroGyroSup = zeroGyroBtn;
 
-  @Override
-  public void initialize(){
-    rotationController.reset();
-    lastSetPoint = s_Swerve.getYaw().getRadians();
-  }
-
-  @Override
-  public void execute() {
-    if (zeroGyroSup.getAsBoolean()){
-      lastSetPoint = 0;
-      rotationController.setSetpoint(0);
-    } else if(Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2) + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband){
-      double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
-      rotationController.setSetpoint(curSetPoint);
-      lastSetPoint = curSetPoint;
-    } else {
-      rotationController.setSetpoint(lastSetPoint);
+        rotationController.enableContinuousInput(0, 2 * Math.PI);
     }
 
-    double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
+    @Override
+    public void initialize() {
+        rotationController.reset();
+        lastSetPoint = s_Swerve.getYaw().getRadians();
+    }
 
-    /* Get Values, Deadband */
-    double translationVal = translationLimiter.calculate(
-        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
-    double strafeVal = strafeLimiter.calculate(
-        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
-    double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+    @Override
+    public void execute() {
+        if (zeroGyroSup.getAsBoolean()) {
+            lastSetPoint = 0;
+            rotationController.setSetpoint(0);
+        } else if (Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2)
+                + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband) {
+            double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
+            rotationController.setSetpoint(curSetPoint);
+            lastSetPoint = curSetPoint;
+        } else {
+            rotationController.setSetpoint(lastSetPoint);
+        }
 
-    /* Drive */
-    s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal, true);
-  }
+        double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
 
-  @Override
-  public void end(boolean interrupted) {
-    s_Swerve.drive(new Translation2d(0, 0), 0, false);
-  }
+        /* Get Values, Deadband */
+        double translationVal = translationLimiter.calculate(
+                MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
+        double strafeVal = strafeLimiter.calculate(
+                MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
+        double rotationVal = MathUtil.clamp(rotationOutput, -Constants.Swerve.maxAngularVelocityInRadiansPerSecond,
+                Constants.Swerve.maxAngularVelocityInRadiansPerSecond);
+
+        /* Drive */
+        s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal,
+                true);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        s_Swerve.drive(new Translation2d(0, 0), 0, false);
+    }
 }

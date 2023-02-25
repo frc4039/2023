@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -70,6 +69,7 @@ public class RobotContainer {
     private final Gripper s_Gripper = new Gripper();
     private final Telescopic s_Telescopic = new Telescopic();
     private final Intake s_Intake = new Intake();
+    private final IntakeSpinner s_IntakeSpinner = new IntakeSpinner();
     private final ConeGuide s_ConeGuide = new ConeGuide();
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
 
@@ -97,10 +97,9 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_Telescopic);
         CommandScheduler.getInstance().registerSubsystem(s_Gripper);
         CommandScheduler.getInstance().registerSubsystem(s_Intake);
+        CommandScheduler.getInstance().registerSubsystem(s_IntakeSpinner);
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
-
-        CameraServer.startAutomaticCapture();
 
         SmartDashboard.putData("AutoMode", autoModeSelector.getAutoChooser());
 
@@ -113,7 +112,7 @@ public class RobotContainer {
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
                 .onTrue(new SequentialCommandGroup(new Command[] {
-                        new PivotConeRelease(s_Pivot).withTimeout(.5),
+                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringConeRelease),
                         new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                         new ParallelCommandGroup(new Command[] {
                                 new TelescopicRetract(s_Telescopic),
@@ -138,7 +137,8 @@ public class RobotContainer {
         operatorXButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
         operatorBButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
-        operatorRightTriggerDepressed.whileTrue(new IntakeMotorSpin(s_Intake));
+        operatorUpButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
+
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
     }

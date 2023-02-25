@@ -20,7 +20,7 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotMotor;
     private DutyCycleEncoder m_pivotEncoder;
 
-    private PIDController controller = new PIDController(0.3, 0, 0);
+    private PIDController controller = new PIDController(0.15, 0, 0);
     private State goalState = new State(PivotConstants.kPositionTravel, 0);
     private State currentState = new State(PivotConstants.kPositionTravel, 0);
     private boolean pidRunning = false;
@@ -80,6 +80,14 @@ public class Pivot extends SubsystemBase {
      */
     public boolean atSetpoint() {
         return Math.abs(currentState.position - goalState.position) < controller.getPositionTolerance()
+                && Math.abs(currentState.velocity - goalState.velocity) < controller.getVelocityTolerance();
+    }
+
+    /**
+     * Returns true when the Pivot has reached the position passed as a parameter.
+     */
+    public boolean atSetpoint(double position) {
+        return Math.abs(currentState.position - position) < controller.getPositionTolerance()
                 && Math.abs(currentState.velocity - goalState.velocity) < controller.getVelocityTolerance();
     }
 
