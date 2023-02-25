@@ -236,7 +236,7 @@ public final class Constants {
         public static final int kTelescopicSlotIdxKD = 0;
         public static final int kTelescopicSlotIdxKFF = 0;
 
-        public static final double kClosedLoopPeakOutputPercent = 0.2;
+        public static final double kClosedLoopPeakOutputPercent = 0.5;
         public static final int kClosedLoopPeakOutputSlotIdx = 0;
         public static final int kSelectedFeedbackSensorPidIdx = 0;
         public static final double kAllowableClosedloopError = 100;
