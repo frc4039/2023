@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -96,8 +95,6 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
 
-        CameraServer.startAutomaticCapture();
-
         configureButtonBindings();
     }
 
@@ -107,7 +104,7 @@ public class RobotContainer {
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
                 .onTrue(new SequentialCommandGroup(new Command[] {
-                        new PivotConeRelease(s_Pivot).withTimeout(.5),
+                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringConeRelease),
                         new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                         new ParallelCommandGroup(new Command[] {
                                 new TelescopicRetract(s_Telescopic),
