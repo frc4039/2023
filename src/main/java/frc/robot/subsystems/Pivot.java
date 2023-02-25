@@ -20,7 +20,7 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotMotor;
     private DutyCycleEncoder m_pivotEncoder;
 
-    private PIDController controller = new PIDController(0.3, 0, 0);
+    private PIDController controller = new PIDController(0.15, 0, 0);
     private State goalState = new State(PivotConstants.kPositionTravel, 0);
     private State currentState = new State(PivotConstants.kPositionTravel, 0);
     private boolean pidRunning = false;

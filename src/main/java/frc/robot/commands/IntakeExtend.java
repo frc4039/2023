@@ -47,8 +47,7 @@ public class IntakeExtend extends CommandBase {
     @Override
     public boolean isFinished() {
         if (m_manualExtend || m_Pivot.getSetpoint() == PivotConstants.kPositionPickupCube) {
-            if (Math.abs(IntakeConstants.kIntakePositionRightExtended
-                    - m_Intake.GetIntakePositionRight()) <= IntakeConstants.kIntakeAllowableError) {
+            if (m_Intake.atSetpoint(IntakeConstants.kIntakePositionRightExtended)) {
                 return true;
             }
 

@@ -9,39 +9,39 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class IntakePickup extends CommandBase {
-  private final Intake m_Intake;
+    private final Intake m_Intake;
 
-  /** Creates a new IntakePickup. */
-  public IntakePickup(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_Intake = intake;
-    addRequirements(m_Intake);
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_Intake.pickup();
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    m_Intake.stopIntake();
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if(Math.abs(IntakeConstants.kIntakePositionRightPickup - m_Intake.GetIntakePositionRight()) <= IntakeConstants.kIntakeAllowableError)
-    {
-      return true;
+    /** Creates a new IntakePickup. */
+    public IntakePickup(Intake intake) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_Intake = intake;
+        addRequirements(m_Intake);
     }
 
-    return false;
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_Intake.pickup();
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_Intake.stopIntake();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        if (m_Intake.atSetpoint(IntakeConstants.kIntakePositionRightPickup)) {
+            return true;
+        }
+
+        return false;
+    }
 }

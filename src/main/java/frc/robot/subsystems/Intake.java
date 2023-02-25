@@ -57,6 +57,11 @@ public class Intake extends SubsystemBase {
         m_intakeControllerLeft.setReference(positionLeft, ControlType.kSmartMotion);
     }
 
+    public boolean atSetpoint(double position) {
+        return (Math.abs(position
+                - GetIntakePositionRight()) <= IntakeConstants.kIntakeAllowableError);
+    }
+
     public void extend() {
         goToPosition(IntakeConstants.kIntakePositionRightExtended, IntakeConstants.kIntakePositionLeftExtended);
     }
