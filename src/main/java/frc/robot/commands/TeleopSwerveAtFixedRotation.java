@@ -30,7 +30,7 @@ public class TeleopSwerveAtFixedRotation extends CommandBase {
 		this.m_swerve = swerve;
 		this.translationSup = translationSup;
 		this.strafeSup = strafeSup;
-		this.rotation = rotation;
+		this.rotation = Math.toRadians(rotation);
 
 		rotationController.enableContinuousInput(0, 2 * Math.PI);
 
