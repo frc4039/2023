@@ -61,8 +61,10 @@ public class RobotContainer {
     private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
     private final JoystickButton operatorBackButton = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton operatorStartButton = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final Trigger operatorLeftTriggerDepressed = new Trigger(
+        () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger operatorRightTriggerDepressed = new Trigger(
-            () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > .1);
+            () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -135,9 +137,9 @@ public class RobotContainer {
         /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
+        operatorLeftTriggerDepressed.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
+        operatorRightTriggerDepressed.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorYButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
-        operatorXButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
-        operatorBButton.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
         operatorUpButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
 
