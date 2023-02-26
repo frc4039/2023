@@ -263,7 +263,7 @@ public final class Constants {
         public static final double kIntakeMotorPercentRetract = -kIntakeMotorPercentExtend;
         public static final double kIntakeExtendTimeout = 0.75;
         public static final double kIntakeRetractTimeout = kIntakeExtendTimeout;
-        public static final int kSpinningIntakeMotorID = 62; // Falcom motor ID
+        public static final int kSpinningIntakeMotorID = 62; // Falcon motor ID
         public static final boolean kSpinningIntakeMotorInverted = false;
         public static final double kIntakeSpinningMotorForward = 0.5;
         public static final double kIntakeSpinningMotorOff = 0;
