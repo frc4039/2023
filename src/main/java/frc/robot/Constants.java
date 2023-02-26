@@ -175,12 +175,22 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
+        public static final double kBalanceSpeed = 0.3;
+
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(false);
         public static TrajectoryConfig reverseConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(true);
+        public static TrajectoryConfig balanceForwardConfig = new TrajectoryConfig(
+                kBalanceSpeed,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig balanceReverseConfig = new TrajectoryConfig(
+                kBalanceSpeed,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(true);
     }
