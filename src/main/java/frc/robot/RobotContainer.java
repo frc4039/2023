@@ -62,7 +62,7 @@ public class RobotContainer {
     private final JoystickButton operatorBackButton = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton operatorStartButton = new JoystickButton(operator, XboxController.Button.kStart.value);
     private final Trigger operatorLeftTriggerDepressed = new Trigger(
-        () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+            () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger operatorRightTriggerDepressed = new Trigger(
             () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
 
@@ -122,26 +122,28 @@ public class RobotContainer {
                                 new TelescopicRetract(s_Telescopic),
                                 new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel) }) }));
         driverYButton
-            .whileTrue(new TeleopSwerveAtFixedRotation(
-                s_Swerve,
-                () -> -driver.getRawAxis(translationAxis),
-                () -> -driver.getRawAxis(strafeAxis),
-                0));
+                .whileTrue(new TeleopSwerveAtFixedRotation(
+                        s_Swerve,
+                        () -> -driver.getRawAxis(translationAxis),
+                        () -> -driver.getRawAxis(strafeAxis),
+                        0));
         driverAButton
-            .whileTrue(new TeleopSwerveAtFixedRotation(
-                s_Swerve,
-                () -> -driver.getRawAxis(translationAxis),
-                () -> -driver.getRawAxis(strafeAxis),
-                180));
+                .whileTrue(new TeleopSwerveAtFixedRotation(
+                        s_Swerve,
+                        () -> -driver.getRawAxis(translationAxis),
+                        () -> -driver.getRawAxis(strafeAxis),
+                        180));
 
         /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
-        operatorLeftTriggerDepressed.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
-        operatorRightTriggerDepressed.onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
+        operatorLeftTriggerDepressed
+                .onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
+        operatorRightTriggerDepressed
+                .onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorYButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
-        operatorUpButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
+        // operatorUpButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
 
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
@@ -171,7 +173,7 @@ public class RobotContainer {
         return s_Intake;
     }
 
-    public AutoModeSelector getAutoModeSelector(){
+    public AutoModeSelector getAutoModeSelector() {
         return autoModeSelector;
     }
 

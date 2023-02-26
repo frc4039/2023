@@ -37,7 +37,7 @@ public class SeqCmdConePickupPosition extends SequentialCommandGroup {
                         new SequentialCommandGroup(new Command[] {
                                 new WaitUntilCommand(
                                         () -> s_Pivot.getEncoder() >= PivotConstants.kPositionPrePickupCube),
-                                new IntakeRetract(s_Intake)
+                        // new IntakeRetract(s_Intake)
                         })
                 }));
     }
