@@ -31,11 +31,15 @@ public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
                 new TelescopicRetract(s_Telescopic),
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
-                new IntakePickup(s_Intake),
-                new ConditionalCommand(new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPrePickupCube),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube),
-                        () -> !s_Pivot.atSetpoint(PivotConstants.kPositionPrePickupCube)
-                                || !s_Intake.atSetpoint(IntakeConstants.kIntakePositionRightPickup))
+                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube)
+        // new IntakePickup(s_Intake),
+        /*
+         * new ConditionalCommand(new PivotMoveToPosition(s_Pivot,
+         * PivotConstants.kPositionPrePickupCube),
+         * new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCube),
+         * () -> !s_Pivot.atSetpoint(PivotConstants.kPositionPrePickupCube)
+         * || !s_Intake.atSetpoint(IntakeConstants.kIntakePositionRightPickup))
+         */
 
         );
     }

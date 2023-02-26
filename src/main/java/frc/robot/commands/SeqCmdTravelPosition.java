@@ -24,17 +24,19 @@ public class SeqCmdTravelPosition extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new IntakeExtend(s_Intake, s_Pivot, false),
+                // new IntakeExtend(s_Intake, s_Pivot, false),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new ConeGuideRetract(s_ConeGuide)
                                 .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel),
-                        new SequentialCommandGroup(new Command[] {
-                                new WaitUntilCommand(
-                                        () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
-                                new IntakeRetract(s_Intake)
-                        })
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
+                /*
+                 * new SequentialCommandGroup(new Command[] {
+                 * new WaitUntilCommand(
+                 * () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
+                 * new IntakeRetract(s_Intake)
+                 * })
+                 */
                 }));
     }
 }
