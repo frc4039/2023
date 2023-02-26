@@ -200,7 +200,7 @@ public final class Constants {
         public static final double kPivotVerticalOffset = -175;
 
         // Setpoints. All setpoints given in degrees from vertical.
-        public static final double kPositionPickupCone = 124;
+        public static final double kPositionPickupCone = 130;
         public static final double kPositionScoringConeRelease = 60;
         public static final double kPositionScoringCone = 50;
         public static final double kPositionScoringCube = -69;
@@ -283,7 +283,7 @@ public final class Constants {
         public static final double kIntakeKD = 0.00;
         public static final double kIntakeKFF = 0.00015;
 
-        public static final double kSmartMotionMaxVelocity = 800 * 1.5;
+        public static final double kSmartMotionMaxVelocity = 1200;
         public static final double kSmartMotionMaxAccel = 2500;
         public static final double kSmartMotionMinOutputVelocity = 0;
 
