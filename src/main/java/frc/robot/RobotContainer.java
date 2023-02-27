@@ -51,8 +51,10 @@ public class RobotContainer {
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton operatorAButton = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton operatorXButton = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton operatorBButton = new JoystickButton(operator, XboxController.Button.kB.value);
+    // private final JoystickButton operatorXButton = new JoystickButton(operator,
+    // XboxController.Button.kX.value);
+    // private final JoystickButton operatorBButton = new JoystickButton(operator,
+    // XboxController.Button.kB.value);
     private final JoystickButton operatorLeftBumper = new JoystickButton(operator,
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton operatorRightBumper = new JoystickButton(operator,
