@@ -210,7 +210,7 @@ public final class Constants {
         public static final double kPivotVerticalOffset = -175;
 
         // Setpoints. All setpoints given in degrees from vertical.
-        public static final double kPositionPickupCone = 124;
+        public static final double kPositionPickupCone = 127;
         public static final double kPositionScoringConeRelease = 60;
         public static final double kPositionScoringCone = 50;
         public static final double kPositionScoringCube = -69;
