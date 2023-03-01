@@ -28,9 +28,8 @@ public class DropAndDriveYellowSide extends SequentialCommandGroup {
                         container.getConeGuide(), container.getPivot(),
                         container.getIntake())).withTimeout(1));
         addCommands(
-                (new SeqCmdConeScoringPosition(container.getTelescopic(),
-                        container.getPivot()).withTimeout(4)),
-                container.getConeGuide()).withTimeout(0.5);
+                (new SeqCmdConeScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                        container.getPivot())).withTimeout(4));
         addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
         addCommands(
                 (new SeqCmdTravelPosition(container.getTelescopic(),
