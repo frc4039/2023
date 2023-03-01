@@ -23,7 +23,7 @@ public class DropAndBalanceYellowSide extends SequentialCommandGroup {
                 new GripperRelease(container.getGripper())
                         .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {
-                        new TelescopicRetract(container.getTelescopic()),
+                        new TelescopicRetract(container.getTelescopic()).withTimeout(1),
                         new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel) }) }));
         addCommands(new ResetRobotPose(container.getSwerve(), pDropAndBalanceYellowSide1.getInitialPose()));
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
