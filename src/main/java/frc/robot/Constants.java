@@ -307,7 +307,7 @@ public final class Constants {
     public static final class ConeGuideConstants {
         public static final int kConeGuideForwardChannel = 2;
         public static final int kConeGuideReverseChannel = 3;
-        public static final double kConeGuideRetractTimeout = 0.5;
+        public static final double kConeGuideRetractTimeout = 0.35;
         public static final double kConeGuideDeployTimeout = 0.5;
     }
 }

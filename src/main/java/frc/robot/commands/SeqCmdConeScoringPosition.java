@@ -16,12 +16,12 @@ import frc.robot.subsystems.ConeGuide;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SeqCmdConeScoringPosition extends SequentialCommandGroup {
     /** Creates a new ConeScoringPosition. */
-    public SeqCmdConeScoringPosition(Telescopic s_Telescopic, Pivot s_Pivot, ConeGuide s_ConeGuide) {
+    public SeqCmdConeScoringPosition(ConeGuide s_ConeGuide, Telescopic s_Telescopic, Pivot s_Pivot) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone),
-                new TelescopicExtendFar(s_Telescopic));
+                new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
+        // new TelescopicExtendFar(s_Telescopic));
     }
 }

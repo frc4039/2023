@@ -145,7 +145,7 @@ public class RobotContainer {
         operatorRightTriggerDepressed
                 .onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorYButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
-        operatorAButton.onTrue(new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringCone));
+        operatorAButton.onTrue(new SeqCmdConeScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
         operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
         operatorUpButton
                 .onTrue(new IntakeExtend(s_Intake, s_Pivot, true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
