@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+//import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ConeGuideConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
@@ -24,17 +24,19 @@ public class SeqCmdTravelPosition extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-                new IntakeExtend(s_Intake, s_Pivot, false),
+                // new IntakeExtend(s_Intake, s_Pivot, false),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new ConeGuideRetract(s_ConeGuide)
                                 .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel),
-                        new SequentialCommandGroup(new Command[] {
-                                new WaitUntilCommand(
-                                        () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
-                                new IntakeRetract(s_Intake)
-                        })
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
+                /*
+                 * new SequentialCommandGroup(new Command[] {
+                 * new WaitUntilCommand(
+                 * () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
+                 * new IntakeRetract(s_Intake)
+                 * })
+                 */
                 }));
     }
 }
