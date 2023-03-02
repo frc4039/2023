@@ -27,9 +27,12 @@ public class TelescopicRetract extends CommandBase {
     @Override
     public void execute() {
         m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
-        if (m_Telescopic.getEncoderPosition() == TelescopicConstants.kTelescopicRetracted) {
-            m_Telescopic.zeroEncoder();
-        }
+        /*
+         * if (m_Telescopic.getEncoderPosition() ==
+         * TelescopicConstants.kTelescopicRetracted) {
+         * m_Telescopic.zeroEncoder();
+         * }
+         */
     }
 
     // Called once the command ends or is interrupted.
