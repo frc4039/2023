@@ -37,8 +37,8 @@ public class AwaitLevelCharge extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (liftoff && (!reverse.getAsBoolean() && swerve.getRawPitch() < 10.0
-                || reverse.getAsBoolean() && swerve.getRawPitch() > -10.0)) {
+        if (liftoff && (!reverse.getAsBoolean() && swerve.getRawPitch() < 12.0
+                || reverse.getAsBoolean() && swerve.getRawPitch() > -12.0)) {
             return true;
         }
 
