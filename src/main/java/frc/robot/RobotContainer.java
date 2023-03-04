@@ -109,6 +109,8 @@ public class RobotContainer {
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
+        mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
+        mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
 
         configureButtonBindings();
     }
