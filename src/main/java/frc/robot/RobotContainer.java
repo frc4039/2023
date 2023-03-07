@@ -4,14 +4,6 @@
 
 package frc.robot;
 
-import java.util.List;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -148,20 +140,8 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        driverXButton.whileTrue(AutoFollowPath.createFollowCommand(s_Swerve,
-                TrajectoryGenerator.generateTrajectory(
-                        s_Swerve.getPose(),
-                        List.of(),
-                        new Pose2d(
-                                new Translation2d(
-                                        14.4,
-                                        4.92),
-                                new Rotation2d(0.0)),
-                        new TrajectoryConfig(
-                                0.05,
-                                3.0))));
+        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> 14.4, () -> 4.92, () -> 0.0));
 
-        /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
