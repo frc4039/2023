@@ -30,6 +30,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package frc.robot.subsystems;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -40,13 +45,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PhotonCameraWrapper;
 import frc.robot.autos.DropAndDriveYellowSide;
+import frc.robot.commands.AutoFollowPath;
 
 public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro;
@@ -56,10 +64,14 @@ public class Swerve extends SubsystemBase {
 
     private Field2d field;
 
+    public PhotonCameraWrapper pcw;
+
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+
+        pcw = new PhotonCameraWrapper();
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -186,6 +198,19 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[2].getOdometryPosition(),
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
+
+        Optional<EstimatedRobotPose> result = pcw.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+        if (result.isPresent()) {
+            EstimatedRobotPose camPose = result.get();
+            swervePoseEstimator.addVisionMeasurement(
+                    camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+            System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
+            field.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+        } else {
+            // move it way off the screen to make it disappear
+            field.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+        }
 
         field.setRobotPose(getPose());
     }

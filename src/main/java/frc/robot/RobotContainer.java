@@ -4,6 +4,14 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -42,6 +50,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverXButton = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driverLeftBumper = new JoystickButton(driver,
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
@@ -138,6 +147,19 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(translationAxis),
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
+
+        driverXButton.whileTrue(AutoFollowPath.createFollowCommand(s_Swerve,
+                TrajectoryGenerator.generateTrajectory(
+                        s_Swerve.getPose(),
+                        List.of(),
+                        new Pose2d(
+                                new Translation2d(
+                                        14.4,
+                                        4.92),
+                                new Rotation2d(0.0)),
+                        new TrajectoryConfig(
+                                0.05,
+                                3.0))));
 
         /* Operator Buttons */
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
