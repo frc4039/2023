@@ -9,33 +9,40 @@ import frc.robot.Constants.TelescopicConstants;
 import frc.robot.subsystems.Telescopic;
 
 public class TelescopicRetract extends CommandBase {
-  private final Telescopic m_Telescopic;
-  
-  /** Creates a new TelescopicRetract. */
-  public TelescopicRetract(Telescopic telescopic) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_Telescopic = telescopic;
-    addRequirements(m_Telescopic);
-  }
+    private final Telescopic m_Telescopic;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    /** Creates a new TelescopicRetract. */
+    public TelescopicRetract(Telescopic telescopic) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_Telescopic = telescopic;
+        addRequirements(m_Telescopic);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
+        /*
+         * if (m_Telescopic.getEncoderPosition() ==
+         * TelescopicConstants.kTelescopicRetracted) {
+         * m_Telescopic.zeroEncoder();
+         * }
+         */
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicRetracted) < 700;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return Math.abs(m_Telescopic.getEncoderPosition() - TelescopicConstants.kTelescopicRetracted) < 700;
+    }
 }

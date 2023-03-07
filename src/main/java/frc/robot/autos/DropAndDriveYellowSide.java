@@ -22,26 +22,26 @@ import frc.robot.commands.SeqCmdTravelPosition;
 
 public class DropAndDriveYellowSide extends SequentialCommandGroup {
 
-	public DropAndDriveYellowSide(RobotContainer container) {
-		addCommands(
-			(new SeqCmdTravelPosition(container.getTelescopic(),
-				container.getConeGuide(), container.getPivot(),
-				container.getIntake())).withTimeout(1));
-		addCommands(
-			(new SeqCmdConeScoringPosition(container.getTelescopic(),
-				container.getPivot()).withTimeout(4)));
-		addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
-		addCommands(
-			(new SeqCmdTravelPosition(container.getTelescopic(),
-				container.getConeGuide(), container.getPivot(),
-				container.getIntake())).withTimeout(3));
-		addCommands(new ResetRobotPose(container.getSwerve(), path.getInitialPose()));
-		addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(), path));
-	}
+    public DropAndDriveYellowSide(RobotContainer container) {
+        addCommands(
+                (new SeqCmdTravelPosition(container.getTelescopic(),
+                        container.getConeGuide(), container.getPivot(),
+                        container.getIntake())).withTimeout(1));
+        addCommands(
+                (new SeqCmdConeScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                        container.getPivot())).withTimeout(4));
+        addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
+        addCommands(
+                (new SeqCmdTravelPosition(container.getTelescopic(),
+                        container.getConeGuide(), container.getPivot(),
+                        container.getIntake())).withTimeout(3));
+        addCommands(new ResetRobotPose(container.getSwerve(), path.getInitialPose()));
+        addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(), path));
+    }
 
-	public static Trajectory path = TrajectoryGenerator.generateTrajectory(
-		new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-		List.of(new Translation2d(1.5, 0)),
-		new Pose2d(3.75, 0, Rotation2d.fromDegrees(0)),
-		Constants.AutoConstants.forwardConfig);
+    public static Trajectory path = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1.5, 0)),
+            new Pose2d(3.75, 0, Rotation2d.fromDegrees(0)),
+            Constants.AutoConstants.forwardConfig);
 }
