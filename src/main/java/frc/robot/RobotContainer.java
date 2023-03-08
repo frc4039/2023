@@ -42,8 +42,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton driverLeftBumper = new JoystickButton(driver,
-            XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driverLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
             XboxController.Button.kRightBumper.value);
     private final JoystickButton driverBackButton = new JoystickButton(driver, XboxController.Button.kBack.value);
@@ -51,10 +50,6 @@ public class RobotContainer {
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton operatorAButton = new JoystickButton(operator, XboxController.Button.kA.value);
-    // private final JoystickButton operatorXButton = new JoystickButton(operator,
-    // XboxController.Button.kX.value);
-    // private final JoystickButton operatorBButton = new JoystickButton(operator,
-    // XboxController.Button.kB.value);
     private final JoystickButton operatorLeftBumper = new JoystickButton(operator,
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton operatorRightBumper = new JoystickButton(operator,
@@ -121,7 +116,7 @@ public class RobotContainer {
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
                 .onTrue(new SequentialCommandGroup(new Command[] {
-                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringConeRelease),
+                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringRelease),
                         new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                         new ParallelCommandGroup(new Command[] {
                                 new TelescopicRetract(s_Telescopic),

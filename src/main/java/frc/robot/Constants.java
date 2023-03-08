@@ -218,7 +218,7 @@ public final class Constants {
 
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 129;
-        public static final double kPositionScoringConeRelease = 60; // release angle
+        public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = 132;
