@@ -15,54 +15,56 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 public class TeleopSwerveAtFixedRotation extends CommandBase {
-	private Swerve m_swerve;
+    private Swerve m_swerve;
 
-  private DoubleSupplier translationSup;
-  private DoubleSupplier strafeSup;
-	private double rotation;
+    private DoubleSupplier translationSup;
+    private DoubleSupplier strafeSup;
+    private double rotation;
 
-	private PIDController rotationController = new PIDController(4.0, 0, 0);
+    private PIDController rotationController = new PIDController(4.0, 0, 0);
 
-	private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
-	private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
+    private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
+    private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
 
-	public TeleopSwerveAtFixedRotation(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, double rotation) {
-		this.m_swerve = swerve;
-		this.translationSup = translationSup;
-		this.strafeSup = strafeSup;
-		this.rotation = Math.toRadians(rotation);
+    public TeleopSwerveAtFixedRotation(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+            double rotation) {
+        this.m_swerve = swerve;
+        this.translationSup = translationSup;
+        this.strafeSup = strafeSup;
+        this.rotation = Math.toRadians(rotation);
 
-		rotationController.enableContinuousInput(0, 2 * Math.PI);
+        rotationController.enableContinuousInput(0, 2 * Math.PI);
 
-		addRequirements(m_swerve);
-	}
+        addRequirements(m_swerve);
+    }
 
-	@Override
-	public void initialize() {
-		rotationController.reset();
-		rotationController.setSetpoint(rotation);
-	}
+    @Override
+    public void initialize() {
+        rotationController.reset();
+        rotationController.setSetpoint(rotation);
+    }
 
-	@Override
-	public void execute() {
-		double rotationOutput = rotationController.calculate(m_swerve.getYaw().getRadians());
+    @Override
+    public void execute() {
+        double rotationOutput = rotationController.calculate(m_swerve.getYaw().getRadians());
 
-		double translationVal = translationLimiter.calculate(
-			MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
-		double strafeVal = strafeLimiter.calculate(
-			MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
-		double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+        double translationVal = translationLimiter.calculate(
+                MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
+        double strafeVal = strafeLimiter.calculate(
+                MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
+        double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
-		m_swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal, true);
-	}
+        m_swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+                true);
+    }
 
-	@Override
-	public void end(boolean interrupted) {
-    m_swerve.drive(new Translation2d(0, 0), 0, false);
-	}
+    @Override
+    public void end(boolean interrupted) {
+        m_swerve.drive(new Translation2d(0, 0), 0, false);
+    }
 
-	@Override
-	public boolean isFinished() {
-		return false;
-	}
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

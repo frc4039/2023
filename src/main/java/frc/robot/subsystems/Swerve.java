@@ -49,136 +49,140 @@ import frc.robot.Constants;
 import frc.robot.autos.DropAndDriveYellowSide;
 
 public class Swerve extends SubsystemBase {
-  private final Pigeon2 gyro;
+    private final Pigeon2 gyro;
 
-  private SwerveDrivePoseEstimator swervePoseEstimator;
-  private SwerveModule[] mSwerveMods;
+    private SwerveDrivePoseEstimator swervePoseEstimator;
+    private SwerveModule[] mSwerveMods;
 
-  private Field2d field;
+    private Field2d field;
 
-  public Swerve() {
-    gyro = new Pigeon2(Constants.Swerve.pigeonID);
-    gyro.configFactoryDefault();
-    zeroGyro();
+    public Swerve() {
+        gyro = new Pigeon2(Constants.Swerve.kPigeonID);
+        gyro.configFactoryDefault();
+        zeroGyro();
 
-    mSwerveMods = new SwerveModule[] {
-        new SwerveModule(0, Constants.Swerve.Mod0.constants),
-        new SwerveModule(1, Constants.Swerve.Mod1.constants),
-        new SwerveModule(2, Constants.Swerve.Mod2.constants),
-        new SwerveModule(3, Constants.Swerve.Mod3.constants)
-    };
+        mSwerveMods = new SwerveModule[] {
+                new SwerveModule(0, Constants.Swerve.Mod0.constants),
+                new SwerveModule(1, Constants.Swerve.Mod1.constants),
+                new SwerveModule(2, Constants.Swerve.Mod2.constants),
+                new SwerveModule(3, Constants.Swerve.Mod3.constants)
+        };
 
-    swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
-        new SwerveModulePosition[] {
-            mSwerveMods[0].getOdometryPosition(),
-            mSwerveMods[1].getOdometryPosition(),
-            mSwerveMods[2].getOdometryPosition(),
-            mSwerveMods[3].getOdometryPosition()
-        },
-        new Pose2d());
+        swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
+                new SwerveModulePosition[] {
+                        mSwerveMods[0].getOdometryPosition(),
+                        mSwerveMods[1].getOdometryPosition(),
+                        mSwerveMods[2].getOdometryPosition(),
+                        mSwerveMods[3].getOdometryPosition()
+                },
+                new Pose2d());
 
-    field = new Field2d();
-    field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
-    // SmartDashboard.putData("Field", field);
+        field = new Field2d();
+        field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
+        // SmartDashboard.putData("Field", field);
 
-    ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
-    tab.add("Field", field);
-    for (SwerveModule mod : mSwerveMods) {
-        // tab.addNumber("Mod " + mod.moduleNumber + " Cancoder", () -> mod.getCanCoder().getDegrees());
-        // tab.addNumber("Mod " + mod.moduleNumber + " Integrated", () -> mod.getState().angle.getDegrees());
-        // tab.addNumber("Mod " + mod.moduleNumber + " Velocity", () -> mod.getState().speedMetersPerSecond);
-        tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
+        ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
+        tab.add("Field", field);
+        for (SwerveModule mod : mSwerveMods) {
+            // tab.addNumber("Mod " + mod.moduleNumber + " Cancoder", () ->
+            // mod.getCanCoder().getDegrees());
+            // tab.addNumber("Mod " + mod.moduleNumber + " Integrated", () ->
+            // mod.getState().angle.getDegrees());
+            // tab.addNumber("Mod " + mod.moduleNumber + " Velocity", () ->
+            // mod.getState().speedMetersPerSecond);
+            tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
+        }
+        tab.addString("Pose", () -> getPose().toString());
     }
-    tab.addString("Pose", () -> getPose().toString());
-  }
 
-  public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
-    SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-        ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw()));
+    public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw()));
 
-    // Translation2d t = translation.rotateBy(inverse(getPose().getRotation()));
-    // ChassisSpeeds s = new ChassisSpeeds(t.getX(), t.getY(), rotation);
-    // SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(s);
+        // Translation2d t = translation.rotateBy(inverse(getPose().getRotation()));
+        // ChassisSpeeds s = new ChassisSpeeds(t.getX(), t.getY(), rotation);
+        // SwerveModuleState[] swerveModuleStates =
+        // Constants.Swerve.swerveKinematics.toSwerveModuleStates(s);
 
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeed);
 
-    for (SwerveModule mod : mSwerveMods) {
-      mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        for (SwerveModule mod : mSwerveMods) {
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        }
     }
-  }
 
-  private Rotation2d inverse(Rotation2d a){
-    return new Rotation2d(a.getCos(), -a.getSin());
-  }
-
-  /* Used by SwerveControllerCommand in Auto */
-  public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-
-    for (SwerveModule mod : mSwerveMods) {
-      mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+    private Rotation2d inverse(Rotation2d a) {
+        return new Rotation2d(a.getCos(), -a.getSin());
     }
-  }
 
-  public Pose2d getPose() {
-    return swervePoseEstimator.getEstimatedPosition();
-  }
+    /* Used by SwerveControllerCommand in Auto */
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.kMaxSpeed);
 
-  public void resetPoseAndGyro(){
-    zeroGyro();
-    resetPoseEstimator();
-  }
-
-  public void resetPoseEstimator() {
-    swervePoseEstimator.resetPosition(getYaw(),
-        new SwerveModulePosition[] {
-            mSwerveMods[0].getOdometryPosition(),
-            mSwerveMods[1].getOdometryPosition(),
-            mSwerveMods[2].getOdometryPosition(),
-            mSwerveMods[3].getOdometryPosition()
-        },
-        getPose());
-  }
-
-  public void setPoseEstimator(Pose2d pose) {
-    swervePoseEstimator.resetPosition(getYaw(),
-        new SwerveModulePosition[] {
-            mSwerveMods[0].getOdometryPosition(),
-            mSwerveMods[1].getOdometryPosition(),
-            mSwerveMods[2].getOdometryPosition(),
-            mSwerveMods[3].getOdometryPosition()
-        },
-        pose);
-  }
-
-  public SwerveModuleState[] getStates() {
-    SwerveModuleState[] states = new SwerveModuleState[4];
-    for (SwerveModule mod : mSwerveMods) {
-      states[mod.moduleNumber] = mod.getState();
+        for (SwerveModule mod : mSwerveMods) {
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+        }
     }
-    return states;
-  }
 
-  public void zeroGyro() {
-    gyro.setYaw(0);
-  }
+    public Pose2d getPose() {
+        return swervePoseEstimator.getEstimatedPosition();
+    }
 
-  public Rotation2d getYaw() {
-    return (Constants.Swerve.invertGyro)
-        ? Rotation2d.fromDegrees(360 - gyro.getYaw())
-        : Rotation2d.fromDegrees(gyro.getYaw());
-  }
+    public void resetPoseAndGyro() {
+        zeroGyro();
+        resetPoseEstimator();
+    }
 
-  @Override
-  public void periodic() {
-    swervePoseEstimator.update(getYaw(),
-        new SwerveModulePosition[] {
-            mSwerveMods[0].getOdometryPosition(),
-            mSwerveMods[1].getOdometryPosition(),
-            mSwerveMods[2].getOdometryPosition(),
-            mSwerveMods[3].getOdometryPosition()
-        }); // get the rotation and offset for encoder
+    public void resetPoseEstimator() {
+        swervePoseEstimator.resetPosition(getYaw(),
+                new SwerveModulePosition[] {
+                        mSwerveMods[0].getOdometryPosition(),
+                        mSwerveMods[1].getOdometryPosition(),
+                        mSwerveMods[2].getOdometryPosition(),
+                        mSwerveMods[3].getOdometryPosition()
+                },
+                getPose());
+    }
 
-    field.setRobotPose(getPose());
-  }
+    public void setPoseEstimator(Pose2d pose) {
+        swervePoseEstimator.resetPosition(getYaw(),
+                new SwerveModulePosition[] {
+                        mSwerveMods[0].getOdometryPosition(),
+                        mSwerveMods[1].getOdometryPosition(),
+                        mSwerveMods[2].getOdometryPosition(),
+                        mSwerveMods[3].getOdometryPosition()
+                },
+                pose);
+    }
+
+    public SwerveModuleState[] getStates() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (SwerveModule mod : mSwerveMods) {
+            states[mod.moduleNumber] = mod.getState();
+        }
+        return states;
+    }
+
+    public void zeroGyro() {
+        gyro.setYaw(0);
+    }
+
+    public Rotation2d getYaw() {
+        return (Constants.Swerve.kInvertGyro)
+                ? Rotation2d.fromDegrees(360 - gyro.getYaw())
+                : Rotation2d.fromDegrees(gyro.getYaw());
+    }
+
+    @Override
+    public void periodic() {
+        swervePoseEstimator.update(getYaw(),
+                new SwerveModulePosition[] {
+                        mSwerveMods[0].getOdometryPosition(),
+                        mSwerveMods[1].getOdometryPosition(),
+                        mSwerveMods[2].getOdometryPosition(),
+                        mSwerveMods[3].getOdometryPosition()
+                }); // get the rotation and offset for encoder
+
+        field.setRobotPose(getPose());
+    }
 }
