@@ -154,7 +154,6 @@ public class Swerve extends SubsystemBase {
                 },
                 pose);
     }
-
     public SwerveModuleState[] getStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
         for (SwerveModule mod : mSwerveMods) {
@@ -168,9 +167,13 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.kInvertGyro)
+        return (Constants.Swerve.invertGyro)
                 ? Rotation2d.fromDegrees(360 - gyro.getYaw())
                 : Rotation2d.fromDegrees(gyro.getYaw());
+    }
+
+    public double getRawPitch() {
+        return gyro.getPitch();
     }
 
     @Override

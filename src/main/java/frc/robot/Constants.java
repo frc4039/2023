@@ -182,12 +182,22 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
+        public static final double kBalanceSpeed = 0.3;
+
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(false);
         public static TrajectoryConfig reverseConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(true);
+        public static TrajectoryConfig balanceForwardConfig = new TrajectoryConfig(
+                kBalanceSpeed,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig balanceReverseConfig = new TrajectoryConfig(
+                kBalanceSpeed,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(true);
     }
@@ -204,14 +214,14 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -175;
+        public static final double kPivotVerticalOffset = -183;
 
         // Setpoints. All setpoints given in degrees from vertical.
-        public static final double kPositionPickupCone = 124;
-        public static final double kPositionScoringConeRelease = 60;
-        public static final double kPositionScoringCone = 50;
+        public static final double kPositionPickupCone = 129;
+        public static final double kPositionScoringConeRelease = 60; // release angle
+        public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = -69;
-        public static final double kPositionPickupCube = 130;
+        public static final double kPositionPickupCube = 132;
         public static final double kPositionPrePickupCube = -95;
         public static final double kPositionForSafeIntakeRetract = -125;
         public static final double kPositionTravel = 0;
@@ -301,7 +311,7 @@ public final class Constants {
     public static final class ConeGuideConstants {
         public static final int kConeGuideForwardChannel = 2;
         public static final int kConeGuideReverseChannel = 3;
-        public static final double kConeGuideRetractTimeout = 0.5;
+        public static final double kConeGuideRetractTimeout = 0.35;
         public static final double kConeGuideDeployTimeout = 0.5;
     }
 }
