@@ -12,9 +12,7 @@ public class TelescopicExtendMid extends CommandBase {
     private final Telescopic m_Telescopic;
     private double targetPosition;
 
-    /** Creates a new TelescopicExtend. */
     public TelescopicExtendMid(Telescopic telescopic) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
         addRequirements(m_Telescopic);
     }

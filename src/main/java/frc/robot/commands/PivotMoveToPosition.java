@@ -8,12 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
 
 public class PivotMoveToPosition extends CommandBase {
-    /** Creates a new PivotMoveToPosition. */
+
     Pivot m_pivot;
     double m_position;
 
     public PivotMoveToPosition(Pivot pivot, double position) {
-        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(pivot);
         m_pivot = pivot;
         m_position = position;

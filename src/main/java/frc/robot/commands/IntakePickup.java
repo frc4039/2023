@@ -11,9 +11,7 @@ import frc.robot.subsystems.Intake;
 public class IntakePickup extends CommandBase {
     private final Intake m_Intake;
 
-    /** Creates a new IntakePickup. */
     public IntakePickup(Intake intake) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Intake = intake;
         addRequirements(m_Intake);
     }

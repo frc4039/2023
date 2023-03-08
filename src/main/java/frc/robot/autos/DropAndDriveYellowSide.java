@@ -17,7 +17,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.AutoFollowPath;
 import frc.robot.commands.GripperRelease;
 import frc.robot.commands.ResetRobotPose;
-import frc.robot.commands.SeqCmdConeScoringPosition;
+import frc.robot.commands.SeqCmdScoringPosition;
 import frc.robot.commands.SeqCmdTravelPosition;
 
 public class DropAndDriveYellowSide extends SequentialCommandGroup {
@@ -28,7 +28,7 @@ public class DropAndDriveYellowSide extends SequentialCommandGroup {
                         container.getConeGuide(), container.getPivot(),
                         container.getIntake())).withTimeout(1));
         addCommands(
-                (new SeqCmdConeScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                (new SeqCmdScoringPosition(container.getConeGuide(), container.getTelescopic(),
                         container.getPivot())).withTimeout(4));
         addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
         addCommands(

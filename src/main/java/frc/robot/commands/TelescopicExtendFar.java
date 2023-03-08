@@ -12,9 +12,7 @@ public class TelescopicExtendFar extends CommandBase {
     private final Telescopic m_Telescopic;
     private double targetPosition;
 
-    /** Creates a new TelescopicExtend. */
     public TelescopicExtendFar(Telescopic telescopic) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
         addRequirements(m_Telescopic);
     }
