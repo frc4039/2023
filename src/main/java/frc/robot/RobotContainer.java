@@ -140,7 +140,7 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> 14.4, () -> 4.92, () -> 0.0));
+        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> 14.93, () -> 5.01, () -> 0.0));
 
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));

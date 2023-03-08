@@ -205,12 +205,13 @@ public class Swerve extends SubsystemBase {
             EstimatedRobotPose camPose = result.get();
             swervePoseEstimator.addVisionMeasurement(
                     camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
             field.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
         } else {
             // move it way off the screen to make it disappear
             field.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
+
+        System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
 
         field.setRobotPose(getPose());
     }
