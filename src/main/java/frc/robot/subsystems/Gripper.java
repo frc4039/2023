@@ -9,7 +9,7 @@ public class Gripper extends SubsystemBase {
 
     // forwardChannel = 0 => closes gripper
     // reverseChannel = 1 => opens gripper
-    private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.solenoidCanID, PneumaticsModuleType.REVPH,
+    private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.kSolenoidCanID, PneumaticsModuleType.REVPH,
             Constants.GripperConstants.kGripperForwardChannel,
             Constants.GripperConstants.kGripperReverseChannel);
 
