@@ -26,8 +26,8 @@ public class PIDTranslate extends CommandBase {
     private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
 
-    private PIDController xPidController = new PIDController(0.2, 0, 0);
-    private PIDController yPidController = new PIDController(0.2, 0, 0);
+    private PIDController xPidController = new PIDController(0.4, 0, 0);
+    private PIDController yPidController = new PIDController(0.5, 0, 0);
 
     public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
         this.swerve = swerve;

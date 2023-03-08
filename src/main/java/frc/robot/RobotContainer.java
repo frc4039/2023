@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.*;
+import frc.robot.common.FindNearestNode;
 import frc.robot.subsystems.*;
 
 /**
@@ -82,6 +83,8 @@ public class RobotContainer {
 
     private AutoModeSelector autoModeSelector;
 
+    private final FindNearestNode findNearestNode = new FindNearestNode(s_Swerve);
+
     public class setDefaultCommand {
     }
 
@@ -140,7 +143,8 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> 14.93, () -> 5.01, () -> 0.0));
+        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> findNearestNode.getTranslation().getX(),
+                () -> findNearestNode.getTranslation().getY(), () -> 0.0));
 
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
