@@ -11,9 +11,10 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 import frc.robot.subsystems.ConeGuide;
 
-public class SeqCmdScoringPosition extends SequentialCommandGroup {
+//Gets the robot ready for scoring a game piece
+public class CmdGrpScoringPosition extends SequentialCommandGroup {
 
-    public SeqCmdScoringPosition(ConeGuide s_ConeGuide, Telescopic s_Telescopic, Pivot s_Pivot) {
+    public CmdGrpScoringPosition(ConeGuide s_ConeGuide, Telescopic s_Telescopic, Pivot s_Pivot) {
         addCommands(
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone));

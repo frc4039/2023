@@ -4,13 +4,9 @@
 
 package frc.robot.commands;
 
-//import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ConeGuideConstants;
 import frc.robot.Constants.GripperConstants;
-//import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
@@ -18,9 +14,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
+//Gets the robot ready to pick up a Cube
+public class CmdGrpCubePickupPosition extends ParallelCommandGroup {
 
-    public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
+    public CmdGrpCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
             Pivot s_Pivot) {
         addCommands(
                 new TelescopicRetract(s_Telescopic),

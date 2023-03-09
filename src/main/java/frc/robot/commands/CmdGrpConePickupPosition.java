@@ -7,23 +7,29 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-//import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ConeGuideConstants;
+import frc.robot.Constants.GripperConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
+import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-public class SeqCmdTravelPosition extends SequentialCommandGroup {
+//Gets the robot ready to pick up a Cone
+public class CmdGrpConePickupPosition extends SequentialCommandGroup {
 
-    public SeqCmdTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
+    public CmdGrpConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot,
+            Intake s_Intake) {
         addCommands(
+                new TelescopicRetract(s_Telescopic),
                 new ParallelCommandGroup(new Command[] {
-                        new TelescopicRetract(s_Telescopic),
-                        new ConeGuideRetract(s_ConeGuide)
+                        new GripperRelease(s_Gripper)
+                                .withTimeout(GripperConstants.kGripperReleaseTimeout),
+                        new ConeGuideDeploy(s_ConeGuide)
                                 .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCone)
                 }));
     }
 }

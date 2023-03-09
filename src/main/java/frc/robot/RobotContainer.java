@@ -115,12 +115,7 @@ public class RobotContainer {
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
-                .onTrue(new SequentialCommandGroup(new Command[] {
-                        new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionScoringRelease),
-                        new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-                        new ParallelCommandGroup(new Command[] {
-                                new TelescopicRetract(s_Telescopic),
-                                new PivotMoveToPosition(s_Pivot, Constants.PivotConstants.kPositionTravel) }) }));
+                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic));
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
                         s_Swerve,
@@ -138,11 +133,11 @@ public class RobotContainer {
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
-                .onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
+                .onTrue(new CmdGrpCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
         operatorRightTriggerDepressed
-                .onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
-        operatorYButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
-        operatorAButton.onTrue(new SeqCmdScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
+                .onTrue(new CmdGrpConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
+        operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
+        operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
         operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
         operatorUpButton
                 .onTrue(new IntakeExtend(s_Intake, s_Pivot, true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
