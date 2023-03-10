@@ -50,6 +50,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.PhotonCameraWrapper;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.autos.DropAndDriveYellowSide;
 
 public class Swerve extends SubsystemBase {
@@ -60,14 +61,16 @@ public class Swerve extends SubsystemBase {
 
     private Field2d field;
 
-    public PhotonCameraWrapper pcw;
+    public PhotonCameraWrapper pcw1;
+    public PhotonCameraWrapper pcw2;
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
 
-        pcw = new PhotonCameraWrapper();
+        pcw1 = new PhotonCameraWrapper(VisionConstants.kCameraName, VisionConstants.kRobotToCam);
+        pcw2 = new PhotonCameraWrapper(VisionConstants.kCameraName2, VisionConstants.kRobotToCam2);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -195,7 +198,16 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
 
-        Optional<EstimatedRobotPose> result = pcw.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+        Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+        if (result.isPresent()) {
+            EstimatedRobotPose camPose = result.get();
+            swervePoseEstimator.addVisionMeasurement(
+                    camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
+            field.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+        }
+
+        result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
         if (result.isPresent()) {
             EstimatedRobotPose camPose = result.get();

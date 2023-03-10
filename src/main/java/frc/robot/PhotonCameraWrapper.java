@@ -27,6 +27,7 @@ package frc.robot;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.VisionConstants;
 import java.io.IOException;
@@ -40,9 +41,9 @@ public class PhotonCameraWrapper {
     private PhotonCamera photonCamera;
     private PhotonPoseEstimator photonPoseEstimator;
 
-    public PhotonCameraWrapper() {
+    public PhotonCameraWrapper(String cameraName, Transform3d cameraOffset) {
         // Change the name of your camera here to whatever it is in the PhotonVision UI.
-        photonCamera = new PhotonCamera(VisionConstants.kCameraName);
+        photonCamera = new PhotonCamera(cameraName);
 
         try {
             // Attempt to load the AprilTagFieldLayout that will tell us where the tags are
@@ -50,7 +51,7 @@ public class PhotonCameraWrapper {
             AprilTagFieldLayout fieldLayout = AprilTagFields.k2023ChargedUp.loadAprilTagLayoutField();
             // Create pose estimator
             photonPoseEstimator = new PhotonPoseEstimator(
-                    fieldLayout, PoseStrategy.MULTI_TAG_PNP, photonCamera, VisionConstants.kRobotToCam);
+                    fieldLayout, PoseStrategy.MULTI_TAG_PNP, photonCamera, cameraOffset);
             photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         } catch (IOException e) {
             // The AprilTagFieldLayout failed to load. We won't be able to estimate poses if
