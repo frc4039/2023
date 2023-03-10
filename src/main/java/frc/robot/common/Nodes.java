@@ -1,0 +1,58 @@
+package frc.robot.common;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.subsystems.Swerve;
+
+public class Nodes {
+    private static String[] translationLabels;
+    private static Translation2d[] translations;
+
+    private Swerve swerve;
+
+    public Nodes(Swerve swerve) {
+        this.swerve = swerve;
+
+        translationLabels = new String[] {
+                "Location 1",
+                "Location 2"
+        };
+        translations = new Translation2d[] {
+                new Translation2d(15.01, 5.05),
+                new Translation2d(14.98, 3.91)
+        };
+    }
+
+    public Translation2d[] getTranslations() {
+        return translations;
+    }
+
+    public Translation2d getNearestTranslation() {
+        Translation2d nearestNode = translations[0];
+        for (Translation2d translation : translations) {
+            if (DistanceToTranslation(translation) < DistanceToTranslation(nearestNode)) {
+                nearestNode = translation;
+            }
+        }
+
+        return nearestNode;
+    }
+
+    public String getTranslationLabel(Translation2d translation) {
+        for (int i = 0; i < translationLabels.length; i++) {
+            if (translations[i] == translation) {
+                return translationLabels[i];
+            }
+        }
+
+        return "";
+    }
+
+    private double DistanceToTranslation(Translation2d translation) {
+        return DistanceBetweenTranslations(swerve.getPose().getTranslation(), translation);
+    }
+
+    private double DistanceBetweenTranslations(Translation2d translationA, Translation2d translationB) {
+        return Math.sqrt(Math.pow(translationA.getX() - translationB.getX(), 2)
+                + Math.pow(translationA.getY() - translationB.getY(), 2));
+    }
+}

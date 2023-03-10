@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.*;
-import frc.robot.common.FindNearestNode;
 import frc.robot.subsystems.*;
 
 /**
@@ -80,10 +78,9 @@ public class RobotContainer {
     private final IntakeSpinner s_IntakeSpinner = new IntakeSpinner();
     private final ConeGuide s_ConeGuide = new ConeGuide();
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
+    private final NodeSelector s_NodeSelector = new NodeSelector(this);
 
     private AutoModeSelector autoModeSelector;
-
-    private final FindNearestNode findNearestNode = new FindNearestNode(s_Swerve);
 
     public class setDefaultCommand {
     }
@@ -110,11 +107,13 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_IntakeSpinner);
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
+        CommandScheduler.getInstance().registerSubsystem(s_NodeSelector);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
         mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
+        mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
 
         configureButtonBindings();
     }
@@ -143,8 +142,8 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> findNearestNode.getTranslation().getX(),
-                () -> findNearestNode.getTranslation().getY(), () -> 0.0));
+        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
+                () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
 
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
@@ -154,10 +153,17 @@ public class RobotContainer {
                 .onTrue(new SeqCmdConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorYButton.onTrue(new SeqCmdTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new SeqCmdConeScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
-        operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
-        operatorUpButton
-                .onTrue(new IntakeExtend(s_Intake, s_Pivot, true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
-        operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
+
+        // Intake stuff
+        // operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
+        // operatorUpButton
+        // .onTrue(new IntakeExtend(s_Intake, s_Pivot,
+        // true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
+        // operatorDownButton.onTrue(new
+        // IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
+        operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
+        operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
+        operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
 
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));

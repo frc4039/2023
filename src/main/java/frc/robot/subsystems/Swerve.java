@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package frc.robot.subsystems;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
@@ -45,8 +44,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -54,7 +51,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.PhotonCameraWrapper;
 import frc.robot.autos.DropAndDriveYellowSide;
-import frc.robot.commands.AutoFollowPath;
 
 public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro;
@@ -123,9 +119,9 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    private Rotation2d inverse(Rotation2d a) {
-        return new Rotation2d(a.getCos(), -a.getSin());
-    }
+    // private Rotation2d inverse(Rotation2d a) {
+    // return new Rotation2d(a.getCos(), -a.getSin());
+    // }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {

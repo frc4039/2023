@@ -12,6 +12,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Swerve;
 
 public class PIDTranslate extends CommandBase {
@@ -27,7 +28,7 @@ public class PIDTranslate extends CommandBase {
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
 
     private PIDController xPidController = new PIDController(0.4, 0, 0);
-    private PIDController yPidController = new PIDController(0.5, 0, 0);
+    private PIDController yPidController = new PIDController(0.4, 0, 0);
 
     public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
         this.swerve = swerve;
@@ -57,6 +58,9 @@ public class PIDTranslate extends CommandBase {
         double strafeVal = -strafeLimiter.calculate(
                 yPidController.calculate(swerve.getPose().getY()));
         double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+
+        translationVal = translationVal + Math.signum(translationVal) * VisionConstants.kTranslationFF;
+        strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
 
         swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal,
                 true);
