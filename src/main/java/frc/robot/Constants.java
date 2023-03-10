@@ -316,7 +316,7 @@ public final class Constants {
 
     public static final class VisionConstants {
         public static final String kCameraName1 = "OV5647";
-        public static final String kCameraName2 = "";
+        public static final String kCameraName2 = "camera2";
 
         public static final Transform3d kRobotToCam1 = new Transform3d(
                 new Translation3d(0.098, -0.038, 0.683),
