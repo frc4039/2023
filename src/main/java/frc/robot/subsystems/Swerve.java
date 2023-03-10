@@ -69,7 +69,7 @@ public class Swerve extends SubsystemBase {
         gyro.configFactoryDefault();
         zeroGyro();
 
-        pcw1 = new PhotonCameraWrapper(VisionConstants.kCameraName, VisionConstants.kRobotToCam);
+        pcw1 = new PhotonCameraWrapper(VisionConstants.kCameraName1, VisionConstants.kRobotToCam1);
         pcw2 = new PhotonCameraWrapper(VisionConstants.kCameraName2, VisionConstants.kRobotToCam2);
 
         mSwerveMods = new SwerveModule[] {
@@ -201,22 +201,25 @@ public class Swerve extends SubsystemBase {
         Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
         if (result.isPresent()) {
-            EstimatedRobotPose camPose = result.get();
+            EstimatedRobotPose camPose1 = result.get();
             swervePoseEstimator.addVisionMeasurement(
-                    camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            field.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+                    camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds);
+            field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
+        } else {
+            // move it way off the screen to make it disappear
+            field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
 
         result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
         if (result.isPresent()) {
-            EstimatedRobotPose camPose = result.get();
+            EstimatedRobotPose camPose2 = result.get();
             swervePoseEstimator.addVisionMeasurement(
-                    camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
-            field.getObject("Cam Est Pos").setPose(camPose.estimatedPose.toPose2d());
+                    camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
+            field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
         } else {
             // move it way off the screen to make it disappear
-            field.getObject("Cam Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
         }
 
         System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
