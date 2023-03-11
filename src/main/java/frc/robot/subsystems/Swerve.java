@@ -45,7 +45,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.autos.DropAndDriveYellowSide;
+import frc.robot.autos.*;
 
 public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro;
@@ -77,7 +77,8 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
+        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.path);
+        
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
         tab.add("Field", field);

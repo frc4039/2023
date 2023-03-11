@@ -20,46 +20,50 @@ import frc.robot.commands.GripperRelease;
 import frc.robot.commands.GripperRetrieve;
 import frc.robot.commands.ResetRobotPose;
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 public class DropAndDriveAndPickup extends SequentialCommandGroup {
 
     public DropAndDriveAndPickup(RobotContainer container) {
-        addCommands(
-                (new CmdGrpTravelPosition(container.getTelescopic(),
-                        container.getConeGuide(), container.getPivot(),
-                        container.getIntake())).withTimeout(1));
-        addCommands(
-                (new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
-                        container.getPivot())).withTimeout(4));
-        addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
-        addCommands(
-                (new CmdGrpTravelPosition(container.getTelescopic(),
-                        container.getConeGuide(), container.getPivot(),
-                        container.getIntake())).withTimeout(3));
+        addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
+        addCommands(new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
+        addCommands(new SequentialCommandGroup(new Command[] {
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
+                new GripperRelease(container.getGripper())
+                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                new ParallelCommandGroup(new Command[] {
+                        new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+                        new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                                .withTimeout(1.0) }) }));
         addCommands(new ResetRobotPose(container.getSwerve(), path.getInitialPose()));
         addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(), path));
         addCommands(new CmdGrpConePickupPosition(container.getTelescopic(), container.getGripper(), container.getConeGuide(), container.getPivot(), container.getIntake()));
+        addCommands(new WaitCommand(0.5));
         addCommands(new GripperRetrieve(container.getGripper()));
-        addCommands(new ParallelCommandGroup(new CmdGrpTravelPosition(container.getTelescopic(), container.getConeGuide(), container.getPivot(), container.getIntake()), 
+        /*addCommands(new ParallelCommandGroup(new CmdGrpTravelPosition(container.getTelescopic(), container.getConeGuide(), container.getPivot(), container.getIntake()), 
                     AutoFollowPath.createFollowCommand(container.getSwerve(), step2)));
-                    addCommands(
-                (new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
-                        container.getPivot())).withTimeout(4));
-        addCommands((new GripperRelease(container.getGripper())).withTimeout(2));
-        addCommands(
-                (new CmdGrpTravelPosition(container.getTelescopic(),
-                        container.getConeGuide(), container.getPivot(),
-                        container.getIntake())).withTimeout(3));
+        addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
+        addCommands(new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
+        addCommands(new SequentialCommandGroup(new Command[] {
+                    new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
+                    new GripperRelease(container.getGripper())
+                            .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                    new ParallelCommandGroup(new Command[] {
+                    new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+                    new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                            .withTimeout(1.0) }) }));;*/
     }
 
     public static Trajectory path = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1.5, 0)),
-            new Pose2d(4.5, 0, Rotation2d.fromDegrees(180)),
+            List.of(),
+            new Pose2d(4.5, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
 
     public static Trajectory step2 = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                List.of(new Translation2d(1.5, 0)),
-                new Pose2d(4.5, 0, Rotation2d.fromDegrees(180)),
+                List.of(),
+                new Pose2d(4.5, 0, Rotation2d.fromDegrees(0)),
                 Constants.AutoConstants.reverseConfig);
 }
