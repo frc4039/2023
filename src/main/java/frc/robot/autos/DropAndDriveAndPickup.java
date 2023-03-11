@@ -41,18 +41,19 @@ public class DropAndDriveAndPickup extends SequentialCommandGroup {
         addCommands(new CmdGrpConePickupPosition(container.getTelescopic(), container.getGripper(), container.getConeGuide(), container.getPivot(), container.getIntake()));
         addCommands(new WaitCommand(0.5));
         addCommands(new GripperRetrieve(container.getGripper()));
-        /*addCommands(new ParallelCommandGroup(new CmdGrpTravelPosition(container.getTelescopic(), container.getConeGuide(), container.getPivot(), container.getIntake()), 
-                    AutoFollowPath.createFollowCommand(container.getSwerve(), step2)));
-        addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
-        addCommands(new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
-        addCommands(new SequentialCommandGroup(new Command[] {
-                    new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
-                    new GripperRelease(container.getGripper())
-                            .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-                    new ParallelCommandGroup(new Command[] {
-                    new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
-                    new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
-                            .withTimeout(1.0) }) }));;*/
+        addCommands(new CmdGrpTravelPosition(container.getTelescopic(), container.getConeGuide(), container.getPivot(), container.getIntake())); 
+        addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(), step2));
+        // addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
+        // addCommands(new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
+        // addCommands(new SequentialCommandGroup(new Command[] {
+        //             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
+        //             new GripperRelease(container.getGripper())
+        //                     .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+        //             new ParallelCommandGroup(new Command[] {
+        //             new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+        //             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+        //                     .withTimeout(1.0) }) }));;
+        
     }
 
     public static Trajectory path = TrajectoryGenerator.generateTrajectory(
