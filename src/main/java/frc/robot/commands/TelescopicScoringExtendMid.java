@@ -15,9 +15,7 @@ public class TelescopicScoringExtendMid extends CommandBase {
     private final Pivot m_Pivot;
     private double targetPosition;
 
-    /** Creates a new TelescopicExtend. */
     public TelescopicScoringExtendMid(Telescopic telescopic, Pivot pivot) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
         m_Pivot = pivot;
         addRequirements(m_Telescopic);

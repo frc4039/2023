@@ -43,7 +43,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.autos.DropAndDriveYellowSide;
@@ -79,17 +78,10 @@ public class Swerve extends SubsystemBase {
 
         field = new Field2d();
         field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
-        // SmartDashboard.putData("Field", field);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
         tab.add("Field", field);
         for (SwerveModule mod : mSwerveMods) {
-            // tab.addNumber("Mod " + mod.moduleNumber + " Cancoder", () ->
-            // mod.getCanCoder().getDegrees());
-            // tab.addNumber("Mod " + mod.moduleNumber + " Integrated", () ->
-            // mod.getState().angle.getDegrees());
-            // tab.addNumber("Mod " + mod.moduleNumber + " Velocity", () ->
-            // mod.getState().speedMetersPerSecond);
             tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
         }
         tab.addString("Pose", () -> getPose().toString());
@@ -98,11 +90,6 @@ public class Swerve extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw()));
-
-        // Translation2d t = translation.rotateBy(inverse(getPose().getRotation()));
-        // ChassisSpeeds s = new ChassisSpeeds(t.getX(), t.getY(), rotation);
-        // SwerveModuleState[] swerveModuleStates =
-        // Constants.Swerve.swerveKinematics.toSwerveModuleStates(s);
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeed);
 

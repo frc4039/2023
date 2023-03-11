@@ -19,7 +19,7 @@ public class DropAndBalanceYellowSide extends SequentialCommandGroup {
         addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
         addCommands(new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
         addCommands(new SequentialCommandGroup(new Command[] {
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringConeRelease),
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
                 new GripperRelease(container.getGripper())
                         .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {

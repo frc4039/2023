@@ -17,15 +17,11 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SeqCmdConePickupPosition extends SequentialCommandGroup {
-    /** Creates a new ConePickup. */
-    public SeqCmdConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot,
+//Gets the robot ready to pick up a Cone
+public class CmdGrpConePickupPosition extends SequentialCommandGroup {
+
+    public CmdGrpConePickupPosition(Telescopic s_Telescopic, Gripper s_Gripper, ConeGuide s_ConeGuide, Pivot s_Pivot,
             Intake s_Intake) {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new TelescopicRetract(s_Telescopic),
                 new ParallelCommandGroup(new Command[] {
@@ -33,12 +29,7 @@ public class SeqCmdConePickupPosition extends SequentialCommandGroup {
                                 .withTimeout(GripperConstants.kGripperReleaseTimeout),
                         new ConeGuideDeploy(s_ConeGuide)
                                 .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCone),
-                        new SequentialCommandGroup(new Command[] {
-                                new WaitUntilCommand(
-                                        () -> s_Pivot.getEncoder() >= PivotConstants.kPositionPrePickupCube),
-                        // new IntakeRetract(s_Intake)
-                        })
+                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCone)
                 }));
     }
 }

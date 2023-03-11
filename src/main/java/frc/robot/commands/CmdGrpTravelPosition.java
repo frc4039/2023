@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-//import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ConeGuideConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
@@ -15,28 +14,16 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SeqCmdTravelPosition extends SequentialCommandGroup {
-    /** Creates a new TravelPosition. */
-    public SeqCmdTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
+//Gets the robot subsystems in travel mode- that is, everything retracted and pivot to vertical position*/
+public class CmdGrpTravelPosition extends SequentialCommandGroup {
+
+    public CmdGrpTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
         addCommands(
-                // new IntakeExtend(s_Intake, s_Pivot, false),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new ConeGuideRetract(s_ConeGuide)
                                 .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
                         new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
-                /*
-                 * new SequentialCommandGroup(new Command[] {
-                 * new WaitUntilCommand(
-                 * () -> s_Pivot.getEncoder() >= PivotConstants.kPositionForSafeIntakeRetract),
-                 * new IntakeRetract(s_Intake)
-                 * })
-                 */
                 }));
     }
 }
