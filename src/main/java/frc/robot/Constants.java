@@ -325,7 +325,7 @@ public final class Constants {
                 new Rotation3d(0.0, 0.0, Math.PI));
 
         public static final Transform3d kRobotToCam2 = new Transform3d(
-                new Translation3d(0.098, -0.038, 0.683),
+                new Translation3d(-0.095, -0.038, 0.683),
                 new Rotation3d(0.0, 0.0, Math.PI));
 
         public static final double kTranslationFF = 0.007;
