@@ -44,6 +44,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -187,31 +188,34 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
 
-        Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+        if(!DriverStation.isAutonomousEnabled()){
 
-        if (result.isPresent()) {
-            EstimatedRobotPose camPose1 = result.get();
-            swervePoseEstimator.addVisionMeasurement(
-                    camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds);
-            field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
-        } else {
-            // move it way off the screen to make it disappear
-            field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose1 = result.get();
+                swervePoseEstimator.addVisionMeasurement(
+                        camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds);
+                field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
+            } else {
+                // move it way off the screen to make it disappear
+                field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
+
+            result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose2 = result.get();
+                swervePoseEstimator.addVisionMeasurement(
+                        camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
+                field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
+            } else {
+                // move it way off the screen to make it disappear
+                field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
+
+            System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
         }
-
-        result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
-
-        if (result.isPresent()) {
-            EstimatedRobotPose camPose2 = result.get();
-            swervePoseEstimator.addVisionMeasurement(
-                    camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
-            field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
-        } else {
-            // move it way off the screen to make it disappear
-            field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
-        }
-
-        System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
 
         field.setRobotPose(getPose());
     }
