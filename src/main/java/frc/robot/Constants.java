@@ -34,7 +34,10 @@ package frc.robot;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -311,5 +314,21 @@ public final class Constants {
         public static final int kConeGuideReverseChannel = 3;
         public static final double kConeGuideRetractTimeout = 0.35;
         public static final double kConeGuideDeployTimeout = 0.5;
+    }
+
+    public static final class VisionConstants {
+        public static final String kCameraName1 = "OV5647";
+        public static final String kCameraName2 = "camera2";
+
+        public static final Transform3d kRobotToCam1 = new Transform3d(
+                new Translation3d(0.098, -0.038, 0.683),
+                new Rotation3d(0.0, 0.0, Math.PI));
+
+        public static final Transform3d kRobotToCam2 = new Transform3d(
+                new Translation3d(0.098, -0.038, 0.683),
+                new Rotation3d(0.0, 0.0, Math.PI));
+
+        public static final double kTranslationFF = 0.007;
+        public static final double kStrafeFF = kTranslationFF;
     }
 }
