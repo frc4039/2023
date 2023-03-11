@@ -90,7 +90,7 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.path);
+        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.returnPath);
         
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
@@ -214,7 +214,7 @@ public class Swerve extends SubsystemBase {
                 field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
             }
 
-            System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
+            // System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
         }
 
         field.setRobotPose(getPose());
