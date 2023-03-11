@@ -62,7 +62,7 @@ public class PIDTranslate extends CommandBase {
         translationVal = translationVal + Math.signum(translationVal) * VisionConstants.kTranslationFF;
         strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
 
-        swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal,
+        swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
                 true);
     }
 
