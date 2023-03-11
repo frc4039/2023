@@ -13,12 +13,20 @@ public class Nodes {
         this.swerve = swerve;
 
         translationLabels = new String[] {
-                "Location 1",
-                "Location 2"
+                "P 1",
+                "P 2",
+                "P 3",
+                "P 4",
+                "P 5",
+                "P 6"
         };
         translations = new Translation2d[] {
-                new Translation2d(15.01, 5.05),
-                new Translation2d(14.98, 3.91)
+                new Translation2d(15, 0.54),
+                new Translation2d(15, 1.70),
+                new Translation2d(15, 2.13),
+                new Translation2d(15, 3.31),
+                new Translation2d(15, 3.84),
+                new Translation2d(15, 5.05)
         };
     }
 
