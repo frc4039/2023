@@ -11,11 +11,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -42,6 +39,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverXButton = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driverLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
             XboxController.Button.kRightBumper.value);
@@ -73,6 +71,7 @@ public class RobotContainer {
     private final IntakeSpinner s_IntakeSpinner = new IntakeSpinner();
     private final ConeGuide s_ConeGuide = new ConeGuide();
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
+    private final NodeSelector s_NodeSelector = new NodeSelector(this);
 
     private AutoModeSelector autoModeSelector;
 
@@ -101,11 +100,13 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_IntakeSpinner);
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
+        CommandScheduler.getInstance().registerSubsystem(s_NodeSelector);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
         mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
+        mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
 
         configureButtonBindings();
     }
@@ -129,7 +130,9 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        /* Operator Buttons */
+        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
+                () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
+
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
@@ -138,10 +141,19 @@ public class RobotContainer {
                 .onTrue(new CmdGrpConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide, s_Pivot, s_Intake));
         operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
-        operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
-        operatorUpButton
-                .onTrue(new IntakeExtend(s_Intake, s_Pivot, true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
-        operatorDownButton.onTrue(new IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
+        operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
+        operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
+        operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
+
+        /*
+         * ********** Intake manual control code ************
+         * operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
+         * operatorUpButton
+         * .onTrue(new IntakeExtend(s_Intake, s_Pivot,
+         * true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
+         * operatorDownButton.onTrue(new
+         * IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
+         */
 
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
