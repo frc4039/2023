@@ -10,9 +10,7 @@ import frc.robot.subsystems.Gripper;
 public class GripperRelease extends CommandBase {
     private final Gripper m_Gripper;
 
-    /** Creates a new GripperRelease. */
     public GripperRelease(Gripper gripper) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Gripper = gripper;
 
         addRequirements(m_Gripper);

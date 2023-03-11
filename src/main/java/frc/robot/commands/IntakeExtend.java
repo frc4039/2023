@@ -15,9 +15,7 @@ public class IntakeExtend extends CommandBase {
     private final Pivot m_Pivot;
     private final boolean m_manualExtend;
 
-    /** Creates a new IntakeDeploy. */
     public IntakeExtend(Intake intake, Pivot pivot, boolean manualExtend) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Intake = intake;
         m_Pivot = pivot;
         m_manualExtend = manualExtend;

@@ -11,9 +11,7 @@ import frc.robot.subsystems.Telescopic;
 public class TelescopicRetract extends CommandBase {
     private final Telescopic m_Telescopic;
 
-    /** Creates a new TelescopicRetract. */
     public TelescopicRetract(Telescopic telescopic) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Telescopic = telescopic;
         addRequirements(m_Telescopic);
     }
@@ -27,12 +25,6 @@ public class TelescopicRetract extends CommandBase {
     @Override
     public void execute() {
         m_Telescopic.armSetPosition(TelescopicConstants.kTelescopicRetracted);
-        /*
-         * if (m_Telescopic.getEncoderPosition() ==
-         * TelescopicConstants.kTelescopicRetracted) {
-         * m_Telescopic.zeroEncoder();
-         * }
-         */
     }
 
     // Called once the command ends or is interrupted.

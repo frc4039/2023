@@ -13,9 +13,7 @@ public class IntakeRetract extends CommandBase {
     private final Intake m_Intake;
     private Timer intakeTimer;
 
-    /** Creates a new IntakeRetract. */
     public IntakeRetract(Intake intake) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_Intake = intake;
         intakeTimer = new Timer();
         addRequirements(m_Intake);
