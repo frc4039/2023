@@ -26,7 +26,7 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
 
         // drop pivot and open gripper
         addCommands(
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringConeRelease));
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease));
         addCommands(new GripperRelease(container.getGripper())
                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
