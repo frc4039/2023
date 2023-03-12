@@ -185,9 +185,8 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
-        public static final double kBalanceSpeed = 0.3;
-
-        public static final double kAcceleratedBalanceSpeed = 0.55;
+        public static final double kBalanceSpeed = 0.3; // This is the variable to increase speed for
+                                                        // DropMobilityBalance
 
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
