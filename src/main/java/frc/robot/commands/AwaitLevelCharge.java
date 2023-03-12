@@ -4,19 +4,15 @@
 
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
 public class AwaitLevelCharge extends CommandBase {
     private final Swerve swerve;
-    private final BooleanSupplier reverse;
     private boolean liftoff = false;
 
-    public AwaitLevelCharge(Swerve swerve, BooleanSupplier reverse) {
+    public AwaitLevelCharge(Swerve swerve) {
         this.swerve = swerve;
-        this.reverse = reverse;
     }
 
     @Override
@@ -25,8 +21,7 @@ public class AwaitLevelCharge extends CommandBase {
 
     @Override
     public void execute() {
-        if (!reverse.getAsBoolean() && swerve.getRawPitch() > 20.0
-                || reverse.getAsBoolean() && swerve.getRawPitch() < -20.0) {
+        if (Math.abs(swerve.getRawPitch()) > 20.0) {
             liftoff = true;
         }
     }
@@ -37,8 +32,7 @@ public class AwaitLevelCharge extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (liftoff && (!reverse.getAsBoolean() && swerve.getRawPitch() < 19.0
-                || reverse.getAsBoolean() && swerve.getRawPitch() > -19.0)) {
+        if (liftoff && Math.abs(swerve.getRawPitch()) < 12.0) {
             return true;
         }
 

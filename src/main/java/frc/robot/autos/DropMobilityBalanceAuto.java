@@ -40,7 +40,7 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
 
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
                 pDropAndBalanceYellowSide1),
-                new AwaitLevelCharge(container.getSwerve(), () -> false)));
+                new AwaitLevelCharge(container.getSwerve())));
     }
 
     public static Trajectory pDropToMobility = TrajectoryGenerator.generateTrajectory(
@@ -52,6 +52,6 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
     public static Trajectory pDropAndBalanceYellowSide1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(4.5, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(2.5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(2.0, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.balanceReverseConfig);
 }
