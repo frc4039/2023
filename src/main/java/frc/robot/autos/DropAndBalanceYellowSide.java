@@ -29,7 +29,7 @@ public class DropAndBalanceYellowSide extends SequentialCommandGroup {
         addCommands(new ResetRobotPose(container.getSwerve(), pDropAndBalanceYellowSide1.getInitialPose()));
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
                 pDropAndBalanceYellowSide1),
-                new AwaitLevelCharge(container.getSwerve(), () -> false)));
+                new AwaitLevelCharge(container.getSwerve())));
     }
 
     public static Trajectory pDropAndBalanceYellowSide1 = TrajectoryGenerator.generateTrajectory(

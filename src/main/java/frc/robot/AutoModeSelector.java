@@ -12,6 +12,7 @@ public class AutoModeSelector {
         autoModeChooser.setDefaultOption("Select...", doNothingCommand(container));
         autoModeChooser.addOption("Drop and drive (yellow side)", dropAndDriveYellow(container));
         autoModeChooser.addOption("Drop and balance (yellow side)", dropAndBalanceYellow(container));
+        autoModeChooser.addOption("Drop, Mobility, and balance", dropMobilityAndBalance(container));
         autoModeChooser.addOption("Drop, drive, strafe, and pickup", new DropAndDriveAndStrafeAndPickup(container));
     }
 
@@ -31,6 +32,10 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup dropAndBalanceYellow(RobotContainer container) {
         return new DropAndBalanceYellowSide(container);
+    }
+
+    private SequentialCommandGroup dropMobilityAndBalance(RobotContainer container) {
+        return new DropMobilityBalanceAuto(container);
     }
 
 }
