@@ -80,7 +80,7 @@ public class TeleopSwerve extends CommandBase {
             lastSetPoint = 0;
             rotationController.setSetpoint(0);
         } else if (Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2)
-                + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.rotationStickDeadband) {
+                + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.kRotationStickDeadband) {
             double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
             rotationController.setSetpoint(curSetPoint);
             lastSetPoint = curSetPoint;
@@ -92,14 +92,14 @@ public class TeleopSwerve extends CommandBase {
 
         /* Get Values, Deadband */
         double translationVal = translationLimiter.calculate(
-                MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
+                MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
         double strafeVal = strafeLimiter.calculate(
-                MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.translationStickDeadband));
-        double rotationVal = MathUtil.clamp(rotationOutput, -Constants.Swerve.maxAngularVelocityInRadiansPerSecond,
-                Constants.Swerve.maxAngularVelocityInRadiansPerSecond);
+                MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
+        double rotationVal = MathUtil.clamp(rotationOutput, -Constants.Swerve.kMaxAngularVelocityInRadiansPerSecond,
+                Constants.Swerve.kMaxAngularVelocityInRadiansPerSecond);
 
         /* Drive */
-        s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal,
+        s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
                 true);
     }
 

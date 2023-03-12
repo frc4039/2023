@@ -10,9 +10,7 @@ import frc.robot.subsystems.IntakeSpinner;
 public class IntakeMotorSpin extends CommandBase {
     private final IntakeSpinner m_intakeSpinner;
 
-    /** Creates a new IntakeMotorSpin. */
     public IntakeMotorSpin(IntakeSpinner intakeSpinner) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_intakeSpinner = intakeSpinner;
         addRequirements(m_intakeSpinner);
     }

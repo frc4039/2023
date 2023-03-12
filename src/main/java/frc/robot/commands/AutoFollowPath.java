@@ -20,13 +20,14 @@ public class AutoFollowPath {
 	public static Command createFollowCommand(Swerve swerve, Trajectory trajectory){
 		thetaController.enableContinuousInput(-Math.PI, Math.PI);
 		return new SwerveControllerCommand(
-			trajectory,
-			swerve::getPose,
-			Constants.Swerve.swerveKinematics,
-			new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-			new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-			thetaController,
-			swerve::setModuleStates,
-			swerve);
+				trajectory,
+				swerve::getPose,
+				Constants.Swerve.swerveKinematics,
+				new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+				new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+				thetaController,
+				swerve::setModuleStates,
+				swerve)
+			.andThen(new StopDrive(swerve));
 	}
 }

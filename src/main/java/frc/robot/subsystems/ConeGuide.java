@@ -7,22 +7,22 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class ConeGuide extends SubsystemBase {
 
-    DoubleSolenoid coneGuidePneumatic = new DoubleSolenoid(Constants.solenoidCanID,PneumaticsModuleType.REVPH, 
-                                                            Constants.ConeGuideConstants.kConeGuideForwardChannel, 
-                                                            Constants.ConeGuideConstants.kConeGuideReverseChannel);
+    DoubleSolenoid coneGuidePneumatic = new DoubleSolenoid(Constants.kSolenoidCanID, PneumaticsModuleType.REVPH,
+            Constants.ConeGuideConstants.kConeGuideForwardChannel,
+            Constants.ConeGuideConstants.kConeGuideReverseChannel);
 
-    public ConeGuide(){
+    public ConeGuide() {
     }
 
-    public void setOff(){
+    public void setOff() {
         coneGuidePneumatic.set(DoubleSolenoid.Value.kOff);
     }
 
-    public void setForward(){
+    public void setForward() {
         coneGuidePneumatic.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void setReverse(){
+    public void setReverse() {
         coneGuidePneumatic.set(DoubleSolenoid.Value.kReverse);
     }
 }

@@ -30,6 +30,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -40,13 +44,15 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.autos.DropAndDriveYellowSide;
+import frc.robot.PhotonCameraWrapper;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.autos.*;
 
 public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro;
@@ -56,10 +62,16 @@ public class Swerve extends SubsystemBase {
 
     private Field2d field;
 
+    public PhotonCameraWrapper pcw1;
+    public PhotonCameraWrapper pcw2;
+
     public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro = new Pigeon2(Constants.Swerve.kPigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+
+        pcw1 = new PhotonCameraWrapper(VisionConstants.kCameraName1, VisionConstants.kRobotToCam1);
+        pcw2 = new PhotonCameraWrapper(VisionConstants.kCameraName2, VisionConstants.kRobotToCam2);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -78,18 +90,12 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropAndDriveYellowSide.path);
-        // SmartDashboard.putData("Field", field);
+        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.returnPath);
+        
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
         tab.add("Field", field);
         for (SwerveModule mod : mSwerveMods) {
-            // tab.addNumber("Mod " + mod.moduleNumber + " Cancoder", () ->
-            // mod.getCanCoder().getDegrees());
-            // tab.addNumber("Mod " + mod.moduleNumber + " Integrated", () ->
-            // mod.getState().angle.getDegrees());
-            // tab.addNumber("Mod " + mod.moduleNumber + " Velocity", () ->
-            // mod.getState().speedMetersPerSecond);
             tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
         }
         tab.addString("Pose", () -> getPose().toString());
@@ -99,25 +105,20 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw()));
 
-        // Translation2d t = translation.rotateBy(inverse(getPose().getRotation()));
-        // ChassisSpeeds s = new ChassisSpeeds(t.getX(), t.getY(), rotation);
-        // SwerveModuleState[] swerveModuleStates =
-        // Constants.Swerve.swerveKinematics.toSwerveModuleStates(s);
-
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
     }
 
-    private Rotation2d inverse(Rotation2d a) {
-        return new Rotation2d(a.getCos(), -a.getSin());
-    }
+    // private Rotation2d inverse(Rotation2d a) {
+    // return new Rotation2d(a.getCos(), -a.getSin());
+    // }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.kMaxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -168,7 +169,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro)
+        return (Constants.Swerve.kInvertGyro)
                 ? Rotation2d.fromDegrees(360 - gyro.getYaw())
                 : Rotation2d.fromDegrees(gyro.getYaw());
     }
@@ -186,6 +187,35 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[2].getOdometryPosition(),
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
+
+        if(!DriverStation.isAutonomousEnabled()){
+
+            Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose1 = result.get();
+                swervePoseEstimator.addVisionMeasurement(
+                        camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds);
+                field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
+            } else {
+                // move it way off the screen to make it disappear
+                field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
+
+            result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+            if (result.isPresent()) {
+                EstimatedRobotPose camPose2 = result.get();
+                swervePoseEstimator.addVisionMeasurement(
+                        camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
+                field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
+            } else {
+                // move it way off the screen to make it disappear
+                field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
+            }
+
+            // System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
+        }
 
         field.setRobotPose(getPose());
     }
