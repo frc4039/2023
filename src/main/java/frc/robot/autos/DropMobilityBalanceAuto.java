@@ -18,7 +18,7 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
     public DropMobilityBalanceAuto(RobotContainer container) {
         // reset initial pose TODO: does this need to be changed now that we use April
         // tags?
-        addCommands(new ResetRobotPose(container.getSwerve(), pDropAndBalanceYellowSide1.getInitialPose()));
+        addCommands(new ResetRobotPose(container.getSwerve(), pDropToMobility.getInitialPose()));
 
         // Pivot and extend arm
         addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
@@ -47,7 +47,7 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
             new Pose2d(4.0, 0, Rotation2d.fromDegrees(0)),
-            Constants.AutoConstants.forwardConfig);
+            Constants.AutoConstants.balanceForwardConfig);
 
     public static Trajectory pDropAndBalanceYellowSide1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(4.0, 0, Rotation2d.fromDegrees(0)),

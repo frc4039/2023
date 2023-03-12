@@ -90,8 +90,7 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.returnPath);
-        
+        field.getObject("Auto path").setTrajectory(DropMobilityBalanceAuto.pDropToMobility);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
         tab.add("Field", field);
@@ -188,9 +187,10 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
 
-        if(!DriverStation.isAutonomousEnabled()){
+        if (!DriverStation.isAutonomousEnabled()) {
 
-            Optional<EstimatedRobotPose> result = pcw1.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+            Optional<EstimatedRobotPose> result = pcw1
+                    .getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
             if (result.isPresent()) {
                 EstimatedRobotPose camPose1 = result.get();

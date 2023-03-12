@@ -187,6 +187,8 @@ public final class Constants {
 
         public static final double kBalanceSpeed = 0.3;
 
+        public static final double kAcceleratedBalanceSpeed = 0.55;
+
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
                 kMaxAccelerationMetersPerSecondSquared)
