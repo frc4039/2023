@@ -32,7 +32,7 @@ public class DropAndDriveAndStrafeAndPickup extends SequentialCommandGroup {
                         new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                         new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                 .withTimeout(1.0) }) }));
-        addCommands(new ResetRobotPose(container.getSwerve(), backoutPath_step1.getInitialPose()));
+        addCommands(new ResetRobotPose(container.getSwerve(), backoutPath_step0.getInitialPose()));
         addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(), backoutPath_step0));
         
     }
