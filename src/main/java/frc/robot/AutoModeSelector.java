@@ -12,6 +12,7 @@ public class AutoModeSelector {
         autoModeChooser.setDefaultOption("Select...", doNothingCommand(container));
         autoModeChooser.addOption("Drop and drive (yellow side)", dropAndDriveYellow(container));
         autoModeChooser.addOption("Drop and balance (yellow side)", dropAndBalanceYellow(container));
+        autoModeChooser.addOption("Drop, drive, strafe, and pickup", new DropAndDriveAndStrafeAndPickup(container));
     }
 
     public SendableChooser<Command> getAutoChooser() {
