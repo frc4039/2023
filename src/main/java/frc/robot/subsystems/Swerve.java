@@ -90,7 +90,7 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropAndDriveAndPickup.returnPath);
+        field.getObject("Auto path").setTrajectory(DropAndDriveAndStrafeAndPickup.strafePath_step1);
         
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
