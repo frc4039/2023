@@ -173,6 +173,7 @@ public final class Constants {
 
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxChargeStationSpeedMetersPerSecond = 1.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -185,7 +186,8 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
-        public static final double kBalanceSpeed = 0.3;
+        public static final double kBalanceSpeed = 0.3; // This is the variable to increase speed for
+                                                        // DropMobilityBalance
 
         public static TrajectoryConfig forwardConfig = new TrajectoryConfig(
                 kMaxSpeedMetersPerSecond,
@@ -203,6 +205,10 @@ public final class Constants {
                 kBalanceSpeed,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(true);
+        public static TrajectoryConfig chargeStationForwardConfig = new TrajectoryConfig(
+                kMaxChargeStationSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
     }
 
     public static final class PivotConstants {
