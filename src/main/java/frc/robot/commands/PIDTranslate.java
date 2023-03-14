@@ -62,21 +62,6 @@ public class PIDTranslate extends CommandBase {
                     yPidController.calculate(swerve.getPose().getY()));
         }
 
-        /*
-         * translationVal = -translationVal + Math.signum(-translationVal) *
-         * VisionConstants.kTranslationFF;
-         * strafeVal = -strafeVal + Math.signum(-strafeVal) * VisionConstants.kStrafeFF;
-         * 
-         * double rotationOutput =
-         * rotationController.calculate(swerve.getYaw().getRadians());
-         * 
-         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-         * 
-         * swerve.drive(new Translation2d(-translationVal,
-         * -strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-         * true);
-         */
-
         else {
             translationVal = translationLimiter.calculate(
                     xPidController.calculate(swerve.getPose().getX()));
@@ -84,28 +69,7 @@ public class PIDTranslate extends CommandBase {
                     yPidController.calculate(swerve.getPose().getY()));
         }
 
-        /*
-         * translationVal = translationVal + Math.signum(translationVal) *
-         * VisionConstants.kTranslationFF;
-         * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
-         * 
-         * double rotationOutput =
-         * rotationController.calculate(swerve.getYaw().getRadians());
-         * 
-         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-         * 
-         * swerve.drive(new Translation2d(translationVal,
-         * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-         * true);
-         */
-
         double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
-        /*
-         * double translationVal = translationLimiter.calculate(
-         * xPidController.calculate(swerve.getPose().getX()));
-         * double strafeVal = strafeLimiter.calculate(
-         * yPidController.calculate(swerve.getPose().getY()));
-         */
         double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
         translationVal = translationVal + Math.signum(translationVal) *
