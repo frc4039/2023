@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Swerve;
@@ -52,18 +53,59 @@ public class PIDTranslate extends CommandBase {
 
     @Override
     public void execute() {
-        double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
-        double translationVal = translationLimiter.calculate(
-                xPidController.calculate(swerve.getPose().getX()));
-        double strafeVal = strafeLimiter.calculate(
-                yPidController.calculate(swerve.getPose().getY()));
-        double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+        if (DriverStation.getAlliance().toString() == "Red") {
+            double translationVal = -translationLimiter.calculate(
+                    xPidController.calculate(swerve.getPose().getX()));
+            double strafeVal = -strafeLimiter.calculate(
+                    yPidController.calculate(swerve.getPose().getY()));
 
-        translationVal = translationVal + Math.signum(translationVal) * VisionConstants.kTranslationFF;
-        strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
+            translationVal = -translationVal + Math.signum(-translationVal) * VisionConstants.kTranslationFF;
+            strafeVal = -strafeVal + Math.signum(-strafeVal) * VisionConstants.kStrafeFF;
 
-        swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-                true);
+            double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
+
+            double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+
+            swerve.drive(new Translation2d(-translationVal, -strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+                    true);
+
+        }
+        if (DriverStation.getAlliance().toString() == "Blue") {
+            double translationVal = translationLimiter.calculate(
+                    xPidController.calculate(swerve.getPose().getX()));
+            double strafeVal = strafeLimiter.calculate(
+                    yPidController.calculate(swerve.getPose().getY()));
+
+            translationVal = translationVal + Math.signum(translationVal) * VisionConstants.kTranslationFF;
+            strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
+
+            double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
+
+            double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+
+            swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+                    true);
+
+        }
+        // double rotationOutput =
+        // rotationController.calculate(swerve.getYaw().getRadians());
+        /*
+         * double translationVal = translationLimiter.calculate(
+         * xPidController.calculate(swerve.getPose().getX()));
+         * double strafeVal = strafeLimiter.calculate(
+         * yPidController.calculate(swerve.getPose().getY()));
+         */
+        // double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+
+        /*
+         * translationVal = translationVal + Math.signum(translationVal) *
+         * VisionConstants.kTranslationFF;
+         * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
+         * 
+         * swerve.drive(new Translation2d(translationVal,
+         * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+         * true);
+         */
     }
 
     @Override
