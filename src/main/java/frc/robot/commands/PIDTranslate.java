@@ -77,7 +77,7 @@ public class PIDTranslate extends CommandBase {
          * true);
          */
 
-        else if (DriverStation.getAlliance().toString() == "Blue") {
+        else {
             translationVal = translationLimiter.calculate(
                     xPidController.calculate(swerve.getPose().getX()));
             strafeVal = strafeLimiter.calculate(
