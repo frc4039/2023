@@ -53,9 +53,9 @@ public class PIDTranslate extends CommandBase {
     @Override
     public void execute() {
         double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
-        double translationVal = -translationLimiter.calculate(
+        double translationVal = translationLimiter.calculate(
                 xPidController.calculate(swerve.getPose().getX()));
-        double strafeVal = -strafeLimiter.calculate(
+        double strafeVal = strafeLimiter.calculate(
                 yPidController.calculate(swerve.getPose().getY()));
         double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
 
