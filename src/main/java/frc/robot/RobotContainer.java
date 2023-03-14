@@ -145,6 +145,15 @@ public class RobotContainer {
                             90));
 
         }
+        if (DriverStation.getAlliance().toString() == "Blue") {
+            driverBButton
+                    .whileTrue(new TeleopSwerveAtFixedRotation(
+                            s_Swerve,
+                            () -> -driver.getRawAxis(translationAxis),
+                            () -> -driver.getRawAxis(strafeAxis),
+                            270));
+
+        }
 
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
