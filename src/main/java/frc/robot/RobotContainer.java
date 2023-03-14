@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -107,6 +108,7 @@ public class RobotContainer {
         mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
         mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
+        mainTab.add("Alliance", DriverStation.getAlliance());
 
         configureButtonBindings();
     }

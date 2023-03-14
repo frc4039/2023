@@ -215,7 +215,7 @@ public class Swerve extends SubsystemBase {
             }
 
             // System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
-            System.out.println(DriverStation.getAlliance());
+            // System.out.println(DriverStation.getAlliance());
         }
 
         field.setRobotPose(getPose());
