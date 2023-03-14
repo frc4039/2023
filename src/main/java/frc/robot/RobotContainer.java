@@ -118,7 +118,7 @@ public class RobotContainer {
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
-                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic));
+                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
                         s_Swerve,
