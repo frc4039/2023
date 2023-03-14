@@ -53,50 +53,52 @@ public class PIDTranslate extends CommandBase {
 
     @Override
     public void execute() {
+        double translationVal;
+        double strafeVal;
         if (DriverStation.getAlliance().toString() == "Red") {
-            double translationVal = -translationLimiter.calculate(
+            translationVal = -translationLimiter.calculate(
                     xPidController.calculate(swerve.getPose().getX()));
-            double strafeVal = -strafeLimiter.calculate(
+            strafeVal = -strafeLimiter.calculate(
                     yPidController.calculate(swerve.getPose().getY()));
-
-            /*
-             * translationVal = -translationVal + Math.signum(-translationVal) *
-             * VisionConstants.kTranslationFF;
-             * strafeVal = -strafeVal + Math.signum(-strafeVal) * VisionConstants.kStrafeFF;
-             * 
-             * double rotationOutput =
-             * rotationController.calculate(swerve.getYaw().getRadians());
-             * 
-             * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-             * 
-             * swerve.drive(new Translation2d(-translationVal,
-             * -strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-             * true);
-             */
-
         }
-        if (DriverStation.getAlliance().toString() == "Blue") {
-            double translationVal = translationLimiter.calculate(
+
+        /*
+         * translationVal = -translationVal + Math.signum(-translationVal) *
+         * VisionConstants.kTranslationFF;
+         * strafeVal = -strafeVal + Math.signum(-strafeVal) * VisionConstants.kStrafeFF;
+         * 
+         * double rotationOutput =
+         * rotationController.calculate(swerve.getYaw().getRadians());
+         * 
+         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+         * 
+         * swerve.drive(new Translation2d(-translationVal,
+         * -strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+         * true);
+         */
+
+        else if (DriverStation.getAlliance().toString() == "Blue") {
+            translationVal = translationLimiter.calculate(
                     xPidController.calculate(swerve.getPose().getX()));
-            double strafeVal = strafeLimiter.calculate(
+            strafeVal = strafeLimiter.calculate(
                     yPidController.calculate(swerve.getPose().getY()));
-
-            /*
-             * translationVal = translationVal + Math.signum(translationVal) *
-             * VisionConstants.kTranslationFF;
-             * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
-             * 
-             * double rotationOutput =
-             * rotationController.calculate(swerve.getYaw().getRadians());
-             * 
-             * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-             * 
-             * swerve.drive(new Translation2d(translationVal,
-             * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-             * true);
-             */
-
         }
+
+        /*
+         * translationVal = translationVal + Math.signum(translationVal) *
+         * VisionConstants.kTranslationFF;
+         * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
+         * 
+         * double rotationOutput =
+         * rotationController.calculate(swerve.getYaw().getRadians());
+         * 
+         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+         * 
+         * swerve.drive(new Translation2d(translationVal,
+         * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+         * true);
+         */
+
         double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
         /*
          * double translationVal = translationLimiter.calculate(
