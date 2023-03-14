@@ -13,12 +13,18 @@ public class Nodes {
         this.swerve = swerve;
 
         translationLabels = new String[] {
-                "P 1",
-                "P 2",
-                "P 3",
-                "P 4",
-                "P 5",
-                "P 6"
+                "RP 1",
+                "RP 2",
+                "RP 3",
+                "RP 4",
+                "RP 5",
+                "RP 6",
+                "BP 1",
+                "BP 2",
+                "BP 3",
+                "BP 4",
+                "BP 5",
+                "BP 6"
         };
         translations = new Translation2d[] {
                 new Translation2d(14.9, 0.44),
@@ -26,7 +32,14 @@ public class Nodes {
                 new Translation2d(15, 2.12),
                 new Translation2d(15, 3.17),
                 new Translation2d(15, 3.86),
-                new Translation2d(14.9, 4.93)
+                new Translation2d(14.9, 4.93),
+                //
+                new Translation2d(1.7, 5.04),
+                new Translation2d(1.6, 4.02),
+                new Translation2d(1.7, 3.35),
+                new Translation2d(1.6, 2.32),
+                new Translation2d(1.7, 1.67),
+                new Translation2d(1.6, 0.63)
         };
     }
 
