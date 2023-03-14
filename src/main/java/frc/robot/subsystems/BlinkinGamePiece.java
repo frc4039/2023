@@ -14,6 +14,8 @@ public class BlinkinGamePiece extends SubsystemBase {
 
     public BlinkinGamePiece() {
         m_BlinkinStrip = new Spark(BlinkinConstants.kBlinkinPWMPort);
+        // The line below needs to be removed after testing the code works and the led
+        // strip lights up purple
         SetColour(BlinkinConstants.kColourValueCube);
     }
 
@@ -21,5 +23,9 @@ public class BlinkinGamePiece extends SubsystemBase {
         if ((colourValue >= -1.0) && (colourValue <= 1.0)) {
             m_BlinkinStrip.set(colourValue);
         }
+    }
+
+    public void TurnOff() {
+        SetColour(BlinkinConstants.kBlinkinOff);
     }
 }
