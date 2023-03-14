@@ -108,7 +108,7 @@ public class RobotContainer {
         mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
         mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
-        mainTab.add("Alliance", DriverStation.getAlliance().toString());
+        mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString());
 
         configureButtonBindings();
     }
