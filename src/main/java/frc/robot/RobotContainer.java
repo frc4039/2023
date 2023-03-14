@@ -40,6 +40,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverBButton = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driverXButton = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driverLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
@@ -134,6 +135,16 @@ public class RobotContainer {
 
         driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
                 () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
+
+        if (DriverStation.getAlliance().toString() == "Red") {
+            driverBButton
+                    .whileTrue(new TeleopSwerveAtFixedRotation(
+                            s_Swerve,
+                            () -> -driver.getRawAxis(translationAxis),
+                            () -> -driver.getRawAxis(strafeAxis),
+                            90));
+
+        }
 
         operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
