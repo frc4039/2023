@@ -56,13 +56,15 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
         addCommands(new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
         // Drop score, and retract
         addCommands(new SequentialCommandGroup(new Command[] {
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease),
+                // new PivotMoveToPosition(container.getPivot(),
+                // Constants.PivotConstants.kPositionScoringRelease),
                 new GripperRelease(container.getGripper())
                         .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                         new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
-                                .withTimeout(1.0) }) }));
+                                .withTimeout(1.0),
+                        AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2) }) }));
         ;
     }
 
@@ -74,8 +76,14 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
 
     public static Trajectory returnPath_1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(0.5, 0.2)),
+            List.of(new Translation2d(1, 0)),
             new Pose2d(0, 0.5, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.reverseConfig);
+
+    public static Trajectory middlePath_2 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1, 0)),
+            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            Constants.AutoConstants.forwardConfig);
 
 }
