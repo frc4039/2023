@@ -340,10 +340,10 @@ public final class Constants {
 
     public static final class BlinkinConstants {
         public static final int kBlinkinPWMPort = 0;
-        public static final double kBlinkinOff = 0;
 
         // Colours
-        public static final double kColourValueCube = 0.91;
+        public static final double kColourValueCube = 0.89;
         public static final double kColourValueCone = 0.69;
+        public static final double kColourValueRainbow = -0.99;
     }
 }

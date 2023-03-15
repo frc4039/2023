@@ -61,6 +61,10 @@ public class RobotContainer {
             () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger operatorRightTriggerDepressed = new Trigger(
             () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+    private final JoystickButton operatorLeftJoystickButton = new JoystickButton(operator,
+            XboxController.Button.kLeftStick.value);
+    private final JoystickButton operatorRightJoystickButton = new JoystickButton(operator,
+            XboxController.Button.kRightStick.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -146,6 +150,8 @@ public class RobotContainer {
         operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
         operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
         operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
+        operatorLeftJoystickButton.onTrue(new BlinkinColourForCone(s_BlinkinGamePiece));
+        operatorRightJoystickButton.onTrue(new BlinkinColourForCube(s_BlinkinGamePiece));
 
         /*
          * ********** Intake manual control code ************

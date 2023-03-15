@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BlinkinGamePiece;
 
-public class BlinkinOff extends CommandBase {
+public class BlinkinRainbow extends CommandBase {
     private BlinkinGamePiece m_BlinkinGamePiece;
 
     /** Creates a new BlinkinOff. */
-    public BlinkinOff(BlinkinGamePiece blinkinGamePiece) {
+    public BlinkinRainbow(BlinkinGamePiece blinkinGamePiece) {
         m_BlinkinGamePiece = blinkinGamePiece;
         addRequirements(m_BlinkinGamePiece);
     }
@@ -24,7 +24,7 @@ public class BlinkinOff extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_BlinkinGamePiece.TurnOff();
+        m_BlinkinGamePiece.SetRainbow();
     }
 
     // Called once the command ends or is interrupted.
