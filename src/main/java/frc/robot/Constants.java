@@ -338,4 +338,13 @@ public final class Constants {
         public static final double kTranslationFF = 0.007;
         public static final double kStrafeFF = kTranslationFF;
     }
+
+    public static final class BlinkinConstants {
+        public static final int kBlinkinPWMPort = 0;
+
+        // Colours
+        public static final double kColourValueCube = 0.89;
+        public static final double kColourValueCone = 0.69;
+        public static final double kColourValueRainbow = -0.99;
+    }
 }
