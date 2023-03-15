@@ -139,7 +139,7 @@ public class RobotContainer {
         driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
                 () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
 
-        operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
+        operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
                 .onTrue(new CmdGrpCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
