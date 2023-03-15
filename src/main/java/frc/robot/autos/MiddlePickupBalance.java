@@ -12,15 +12,16 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class MiddlePickupStraight extends SequentialCommandGroup {
+public class MiddlePickupBalance extends SequentialCommandGroup {
 
-    public MiddlePickupStraight(RobotContainer container) {
+    public MiddlePickupBalance(RobotContainer container) {
         addCommands(new ResetRobotPose(container.getSwerve(), middlePath_1.getInitialPose()));
 
         // Pivot and extend arm
@@ -38,7 +39,6 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
                 new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionGreenCubePickup)
                         .withTimeout(1.0),
-                // new TelescopicGreenCube(container.getTelescopic()).withTimeout(1.0),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         middlePath_1) }));
 
@@ -66,7 +66,10 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
                         new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                 .withTimeout(1.0),
                         AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2) }) }));
-        ;
+        addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
+                balancePath_1),
+                new AwaitLevelCharge(container.getSwerve())));
+
     }
 
     public static Trajectory middlePath_1 = TrajectoryGenerator.generateTrajectory(
@@ -82,9 +85,14 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
             Constants.AutoConstants.reverseConfig);
 
     public static Trajectory middlePath_2 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 0)),
-            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(0, 0.5, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1, 2)),
+            new Pose2d(2.2, 2, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
+    public static Trajectory balancePath_1 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(2.2, 2, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1, 2)),
+            new Pose2d(3, 2, Rotation2d.fromDegrees(0)),
+            Constants.AutoConstants.balanceForwardConfig);
 
 }
