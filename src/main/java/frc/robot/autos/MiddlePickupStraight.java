@@ -36,8 +36,7 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
         // retract arm and pivot up to vertical, also start driving to middle
         addCommands(new ParallelCommandGroup(new Command[] {
                 new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionGreenCubePickup)
-                        .withTimeout(1.0),
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionGreenCubePickup),
                 // new TelescopicGreenCube(container.getTelescopic()).withTimeout(1.0),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         middlePath_1) }));
@@ -72,11 +71,11 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
     public static Trajectory middlePath_1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(4.65, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
 
     public static Trajectory returnPath_1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(4.65, 0, Rotation2d.fromDegrees(0)),
             List.of(new Translation2d(1, 0)),
             new Pose2d(0, 0.5, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.reverseConfig);
