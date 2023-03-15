@@ -69,13 +69,13 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
     public static Trajectory middlePath_1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(5, 0.2, Rotation2d.fromDegrees(0)),
+            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
 
     public static Trajectory returnPath_1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
             List.of(new Translation2d(0.5, 0.2)),
-            new Pose2d(0.1, 0.45, Rotation2d.fromDegrees(0)),
+            new Pose2d(0, 0.5, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.reverseConfig);
 
 }
