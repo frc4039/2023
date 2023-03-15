@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -39,6 +40,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driverAButton = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driverBButton = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driverXButton = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driverLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
@@ -113,6 +115,7 @@ public class RobotContainer {
         mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
         mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
+        mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString());
 
         configureButtonBindings();
     }
@@ -138,6 +141,25 @@ public class RobotContainer {
 
         driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
                 () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
+
+        if (DriverStation.getAlliance().toString() == "Red") {
+            driverBButton
+                    .whileTrue(new TeleopSwerveAtFixedRotation(
+                            s_Swerve,
+                            () -> -driver.getRawAxis(translationAxis),
+                            () -> -driver.getRawAxis(strafeAxis),
+                            90));
+
+        }
+        if (DriverStation.getAlliance().toString() == "Blue") {
+            driverBButton
+                    .whileTrue(new TeleopSwerveAtFixedRotation(
+                            s_Swerve,
+                            () -> -driver.getRawAxis(translationAxis),
+                            () -> -driver.getRawAxis(strafeAxis),
+                            270));
+
+        }
 
         operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
