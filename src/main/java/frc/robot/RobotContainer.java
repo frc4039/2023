@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
@@ -73,6 +74,7 @@ public class RobotContainer {
     private final IntakeSpinner s_IntakeSpinner = new IntakeSpinner();
     private final ConeGuide s_ConeGuide = new ConeGuide();
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
+    private final PressureSensor s_PressureSensor = new PressureSensor();
     private final NodeSelector s_NodeSelector = new NodeSelector(this);
 
     private AutoModeSelector autoModeSelector;
@@ -103,6 +105,7 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_ConeGuide);
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
         CommandScheduler.getInstance().registerSubsystem(s_NodeSelector);
+        // CommandScheduler.getInstance().registerSubsystem(s_PressureSensor);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
@@ -110,6 +113,7 @@ public class RobotContainer {
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
         mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
         mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString());
+        mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading());
 
         configureButtonBindings();
     }
