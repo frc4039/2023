@@ -172,7 +172,7 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 2;
         public static final double kMaxChargeStationSpeedMetersPerSecond = 1.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -232,6 +232,7 @@ public final class Constants {
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = 132;
         public static final double kPositionTravel = 0;
+        public static final double kPositionGreenCubePickup = -131;
     }
 
     public static final class TelescopicConstants {
