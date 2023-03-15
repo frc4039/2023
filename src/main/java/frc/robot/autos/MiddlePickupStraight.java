@@ -41,7 +41,8 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
                 // new TelescopicGreenCube(container.getTelescopic()).withTimeout(1.0),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         middlePath_1) }));
-
+        addCommands(AutoFollowPath.createFollowCommand(container.getSwerve(),
+                slowPickup));
         // close gripper
         addCommands(new GripperRetrieve(container.getGripper())
                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
@@ -72,11 +73,16 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
     public static Trajectory middlePath_1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(4, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
+    public static Trajectory slowPickup = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(4, 0, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1, 0)),
+            new Pose2d(5.3, 0, Rotation2d.fromDegrees(0)),
+            Constants.AutoConstants.balanceForwardConfig);
 
     public static Trajectory returnPath_1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.3, 0, Rotation2d.fromDegrees(0)),
             List.of(new Translation2d(1, 0)),
             new Pose2d(0, 0.5, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.reverseConfig);
