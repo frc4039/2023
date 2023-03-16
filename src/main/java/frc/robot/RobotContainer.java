@@ -64,6 +64,10 @@ public class RobotContainer {
             () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger operatorRightTriggerDepressed = new Trigger(
             () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+    private final JoystickButton operatorLeftJoystickButton = new JoystickButton(operator,
+            XboxController.Button.kLeftStick.value);
+    private final JoystickButton operatorRightJoystickButton = new JoystickButton(operator,
+            XboxController.Button.kRightStick.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -76,6 +80,7 @@ public class RobotContainer {
     private final PowerDistributionHub s_PowerDistributionHub = new PowerDistributionHub();
     private final PressureSensor s_PressureSensor = new PressureSensor();
     private final NodeSelector s_NodeSelector = new NodeSelector(this);
+    private final BlinkinGamePiece s_BlinkinGamePiece = new BlinkinGamePiece();
 
     private AutoModeSelector autoModeSelector;
 
@@ -106,6 +111,7 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_PowerDistributionHub);
         CommandScheduler.getInstance().registerSubsystem(s_PressureSensor);
         CommandScheduler.getInstance().registerSubsystem(s_NodeSelector);
+        CommandScheduler.getInstance().registerSubsystem(s_BlinkinGamePiece);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
@@ -123,7 +129,7 @@ public class RobotContainer {
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverRightBumper
-                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic));
+                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
                         s_Swerve,
@@ -159,7 +165,7 @@ public class RobotContainer {
 
         }
 
-        operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
+        operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
                 .onTrue(new CmdGrpCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake, s_Pivot));
@@ -170,6 +176,8 @@ public class RobotContainer {
         operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
         operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
         operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
+        operatorLeftJoystickButton.onTrue(new BlinkinColourForCone(s_BlinkinGamePiece));
+        operatorRightJoystickButton.onTrue(new BlinkinColourForCube(s_BlinkinGamePiece));
 
         /*
          * ********** Intake manual control code ************

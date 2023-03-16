@@ -172,7 +172,7 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 1.5;
         public static final double kMaxChargeStationSpeedMetersPerSecond = 1.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -232,6 +232,7 @@ public final class Constants {
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = 132;
         public static final double kPositionTravel = 0;
+        public static final double kPositionGreenCubePickup = -122;
     }
 
     public static final class TelescopicConstants {
@@ -250,6 +251,7 @@ public final class Constants {
         public static final double kTelescopicFar = 70500;
         public static final double kTelescopicRetracted = 0;
         public static final double kTelescopicMid = 34940;
+        public static final double kTelescopicGreenCube = 2800;
 
         public static final double kTelescopicKP = 0.07;
         public static final double kTelescopicKI = 0.00;
@@ -327,14 +329,23 @@ public final class Constants {
         public static final String kCameraName2 = "camera2";
 
         public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(0.096, -0.051, 0.684),
-                new Rotation3d(0.0, 0.0, 2.79));
+                new Translation3d(0.104, -0.072, 0.662),
+                new Rotation3d(3.14, 0.0, 2.79));
 
         public static final Transform3d kRobotToCam2 = new Transform3d(
-                new Translation3d(-0.096, -0.051, 0.684),
-                new Rotation3d(0.0, 0.0, 3.49));
+                new Translation3d(-0.104, -0.072, 0.662),
+                new Rotation3d(3.14, 0.0, 3.49));
 
         public static final double kTranslationFF = 0.007;
         public static final double kStrafeFF = kTranslationFF;
+    }
+
+    public static final class BlinkinConstants {
+        public static final int kBlinkinPWMPort = 0;
+
+        // Colours
+        public static final double kColourValueCube = 0.89;
+        public static final double kColourValueCone = 0.69;
+        public static final double kColourValueRainbow = -0.99;
     }
 }
