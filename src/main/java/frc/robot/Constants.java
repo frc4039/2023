@@ -329,12 +329,12 @@ public final class Constants {
         public static final String kCameraName2 = "camera2";
 
         public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(0.096, -0.051, 0.684),
-                new Rotation3d(0.0, 0.0, 2.79));
+                new Translation3d(0.104, -0.072, 0.662),
+                new Rotation3d(3.14, 0.0, 2.79));
 
         public static final Transform3d kRobotToCam2 = new Transform3d(
-                new Translation3d(-0.096, -0.051, 0.684),
-                new Rotation3d(0.0, 0.0, 3.49));
+                new Translation3d(-0.104, -0.072, 0.662),
+                new Rotation3d(3.14, 0.0, 3.49));
 
         public static final double kTranslationFF = 0.007;
         public static final double kStrafeFF = kTranslationFF;
