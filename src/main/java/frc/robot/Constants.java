@@ -232,7 +232,7 @@ public final class Constants {
         public static final double kPositionScoringCube = -69;
         public static final double kPositionPickupCube = 132;
         public static final double kPositionTravel = 0;
-        public static final double kPositionGreenCubePickup = -120;
+        public static final double kPositionGreenCubePickup = -122;
     }
 
     public static final class TelescopicConstants {
