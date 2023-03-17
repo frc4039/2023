@@ -336,7 +336,7 @@ public final class Constants {
                 new Translation3d(-0.104, -0.072, 0.662),
                 new Rotation3d(3.14, 0.0, 3.49));
 
-        public static final double kTranslationFF = 0.007;
+        public static final double kTranslationFF = 0.005; // was 0.007, lowered @ Western
         public static final double kStrafeFF = kTranslationFF;
     }
 
