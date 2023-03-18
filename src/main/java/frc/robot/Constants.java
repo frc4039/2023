@@ -128,7 +128,7 @@ public final class Constants {
             public static final int kAngleMotorID = 11; // Angle Motor Controller - [FLA]
             public static final int kCanCoderID = 12; // Front Left Encoder - [FLE]
             public static final boolean kDriveMotorInvert = true;
-            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(280.3);
+            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(167.4);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(kDriveMotorID,
                     kAngleMotorID,
                     kCanCoderID, kAngleOffset, kDriveMotorInvert);
@@ -223,7 +223,7 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -196.5;
+        public static final double kPivotVerticalOffset = -129.5;
 
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 124;

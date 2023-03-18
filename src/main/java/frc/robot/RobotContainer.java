@@ -120,6 +120,7 @@ public class RobotContainer {
         mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
         mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString());
         mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading());
+        mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve));
 
         configureButtonBindings();
     }

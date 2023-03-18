@@ -38,6 +38,8 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility) }));
 
+        addCommands(new WaitCommand(0.5));
+
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
                 pDropAndBalanceYellowSide1),
                 new AwaitLevelCharge(container.getSwerve())));
