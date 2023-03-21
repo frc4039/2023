@@ -133,6 +133,12 @@ public class Swerve extends SubsystemBase {
         resetPoseEstimator();
     }
 
+    public void resetAngleEncodersToAbsolute() {
+        for (SwerveModule mod : mSwerveMods) {
+            mod.resetToAbsolute();
+        }
+    }
+
     public void resetPoseEstimator() {
         swervePoseEstimator.resetPosition(getYaw(),
                 new SwerveModulePosition[] {

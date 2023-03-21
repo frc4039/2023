@@ -102,7 +102,7 @@ public class SwerveModule {
         setSpeed(desiredState, isOpenLoop);
     }
 
-    private void resetToAbsolute() {
+    public void resetToAbsolute() {
         Rotation2d absolutePosition = getCanCoder().minus(angleOffset);
         integratedAngleEncoder.setPosition(absolutePosition.getDegrees());
     }

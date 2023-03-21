@@ -13,9 +13,9 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.*;
 
-public class DropMobilityBalanceAuto extends SequentialCommandGroup {
+public class DropMobilityChargeSide extends SequentialCommandGroup {
 
-    public DropMobilityBalanceAuto(RobotContainer container) {
+    public DropMobilityChargeSide(RobotContainer container) {
         // reset initial pose TODO: does this need to be changed now that we use April
         // tags?
         addCommands(new ResetRobotPose(container.getSwerve(), pDropToMobility.getInitialPose()));
@@ -37,23 +37,11 @@ public class DropMobilityBalanceAuto extends SequentialCommandGroup {
                         .withTimeout(1.0),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility) }));
-
-        addCommands(new WaitCommand(0.5));
-
-        addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
-                pDropAndBalanceYellowSide1),
-                new AwaitLevelCharge(container.getSwerve())));
     }
 
     public static Trajectory pDropToMobility = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(4.25, 0, Rotation2d.fromDegrees(0)),
-            Constants.AutoConstants.chargeStationForwardConfig);
-
-    public static Trajectory pDropAndBalanceYellowSide1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(4.25, 0, Rotation2d.fromDegrees(0)),
-            List.of(),
-            new Pose2d(2.0, 0, Rotation2d.fromDegrees(0)),
-            Constants.AutoConstants.balanceReverseConfig);
+            new Pose2d(5.0, 0, Rotation2d.fromDegrees(0)),
+            Constants.AutoConstants.forwardConfig);
 }

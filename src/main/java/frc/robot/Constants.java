@@ -128,7 +128,7 @@ public final class Constants {
             public static final int kAngleMotorID = 11; // Angle Motor Controller - [FLA]
             public static final int kCanCoderID = 12; // Front Left Encoder - [FLE]
             public static final boolean kDriveMotorInvert = true;
-            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(280.3);
+            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(167.4);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(kDriveMotorID,
                     kAngleMotorID,
                     kCanCoderID, kAngleOffset, kDriveMotorInvert);
@@ -223,14 +223,14 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -196.5;
+        public static final double kPivotVerticalOffset = -129.5;
 
         // Setpoints. All setpoints given in degrees from vertical.
-        public static final double kPositionPickupCone = 127;
+        public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = -69;
-        public static final double kPositionPickupCube = 132;
+        public static final double kPositionPickupCube = 134;
         public static final double kPositionTravel = 0;
         public static final double kPositionGreenCubePickup = -122;
     }
@@ -336,7 +336,7 @@ public final class Constants {
                 new Translation3d(-0.104, -0.072, 0.662),
                 new Rotation3d(3.14, 0.0, 3.49));
 
-        public static final double kTranslationFF = 0.007;
+        public static final double kTranslationFF = 0.005; // was 0.007, lowered @ Western
         public static final double kStrafeFF = kTranslationFF;
     }
 
