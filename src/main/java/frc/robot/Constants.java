@@ -214,7 +214,7 @@ public final class Constants {
     public static final class PivotConstants {
         public static final int kPivotMotorID = 40;
         public static final int kSmartCurrentLimit = 30;
-        public static final int kEncoderChannel = 1;
+        public static final int kEncoderChannel = 10;
         public static final double kPivotAllowableError = 2;
         public static final double kNominalVoltage = kDefaultVoltage;
 
