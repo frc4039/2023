@@ -123,6 +123,7 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_PressureSensor);
         CommandScheduler.getInstance().registerSubsystem(s_NodeSelector);
         CommandScheduler.getInstance().registerSubsystem(s_BlinkinGamePiece);
+        CommandScheduler.getInstance().registerSubsystem(s_GamePieceSelector);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
