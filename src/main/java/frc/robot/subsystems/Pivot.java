@@ -21,15 +21,17 @@ public class Pivot extends SubsystemBase {
     private CANSparkMax m_pivotRightMotor;
     private DutyCycleEncoder m_pivotEncoder;
 
-    private PIDController controller = new PIDController((0.15 * 0.5), 0, 0);
+    private PIDController controller = new PIDController(PivotConstants.kPivotKP, 0, 0);
     private State goalState = new State(PivotConstants.kPositionTravel, 0);
     private State currentState = new State(PivotConstants.kPositionTravel, 0);
     private boolean pidRunning = false;
 
     public Pivot() {
-        ConfigMotor(m_pivotLeftMotor, PivotConstants.kPivotLeftMotorID, false);
-        ConfigMotor(m_pivotRightMotor, PivotConstants.kPivotRightMotorID, true);
-        m_pivotRightMotor.follow(m_pivotLeftMotor);
+        m_pivotLeftMotor = new CANSparkMax(PivotConstants.kPivotLeftMotorID, MotorType.kBrushless);
+        m_pivotRightMotor = new CANSparkMax(PivotConstants.kPivotRightMotorID, MotorType.kBrushless);
+        ConfigMotor(m_pivotLeftMotor, false);
+        ConfigMotor(m_pivotRightMotor, true);
+        m_pivotRightMotor.follow(m_pivotLeftMotor, true);
 
         m_pivotEncoder = new DutyCycleEncoder(PivotConstants.kEncoderChannel);
 
@@ -95,10 +97,9 @@ public class Pivot extends SubsystemBase {
         return (360.0 * m_pivotEncoder.getAbsolutePosition()) + PivotConstants.kPivotVerticalOffset;
     }
 
-    private void ConfigMotor(CANSparkMax pivotMotor, int motorId, boolean isInverted) {
-        pivotMotor = new CANSparkMax(motorId, MotorType.kBrushless);
+    private void ConfigMotor(CANSparkMax pivotMotor, boolean isInverted) {
         pivotMotor.restoreFactoryDefaults();
-        CANSparkMaxUtil.setCANSparkMaxBusUsage(pivotMotor, Usage.kPositionOnly);
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(pivotMotor, Usage.kPositionOnly, true);
         pivotMotor.setInverted(isInverted);
         pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);// set idlemode to brake, can be kCoast
         pivotMotor.enableVoltageCompensation(PivotConstants.kNominalVoltage);// voltage compensation
