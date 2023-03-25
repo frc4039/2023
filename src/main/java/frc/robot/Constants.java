@@ -212,14 +212,16 @@ public final class Constants {
     }
 
     public static final class PivotConstants {
-        public static final int kPivotMotorID = 40;
+        public static final int kPivotLeftMotorID = 40;
+        public static final int kPivotRightMotorID = 42;
         public static final int kSmartCurrentLimit = 30;
         public static final int kEncoderChannel = 1;
         public static final double kPivotAllowableError = 2;
         public static final double kNominalVoltage = kDefaultVoltage;
 
         public static final TrapezoidProfile.Constraints kProfileConstraints = new TrapezoidProfile.Constraints(
-                200, 125);
+                200, 130);
+        public static double kPivotKP = 0.15;
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
@@ -272,8 +274,8 @@ public final class Constants {
     }
 
     public static final class GripperConstants {
-        public static final int kGripperForwardChannel = 1;
-        public static final int kGripperReverseChannel = 0;
+        public static final int kGripperForwardChannel = 7;
+        public static final int kGripperReverseChannel = 8;
         public static final double kGripperReleaseTimeout = 0.5;
     }
 
