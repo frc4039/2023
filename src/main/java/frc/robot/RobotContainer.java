@@ -49,6 +49,8 @@ public class RobotContainer {
     private final JoystickButton driverBackButton = new JoystickButton(driver, XboxController.Button.kBack.value);
     private final Trigger driverRightTriggerDepressed = new Trigger(
             () -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+    private final Trigger driverLeftTriggerDepressed = new Trigger(
+            () -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
 
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -131,8 +133,6 @@ public class RobotContainer {
         /* Driver Buttons */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
-        driverRightBumper
-                .onTrue(new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
                         s_Swerve,
@@ -146,8 +146,10 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         180));
 
-        driverXButton.whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
-                () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
+        // Semi-auto alignment to scoring locations
+        driverLeftTriggerDepressed
+                .whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
+                        () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
 
         if (DriverStation.getAlliance().toString() == "Red") {
             driverBButton
@@ -167,8 +169,16 @@ public class RobotContainer {
                             270));
 
         }
-        driverRightTriggerDepressed.onTrue(new ScoreYellowMid(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
+        // score mid (Need to add logic for purple vs yellow)
+        driverRightTriggerDepressed
+                .onTrue(new CmdGrpScoreYellowMid(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
+        // score low
+        driverXButton.onTrue(new CmdGrpScoreLow(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
+        // score high (need to add logic for purple vs yellow)
+        driverRightBumper
+                .onTrue(new CmdGrpScoreYellowHigh(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
 
+        // ====================================================== //
         /* Operator buttons */
         operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
@@ -183,7 +193,8 @@ public class RobotContainer {
         operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
         operatorLeftJoystickButton.onTrue(new BlinkinColourForCone(s_BlinkinGamePiece));
         operatorRightJoystickButton.onTrue(new BlinkinColourForCube(s_BlinkinGamePiece));
-
+        operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
+        operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
         /*
          * ********** Intake manual control code ************
          * operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
@@ -194,8 +205,6 @@ public class RobotContainer {
          * IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
          */
 
-        operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
-        operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
     }
 
     public Swerve getSwerve() {

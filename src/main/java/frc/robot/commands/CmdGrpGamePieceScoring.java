@@ -20,7 +20,6 @@ public class CmdGrpGamePieceScoring extends SequentialCommandGroup {
     public CmdGrpGamePieceScoring(Pivot s_Pivot, Gripper s_Gripper, Telescopic s_Telescopic,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringRelease),
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),

@@ -14,13 +14,13 @@ import frc.robot.subsystems.Telescopic;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreYellowHigh extends SequentialCommandGroup {
+public class CmdGrpScorePurpleHigh extends SequentialCommandGroup {
     /** Creates a new ScoreYellowHigh. */
-    public ScoreYellowHigh(Pivot s_Pivot, Gripper s_Gripper, Telescopic s_Telescopic,
+    public CmdGrpScorePurpleHigh(Pivot s_Pivot, Gripper s_Gripper, Telescopic s_Telescopic,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
                 // pivot to extend angle
-                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone),
+                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCube),
                 // extend to far
                 new TelescopicScoringExtendFar(s_Telescopic, s_Pivot),
                 // score

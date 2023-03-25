@@ -229,7 +229,7 @@ public final class Constants {
         public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
-        public static final double kPositionScoringCube = -69;
+        public static final double kPositionScoringCube = 60;
         public static final double kPositionPickupCube = 134;
         public static final double kPositionTravel = 0;
         public static final double kPositionGreenCubePickup = -122;
