@@ -17,22 +17,21 @@ import frc.robot.Robot;
 
 public class Pivot extends SubsystemBase {
 
-    private CANSparkMax m_pivotMotor;
+    private CANSparkMax m_pivotLeftMotor;
+    private CANSparkMax m_pivotRightMotor;
     private DutyCycleEncoder m_pivotEncoder;
 
-    private PIDController controller = new PIDController(0.15, 0, 0);
+    private PIDController controller = new PIDController(PivotConstants.kPivotKP, 0, 0);
     private State goalState = new State(PivotConstants.kPositionTravel, 0);
     private State currentState = new State(PivotConstants.kPositionTravel, 0);
     private boolean pidRunning = false;
 
     public Pivot() {
-        m_pivotMotor = new CANSparkMax(PivotConstants.kPivotMotorID, MotorType.kBrushless);
-        m_pivotMotor.restoreFactoryDefaults();
-        CANSparkMaxUtil.setCANSparkMaxBusUsage(m_pivotMotor, Usage.kPositionOnly);
-        m_pivotMotor.setInverted(false);
-        m_pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);// set idlemode to brake, can be kCoast
-        m_pivotMotor.enableVoltageCompensation(PivotConstants.kNominalVoltage);// voltage compensation
-        m_pivotMotor.setSmartCurrentLimit(PivotConstants.kSmartCurrentLimit);
+        m_pivotLeftMotor = new CANSparkMax(PivotConstants.kPivotLeftMotorID, MotorType.kBrushless);
+        m_pivotRightMotor = new CANSparkMax(PivotConstants.kPivotRightMotorID, MotorType.kBrushless);
+        ConfigMotor(m_pivotLeftMotor, false);
+        ConfigMotor(m_pivotRightMotor, true);
+        m_pivotRightMotor.follow(m_pivotLeftMotor, true);
 
         m_pivotEncoder = new DutyCycleEncoder(PivotConstants.kEncoderChannel);
 
@@ -43,7 +42,7 @@ public class Pivot extends SubsystemBase {
         tab.addDouble("Absolute Encoder", () -> getEncoder());
         tab.addDouble("Absoulte Encoder (raw)", () -> m_pivotEncoder.getAbsolutePosition());
         tab.addDouble("Target Position", () -> goalState.position);
-        tab.addDouble("Pivot Motor Output", () -> m_pivotMotor.getAppliedOutput());
+        tab.addDouble("Pivot Motor Output", () -> m_pivotLeftMotor.getAppliedOutput());
     }
 
     /**
@@ -98,6 +97,15 @@ public class Pivot extends SubsystemBase {
         return (360.0 * m_pivotEncoder.getAbsolutePosition()) + PivotConstants.kPivotVerticalOffset;
     }
 
+    private void ConfigMotor(CANSparkMax pivotMotor, boolean isInverted) {
+        pivotMotor.restoreFactoryDefaults();
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(pivotMotor, Usage.kPositionOnly, true);
+        pivotMotor.setInverted(isInverted);
+        pivotMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);// set idlemode to brake, can be kCoast
+        pivotMotor.enableVoltageCompensation(PivotConstants.kNominalVoltage);// voltage compensation
+        pivotMotor.setSmartCurrentLimit(PivotConstants.kSmartCurrentLimit);
+    }
+
     /**
      * Runs periodically (every 20 ms). Updates the motion profile, FF, and PID.
      */
@@ -116,10 +124,10 @@ public class Pivot extends SubsystemBase {
             // The PID will correct for errors in the feed-forward's prediction.
             double pidVolts = controller.calculate(getEncoder(), currentState.position);
 
-            m_pivotMotor.setVoltage(pidVolts);
+            m_pivotLeftMotor.setVoltage(pidVolts);
         } else {
             // If the PID is disabled, stop outputting to the motor.
-            m_pivotMotor.stopMotor();
+            m_pivotLeftMotor.stopMotor();
         }
     }
 }
