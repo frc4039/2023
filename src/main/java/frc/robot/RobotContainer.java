@@ -47,6 +47,8 @@ public class RobotContainer {
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
             XboxController.Button.kRightBumper.value);
     private final JoystickButton driverBackButton = new JoystickButton(driver, XboxController.Button.kBack.value);
+    private final Trigger driverRightTriggerDepressed = new Trigger(
+            () -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
 
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -165,7 +167,9 @@ public class RobotContainer {
                             270));
 
         }
+        driverRightTriggerDepressed.onTrue(new ScoreYellowMid(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
 
+        /* Operator buttons */
         operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
         operatorLeftTriggerDepressed
