@@ -139,6 +139,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         /* Driver Buttons */
+        /* ============== */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         driverYButton
@@ -177,10 +178,9 @@ public class RobotContainer {
                             270));
 
         }
-        // score low
-        driverXButton.onTrue(new CmdGrpScoreLow(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
 
-        // score mid
+        // scoring
+        driverXButton.onTrue(new CmdGrpScoreLow(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
         driverRightTriggerDepressed
                 .onTrue(new SelectCommand(
                         Map.ofEntries(
@@ -191,8 +191,6 @@ public class RobotContainer {
                                         new CmdGrpScorePurpleMid(s_Pivot, s_Gripper, s_Telescopic,
                                                 s_BlinkinGamePiece))),
                         s_GamePieceSelector::getCurrentGamepiece));
-
-        // score high
         driverRightBumper
                 .onTrue(new SelectCommand(
                         Map.ofEntries(
@@ -205,13 +203,16 @@ public class RobotContainer {
                         s_GamePieceSelector::getCurrentGamepiece));
 
         // ====================================================== //
+
         /* Operator buttons */
+        /* ================ */
+        // Gripper
         operatorLeftBumper.onTrue(new CmdGrpGripperRelease(s_Gripper, s_BlinkinGamePiece));
         operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
-        // set robot state to purple
-        operatorLeftTriggerDepressed.onTrue(new SetRobotStatePurple(s_GamePieceSelector));
-        // set robot state to yellow
-        operatorRightTriggerDepressed.onTrue(new SetRobotStateYellow(s_GamePieceSelector));
+
+        // set robot state
+        operatorLeftTriggerDepressed.onTrue(new CmdGrpSetPurple(s_GamePieceSelector, s_BlinkinGamePiece));
+        operatorRightTriggerDepressed.onTrue(new CmdGrpSetYellow(s_GamePieceSelector, s_BlinkinGamePiece));
 
         // floor pickup
         operatorXButton.onTrue(new SelectCommand(
@@ -223,19 +224,20 @@ public class RobotContainer {
                                 new CmdGrpCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper,
                                         s_Intake, s_Pivot))),
                 s_GamePieceSelector::getCurrentGamepiece));
-
-        // .onTrue(new CmdGrpCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper,
-        // s_Intake, s_Pivot));
-        // operatorRightTriggerDepressed
-        // .onTrue(new CmdGrpConePickupPosition(s_Telescopic, s_Gripper, s_ConeGuide,
-        // s_Pivot, s_Intake));
+        // pivot angles
         operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
+
+        // semi-auto scoring node selector
         operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
         operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
         operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
+
+        // manual LED control
         operatorLeftJoystickButton.onTrue(new BlinkinColourForCone(s_BlinkinGamePiece));
         operatorRightJoystickButton.onTrue(new BlinkinColourForCube(s_BlinkinGamePiece));
+
+        // manual telescopic extend
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
         /*
