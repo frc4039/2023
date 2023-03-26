@@ -16,7 +16,7 @@ public class CmdGrpSetYellow extends SequentialCommandGroup {
     public CmdGrpSetYellow(GamePieceSelector s_GamePieceSelector,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                new SetRobotStateYellow(s_GamePieceSelector).withTimeout(0.01),
+                new SetRobotStateYellow(s_GamePieceSelector),
                 new BlinkinColourForCone(s_BlinkinGamePiece));
 
     }
