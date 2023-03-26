@@ -22,7 +22,8 @@ public class CmdGrpScoreYellowMid extends SequentialCommandGroup {
                 // pivot to extend angle
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone),
                 // extend to far
-                new TelescopicScoringExtendMid(s_Telescopic, s_Pivot).withTimeout(0.35),
+                new TelescopicScoringExtendMid(s_Telescopic, s_Pivot).withTimeout(0.35), // shouldnt need a timeout
+                                                                                         // here....
                 // score
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringRelease),
                 new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));

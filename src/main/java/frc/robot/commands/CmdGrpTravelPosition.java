@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.ConeGuideConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Intake;
@@ -21,8 +20,7 @@ public class CmdGrpTravelPosition extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
-                        new ConeGuideRetract(s_ConeGuide)
-                                .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                        new ConeGuideRetract(s_ConeGuide),
                         new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
                 }));
     }
