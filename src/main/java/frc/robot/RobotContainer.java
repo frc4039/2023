@@ -232,10 +232,6 @@ public class RobotContainer {
         operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.increaseSelectedNode()));
         operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectClosestNode()));
 
-        // manual LED control
-        operatorLeftJoystickButton.onTrue(new BlinkinColourForCone(s_BlinkinGamePiece));
-        operatorRightJoystickButton.onTrue(new BlinkinColourForCube(s_BlinkinGamePiece));
-
         // manual telescopic extend
         operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
         operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
