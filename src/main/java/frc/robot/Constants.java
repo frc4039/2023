@@ -178,6 +178,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
+        public static final double kTwoPurpleBarrierMaxSpeedMetersPerSecond = 2;
+        public static final double kTwoPurpleBarrierMaxSpeedMetersPerSecondFast = 3;
+
         public static final double kPXController = 1;
         public static final double kPYController = 1;
         public static final double kPThetaController = 1;
@@ -209,6 +212,19 @@ public final class Constants {
                 kMaxChargeStationSpeedMetersPerSecond,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(false);
+
+        public static TrajectoryConfig twoPurpleBarrierForwardConfig = new TrajectoryConfig(
+                kTwoPurpleBarrierMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig twoPurpleBarrierForwardConfigFast = new TrajectoryConfig(
+                kTwoPurpleBarrierMaxSpeedMetersPerSecondFast,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig twoPurpleBarrierReverseConfig = new TrajectoryConfig(
+                kTwoPurpleBarrierMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(true);
     }
 
     public static final class PivotConstants {
@@ -231,10 +247,10 @@ public final class Constants {
         public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
-        public static final double kPositionScoringCube = 60;
+        public static final double kPositionScoringCube = 65;
         public static final double kPositionPickupCube = 134;
         public static final double kPositionTravel = 0;
-        public static final double kPositionGreenCubePickup = -122;
+        public static final double kPositionGreenCubePickup = -125;
     }
 
     public static final class TelescopicConstants {

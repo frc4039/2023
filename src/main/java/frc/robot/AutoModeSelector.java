@@ -21,6 +21,7 @@ public class AutoModeSelector {
         // autoModeChooser.addOption("Middle Pickup Balance",
         // middlePickupBalance(container));
         autoModeChooser.addOption("ChargeSideMobility", new DropMobilityChargeSide(container));
+        autoModeChooser.addOption("2 Purple Barrier (red)", twoPiecePurpleBarrier(container, true));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -51,6 +52,10 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup middlePickupBalance(RobotContainer container) {
         return new MiddlePickupBalance(container);
+    }
+
+    private SequentialCommandGroup twoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
+        return new TwoPiecePurpleBarrier(container, isRed);
     }
 
 }
