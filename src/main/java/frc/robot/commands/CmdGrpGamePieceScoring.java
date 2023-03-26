@@ -24,7 +24,8 @@ public class CmdGrpGamePieceScoring extends SequentialCommandGroup {
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
-                }),
-                new BlinkinRainbow(s_BlinkinGamePiece));
+                })// ,
+                  // new BlinkinRainbow(s_BlinkinGamePiece)
+        );
     }
 }

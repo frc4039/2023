@@ -16,7 +16,7 @@ public class CmdGrpSetPurple extends SequentialCommandGroup {
     public CmdGrpSetPurple(GamePieceSelector s_GamePieceSelector,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                new SetRobotStatePurple(s_GamePieceSelector),
+                new SetRobotStatePurple(s_GamePieceSelector).withTimeout(0.01),
                 new BlinkinColourForCube(s_BlinkinGamePiece));
 
     }

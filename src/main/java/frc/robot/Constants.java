@@ -220,7 +220,7 @@ public final class Constants {
         public static final double kNominalVoltage = kDefaultVoltage;
 
         public static final TrapezoidProfile.Constraints kProfileConstraints = new TrapezoidProfile.Constraints(
-                200, 130);
+                200, 250);
         public static double kPivotKP = 0.15;
 
         // Degrees. Adding this to the encoder reading should give 0 when
@@ -322,7 +322,7 @@ public final class Constants {
     public static final class ConeGuideConstants {
         public static final int kConeGuideForwardChannel = 2;
         public static final int kConeGuideReverseChannel = 3;
-        public static final double kConeGuideRetractTimeout = 0.35;
+        public static final double kConeGuideRetractTimeout = 0.05;
         public static final double kConeGuideDeployTimeout = 0.5;
     }
 

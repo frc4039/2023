@@ -12,7 +12,8 @@ import frc.robot.subsystems.Gripper;
 public class CmdGrpGripperRelease extends ParallelCommandGroup {
     public CmdGrpGripperRelease(Gripper s_Gripper, BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                new GripperRelease(s_Gripper),
-                new BlinkinRainbow(s_BlinkinGamePiece));
+                new GripperRelease(s_Gripper)// ,
+        // new BlinkinRainbow(s_BlinkinGamePiece)
+        );
     }
 }
