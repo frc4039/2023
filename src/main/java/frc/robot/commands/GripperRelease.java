@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Gripper;
 
 public class GripperRelease extends CommandBase {
@@ -19,6 +20,8 @@ public class GripperRelease extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+
+        // new WaitCommand(0.25);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -7,8 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.ConeGuideConstants;
-import frc.robot.Constants.GripperConstants;
+import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
@@ -24,10 +23,9 @@ public class CmdGrpConePickupPosition extends SequentialCommandGroup {
         addCommands(
                 new TelescopicRetract(s_Telescopic),
                 new ParallelCommandGroup(new Command[] {
-                        new GripperRelease(s_Gripper)
-                                .withTimeout(GripperConstants.kGripperReleaseTimeout),
+                        new GripperRelease(s_Gripper),
                         new ConeGuideDeploy(s_ConeGuide)
-                                .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                                .withTimeout(Constants.ConeGuideConstants.kConeGuideDeployTimeout),
                         new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCone)
                 }));
     }

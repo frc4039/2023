@@ -5,37 +5,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ConeGuide;
+import frc.robot.subsystems.GamePieceSelector;
+import frc.robot.subsystems.GamePieceSelector.Gamepiece;
 
-public class ConeGuideDeploy extends CommandBase {
-    private final ConeGuide m_ConeGuide;
+public class SetRobotStatePurple extends CommandBase {
+    private GamePieceSelector m_GamePieceSelector;
 
-    public ConeGuideDeploy(ConeGuide coneGuide) {
-        m_ConeGuide = coneGuide;
-        addRequirements(m_ConeGuide);
+    /** Creates a new SetRobotStatePurple. */
+    public SetRobotStatePurple(GamePieceSelector gamePieceSelector) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_GamePieceSelector = gamePieceSelector;
+        addRequirements(m_GamePieceSelector);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_ConeGuide.setForward();
+        m_GamePieceSelector.setGamepiecePurple();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_ConeGuide.setOff();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        if (m_GamePieceSelector.getCurrentGamepiece() == Gamepiece.PURPLE) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
