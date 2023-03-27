@@ -27,11 +27,11 @@ public class Nodes {
                 "BP 6"
         };
         translations = new Translation2d[] {
-                new Translation2d(14.8, 0.59),
-                new Translation2d(15, 1.53),
-                new Translation2d(14.93, 2.28),
-                new Translation2d(14.93, 3.23),
-                new Translation2d(14.64, 3.96),
+                new Translation2d(14.72, 0.51),
+                new Translation2d(15, 1.48),
+                new Translation2d(15, 2.28),
+                new Translation2d(15, 3.18),
+                new Translation2d(15, 3.96),
                 new Translation2d(14.95, 4.90),
                 //
                 new Translation2d(1.7, 5.04),
