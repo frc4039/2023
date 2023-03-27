@@ -180,7 +180,7 @@ public class RobotContainer {
 
         // scoring
         driverXButton.onTrue(new CmdGrpScoreLow(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
-        driverRightTriggerDepressed
+        driverRightBumper
                 .onTrue(new SelectCommand(
                         Map.ofEntries(
                                 Map.entry(Gamepiece.YELLOW,
@@ -190,7 +190,7 @@ public class RobotContainer {
                                         new CmdGrpScorePurpleMid(s_Pivot, s_Gripper, s_Telescopic,
                                                 s_BlinkinGamePiece))),
                         s_GamePieceSelector::getCurrentGamepiece));
-        driverRightBumper
+        driverRightTriggerDepressed
                 .onTrue(new SelectCommand(
                         Map.ofEntries(
                                 Map.entry(Gamepiece.YELLOW,
@@ -206,8 +206,10 @@ public class RobotContainer {
         /* Operator buttons */
         /* ================ */
         // Gripper
-        operatorLeftBumper.onTrue(new GripperRelease(s_Gripper));
-        operatorRightBumper.onTrue(new GripperRetrieve(s_Gripper));
+        operatorLeftBumper
+                .onTrue(new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+        operatorRightBumper
+                .onTrue(new GripperRetrieve(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
         // set robot state
         operatorLeftTriggerDepressed.onTrue(new CmdGrpSetPurple(s_GamePieceSelector, s_BlinkinGamePiece));

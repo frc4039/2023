@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.BlinkinGamePiece;
 import frc.robot.subsystems.Gripper;
@@ -19,7 +20,7 @@ public class CmdGrpGamePieceScoring extends SequentialCommandGroup {
     public CmdGrpGamePieceScoring(Pivot s_Pivot, Gripper s_Gripper, Telescopic s_Telescopic,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                new GripperRelease(s_Gripper),
+                new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionTravel)
