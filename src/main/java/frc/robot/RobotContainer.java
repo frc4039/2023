@@ -102,7 +102,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
-                new TeleopSwerve(
+                new TeleopSwerveTurn(
                         s_Swerve,
                         () -> -driver.getRawAxis(translationAxis),
                         () -> -driver.getRawAxis(strafeAxis),
@@ -147,7 +147,7 @@ public class RobotContainer {
         /* Driver Buttons */
         /* ============== */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
-        driverLeftBumper.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
+
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
                         s_Swerve,
@@ -212,6 +212,8 @@ public class RobotContainer {
 
         /* Operator buttons */
         /* ================ */
+        // Reset Telescopic encoder - moved here so driver doesnt have to do it!
+        operatorLeftJoystickButton.onTrue(new InstantCommand(() -> s_Telescopic.zeroEncoder()));
         // Gripper
         operatorLeftBumper
                 .onTrue(new GripperRelease(s_Gripper).withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
