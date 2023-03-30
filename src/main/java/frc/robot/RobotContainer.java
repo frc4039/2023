@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -124,14 +125,20 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_GamePieceSelector);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+        mainTab.addString("Gamepiece State", () -> s_GamePieceSelector.getCurrentGamepiece().toString()).withSize(1, 1)
+                .withPosition(0, 0);
+        mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString()).withSize(1, 1)
+                .withPosition(1, 0);
+        mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel()).withSize(1, 1)
+                .withPosition(2, 0);
+        mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees()).withSize(1, 1)
+                .withPosition(3, 0);
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
-        mainTab.addDouble("Gyro", () -> s_Swerve.getYaw().getDegrees());
-        mainTab.add("Gyro zero", new ZeroGyro(s_Swerve));
-        mainTab.addString("Selected Node", () -> s_NodeSelector.getSelectedNodeLabel());
-        mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString());
-        mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading());
-        mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve));
-        mainTab.addString("Gamepiece State", () -> s_GamePieceSelector.getCurrentGamepiece().toString());
+        mainTab.add("Gyro zero", new ZeroGyro(s_Swerve)).withSize(2, 1).withPosition(3, 1);
+        mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
+                .withPosition(0, 2);
+        mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(3, 2);
+        mainTab.add("Game Field", new Field2d()).withSize(4, 3).withPosition(4, 0);
 
         configureButtonBindings();
     }
