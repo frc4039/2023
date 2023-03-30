@@ -75,7 +75,8 @@ public class TeleopSwerveTurn extends CommandBase {
 
     @Override
     public void execute() {
-        // double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
+        // double rotationOutput =
+        // rotationController.calculate(s_Swerve.getYaw().getRadians());
 
         /* Get Values, Deadband */
         double translationVal = translationLimiter.calculate(
@@ -83,7 +84,7 @@ public class TeleopSwerveTurn extends CommandBase {
         double strafeVal = strafeLimiter.calculate(
                 MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
         double rotationVal = rotationLimiter.calculate(
-            MathUtil.applyDeadband(rotationXSup.getAsDouble(), Constants.Swerve.kRotationStickDeadband));
+                MathUtil.applyDeadband(rotationXSup.getAsDouble(), Constants.Swerve.kRotationStickDeadband));
 
         /* Drive */
         s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed),
