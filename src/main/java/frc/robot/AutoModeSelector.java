@@ -20,7 +20,7 @@ public class AutoModeSelector {
         autoModeChooser.addOption("Middle Pickup (blue)", middlePickupStraight(container, false));
         // autoModeChooser.addOption("Middle Pickup Balance",
         // middlePickupBalance(container));
-        autoModeChooser.addOption("ChargeSideMobility", new DropMobilityChargeSide(container));
+        autoModeChooser.addOption("Guardrail Yellow + Mobility", new DropMobilityChargeSide(container));
         autoModeChooser.addOption("2 Purple Barrier (red)", twoPiecePurpleBarrier(container, true));
     }
 
