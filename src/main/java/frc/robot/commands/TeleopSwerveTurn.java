@@ -41,7 +41,7 @@ import frc.robot.subsystems.Swerve;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class TeleopSwerve extends CommandBase {
+public class TeleopSwerveTurn extends CommandBase {
     private Swerve s_Swerve;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
@@ -51,10 +51,10 @@ public class TeleopSwerve extends CommandBase {
 
     private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
+    private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
     private PIDController rotationController = new PIDController(4.0, 0, 0);
-    private double lastSetPoint;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
+    public TeleopSwerveTurn(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
             DoubleSupplier rotationXSup, DoubleSupplier rotationYSup, BooleanSupplier zeroGyroBtn) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
@@ -71,35 +71,23 @@ public class TeleopSwerve extends CommandBase {
     @Override
     public void initialize() {
         rotationController.reset();
-        lastSetPoint = s_Swerve.getYaw().getRadians();
     }
 
     @Override
     public void execute() {
-        if (zeroGyroSup.getAsBoolean()) {
-            lastSetPoint = 0;
-            rotationController.setSetpoint(0);
-        } else if (Math.sqrt(Math.pow(rotationXSup.getAsDouble(), 2)
-                + Math.pow(rotationYSup.getAsDouble(), 2)) > Constants.Swerve.kRotationStickDeadband) {
-            double curSetPoint = Math.atan2(-rotationYSup.getAsDouble(), rotationXSup.getAsDouble()) + (Math.PI / 2);
-            rotationController.setSetpoint(curSetPoint);
-            lastSetPoint = curSetPoint;
-        } else {
-            rotationController.setSetpoint(lastSetPoint);
-        }
-
-        double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
+        // double rotationOutput = rotationController.calculate(s_Swerve.getYaw().getRadians());
 
         /* Get Values, Deadband */
         double translationVal = translationLimiter.calculate(
                 MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
         double strafeVal = strafeLimiter.calculate(
                 MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.kTranslationStickDeadband));
-        double rotationVal = MathUtil.clamp(rotationOutput, -Constants.Swerve.kMaxAngularVelocityInRadiansPerSecond,
-                Constants.Swerve.kMaxAngularVelocityInRadiansPerSecond);
+        double rotationVal = rotationLimiter.calculate(
+            MathUtil.applyDeadband(rotationXSup.getAsDouble(), Constants.Swerve.kRotationStickDeadband));
 
         /* Drive */
-        s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+        s_Swerve.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.kMaxSpeed),
+                rotationVal * Constants.Swerve.kMaxAngularVelocityInRadiansPerSecond,
                 true);
     }
 
