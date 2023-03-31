@@ -34,12 +34,12 @@ public class Nodes {
                 new Translation2d(14.64, 3.96),
                 new Translation2d(14.95, 4.90),
                 //
-                new Translation2d(1.7, 5.04),
-                new Translation2d(1.6, 4.02),
-                new Translation2d(1.7, 3.35),
-                new Translation2d(1.6, 2.32),
-                new Translation2d(1.7, 1.67),
-                new Translation2d(1.6, 0.63)
+                new Translation2d(1.84, 4.9),
+                new Translation2d(1.58, 3.96),
+                new Translation2d(1.85, 3.30),
+                new Translation2d(1.61, 2.35),
+                new Translation2d(1.87, 1.56),
+                new Translation2d(1.62, 0.61)
         };
     }
 
