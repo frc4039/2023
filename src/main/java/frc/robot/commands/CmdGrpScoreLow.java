@@ -20,7 +20,7 @@ public class CmdGrpScoreLow extends SequentialCommandGroup {
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
                 // pivot to extend angle
-                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone),
+                // new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone),
                 // score
                 new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
     }
