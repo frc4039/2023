@@ -118,6 +118,7 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
                             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                     .withTimeout(1.0),
                             AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2_Blue) }) }));
+            ;
         }
     }
 
@@ -147,19 +148,19 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
     /* ========== */
     public static Trajectory middlePath_1_Blue = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(2, 0)),
-            new Pose2d(4.75, -0.381, Rotation2d.fromDegrees(0)),
+            List.of(),
+            new Pose2d(4.65, -0.3, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
 
     public static Trajectory returnPath_1_Blue = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(4.75, -0.381, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1.2, 0)),
-            new Pose2d(0.3, -0.6, Rotation2d.fromDegrees(0)),
+            new Pose2d(4.65, -0.3, Rotation2d.fromDegrees(0)),
+            List.of(),
+            new Pose2d(0, -0.55, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.reverseConfig);
 
     public static Trajectory middlePath_2_Blue = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 0)),
+            List.of(),
             new Pose2d(5, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.forwardConfig);
 
