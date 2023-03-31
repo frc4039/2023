@@ -108,7 +108,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         public static final double kMaxSpeed = 4.5; // meters per second
-        public static final double kMaxAngularVelocityInRadiansPerSecond = 4 * Math.PI;
+        public static final double kMaxAngularVelocityInRadiansPerSecond = 2 * Math.PI;
 
         /* Neutral Modes */
         public static final IdleMode kAngleNeutralMode = IdleMode.kBrake;
@@ -249,7 +249,7 @@ public final class Constants {
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = 65;
         public static final double kPositionPickupCube = 134;
-        public static final double kPositionTravel = 0;
+        public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
     }
 
@@ -292,7 +292,7 @@ public final class Constants {
     public static final class GripperConstants {
         public static final int kGripperForwardChannel = 7;
         public static final int kGripperReverseChannel = 8;
-        public static final double kGripperReleaseTimeout = 0.1;
+        public static final double kGripperReleaseTimeout = 0.25;
     }
 
     public static final class IntakeConstants {
