@@ -16,12 +16,15 @@ public class AutoModeSelector {
         autoModeChooser.addOption("Drop, Mobility, and balance", dropMobilityAndBalance(container));
         // autoModeChooser.addOption("Drop, drive, strafe, and pickup", new
         // DropAndDriveAndStrafeAndPickup(container));
-        autoModeChooser.addOption("Middle Pickup (red)", middlePickupStraight(container, true));
-        autoModeChooser.addOption("Middle Pickup (blue)", middlePickupStraight(container, false));
+        // autoModeChooser.addOption("Middle Pickup (red)",
+        // middlePickupStraight(container, true));
+        // autoModeChooser.addOption("Middle Pickup (blue)",
+        // middlePickupStraight(container, false));
         // autoModeChooser.addOption("Middle Pickup Balance",
         // middlePickupBalance(container));
         autoModeChooser.addOption("Guardrail Yellow + Mobility", new DropMobilityChargeSide(container));
         autoModeChooser.addOption("2 Purple Barrier (red)", twoPiecePurpleBarrier(container, true));
+        autoModeChooser.addOption("2 Purple Barrier (blue)", twoPiecePurpleBarrier(container, false));
     }
 
     public SendableChooser<Command> getAutoChooser() {
