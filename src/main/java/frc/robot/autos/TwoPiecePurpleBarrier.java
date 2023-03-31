@@ -54,7 +54,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
             // extend arm
             addCommands(
-                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
+                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(0.4));
             // Drop score, and retract
             addCommands(new SequentialCommandGroup(new Command[] {
                     // new PivotMoveToPosition(container.getPivot(),
