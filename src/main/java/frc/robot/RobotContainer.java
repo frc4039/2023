@@ -68,6 +68,7 @@ public class RobotContainer {
     private final Trigger operatorUpButton = new Trigger(() -> operator.getPOV() == 0);
     private final Trigger operatorDownButton = new Trigger(() -> operator.getPOV() == 180);
     private final Trigger operatorLeftButton = new Trigger(() -> operator.getPOV() == 270);
+    private final Trigger operatorRightButton = new Trigger(() -> operator.getPOV() == 90);
     private final JoystickButton operatorBackButton = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton operatorStartButton = new JoystickButton(operator, XboxController.Button.kStart.value);
     private final Trigger operatorLeftTriggerDepressed = new Trigger(
@@ -238,6 +239,7 @@ public class RobotContainer {
         // pivot angles
         operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
         operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
+        operatorRightButton.onTrue(new PivotMoveToPosition(s_Pivot, 0));
 
         // semi-auto scoring node selector
         operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.decreaseSelectedNode()));
