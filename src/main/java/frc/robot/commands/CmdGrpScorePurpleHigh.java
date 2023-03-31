@@ -22,7 +22,7 @@ public class CmdGrpScorePurpleHigh extends SequentialCommandGroup {
                 // pivot to extend angle
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCube),
                 // extend to far
-                new TelescopicScoringExtendFar(s_Telescopic, s_Pivot),
+                new TelescopicScoringExtendFar(s_Telescopic, s_Pivot).withTimeout(0.4),
                 // score
                 new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
     }

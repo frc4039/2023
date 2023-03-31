@@ -21,8 +21,8 @@ public class CmdGrpScorePurpleMid extends SequentialCommandGroup {
         addCommands(
                 // pivot to extend angle
                 new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCube),
-                // extend to far
-                new TelescopicScoringExtendMid(s_Telescopic, s_Pivot),
+                // extend to mid
+                new TelescopicScoringExtendMid(s_Telescopic, s_Pivot).withTimeout(0.4),
                 // score
                 new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
     }
