@@ -93,11 +93,10 @@ public class Swerve extends SubsystemBase {
         field.getObject("Auto path").setTrajectory(DropMobilityBalanceAuto.pDropToMobility);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
-        // tab.add("Field", field);
         for (SwerveModule mod : mSwerveMods) {
             tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
         }
-        tab.addString("Pose", () -> getPose().toString());
+        tab.addString("Pose", () -> getPose().toString()).withSize(4, 1).withPosition(1, 1);
     }
 
     public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {

@@ -10,6 +10,7 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -144,9 +145,12 @@ public class RobotContainer {
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve)).withSize(2, 1).withPosition(2, 1);
         mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
-                .withPosition(0, 2).withWidget("Simple Dial").withProperties(pressureSensorMax);
+                .withPosition(0, 2).withWidget(BuiltInWidgets.kDial).withProperties(pressureSensorMax);
         mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
         mainTab.add("Game Field", s_Swerve.getField()).withSize(5, 3).withPosition(4, 0);
+
+        ShuffleboardTab swerveTab = Shuffleboard.getTab("Swerve Drive");
+        swerveTab.addBoolean("Scored", driverRightTriggerDepressed).withSize(1, 1).withPosition(0, 1);
 
         configureButtonBindings();
     }
