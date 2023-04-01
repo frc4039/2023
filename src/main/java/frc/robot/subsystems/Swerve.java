@@ -93,7 +93,7 @@ public class Swerve extends SubsystemBase {
         field.getObject("Auto path").setTrajectory(DropMobilityBalanceAuto.pDropToMobility);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
-        tab.add("Field", field);
+        // tab.add("Field", field);
         for (SwerveModule mod : mSwerveMods) {
             tab.addString("Mod " + mod.moduleNumber + " Position", () -> mod.getPosition().toString());
         }
@@ -181,6 +181,10 @@ public class Swerve extends SubsystemBase {
 
     public double getRawPitch() {
         return gyro.getPitch();
+    }
+
+    public Field2d getField() {
+        return field;
     }
 
     @Override

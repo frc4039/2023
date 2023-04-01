@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -127,6 +128,11 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(s_GamePieceSelector);
 
         ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+        Map<String, Object> pressureSensorMax = new HashMap<String, Object>() {
+            {
+                put("max", 120);
+            }
+        };
         mainTab.addString("Gamepiece State", () -> s_GamePieceSelector.getCurrentGamepiece().toString()).withSize(1, 1)
                 .withPosition(0, 0);
         mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString()).withSize(1, 1)
@@ -138,9 +144,9 @@ public class RobotContainer {
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve)).withSize(2, 1).withPosition(2, 1);
         mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
-                .withPosition(0, 2).withWidget("Simple Dial");
+                .withPosition(0, 2).withWidget("Simple Dial").withProperties(pressureSensorMax);
         mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
-        mainTab.add("Game Field", new Field2d()).withSize(5, 3).withPosition(4, 0);
+        mainTab.add("Game Field", s_Swerve.getField()).withSize(5, 3).withPosition(4, 0);
 
         configureButtonBindings();
     }
