@@ -137,11 +137,11 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     public static Trajectory middlePath_1_Red = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(4.65, -0.2, Rotation2d.fromDegrees(0)),
+            new Pose2d(4.65, -0.22, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.twoPurpleBarrierForwardConfig);
 
     public static Trajectory returnPath_1_Red = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(4.65, -0.2, Rotation2d.fromDegrees(0)),
+            new Pose2d(4.65, -0.22, Rotation2d.fromDegrees(0)),
             List.of(),
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.twoPurpleBarrierReverseConfig);
