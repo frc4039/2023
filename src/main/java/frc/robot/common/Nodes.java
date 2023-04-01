@@ -41,7 +41,7 @@ public class Nodes {
                  * new Translation2d(1.9, 3.3),
                  * new Translation2d(1.9, 3.3),
                  */
-                new Translation2d(1.9, 3.3)
+                new Translation2d(2, 3.3)
         };
     }
 

@@ -205,19 +205,20 @@ public class Swerve extends SubsystemBase {
                 field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
             } else {
                 // move it way off the screen to make it disappear
-                field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
-            }
+                // field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new
+                // Rotation2d()));
+                result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
-            result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
-
-            if (result.isPresent()) {
-                EstimatedRobotPose camPose2 = result.get();
-                swervePoseEstimator.addVisionMeasurement(
-                        camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
-                field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
-            } else {
-                // move it way off the screen to make it disappear
-                field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
+                if (result.isPresent()) {
+                    EstimatedRobotPose camPose2 = result.get();
+                    swervePoseEstimator.addVisionMeasurement(
+                            camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
+                    field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
+                } else {
+                    // move it way off the screen to make it disappear
+                    // field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new
+                    // Rotation2d()));
+                }
             }
 
             // System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());

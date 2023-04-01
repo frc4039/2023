@@ -12,6 +12,8 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Swerve;
@@ -29,8 +31,8 @@ public class PIDTranslate extends CommandBase {
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
 
     private PIDController xPidController = new PIDController(0.4, 0, 0); // 0.4 kp
-    private PIDController yPidController = new PIDController(0.25, 0, 0); // 0.25 kp, but still a littler jittery and
-                                                                          // slow. Not sure what the best approach is.
+    private PIDController yPidController = new PIDController(0.4, 0, 0); // 0.25 kp, but still a littler jittery and
+                                                                         // slow. Not sure what the best approach is.
 
     public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
         this.swerve = swerve;
@@ -48,38 +50,72 @@ public class PIDTranslate extends CommandBase {
         rotationController.reset();
         rotationController.setSetpoint(rotSup.getAsDouble());
 
-        xPidController.setSetpoint(xSup.getAsDouble());
-        yPidController.setSetpoint(ySup.getAsDouble());
+        xPidController.setSetpoint(0);
+        // yPidController.setSetpoint(ySup.getAsDouble());
     }
 
     @Override
     public void execute() {
-        double translationVal;
-        double strafeVal;
-        if (DriverStation.getAlliance().toString() == "Red") {
-            translationVal = -translationLimiter.calculate(
-                    xPidController.calculate(swerve.getPose().getX()));
-            strafeVal = -strafeLimiter.calculate(
-                    yPidController.calculate(swerve.getPose().getY()));
-        }
+        double magnitude = Math.sqrt(Math.pow(this.xSup.getAsDouble() - swerve.getPose().getX(), 2)
+                + Math.pow(this.ySup.getAsDouble() - swerve.getPose().getY(), 2));
+        double angle = Math.atan2(this.ySup.getAsDouble() - swerve.getPose().getY(),
+                this.xSup.getAsDouble() - swerve.getPose().getX());
 
-        else {
-            translationVal = translationLimiter.calculate(
-                    xPidController.calculate(swerve.getPose().getX()));
-            strafeVal = strafeLimiter.calculate(
-                    yPidController.calculate(swerve.getPose().getY()));
-        }
+        double velocity = xPidController.calculate(magnitude);
 
+        double xVelocity = -velocity * Math.cos(angle);
+        double yVelocity = -velocity * Math.sin(angle);
         double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
         double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+        System.out.println("Angle: " + angle * 180 / Math.PI);
+        System.out.println("Magnitude: " + magnitude);
+        System.out.println("X: " + (this.xSup.getAsDouble() -
+                swerve.getPose().getX()));
+        System.out.println("Y: " + (this.ySup.getAsDouble() -
+                swerve.getPose().getY()));
+        System.out.println("X Vel: " + xVelocity);
+        System.out.println("Y Vel: " + yVelocity);
 
-        translationVal = translationVal + Math.signum(translationVal) *
-                VisionConstants.kTranslationFF;
-        strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
-
-        swerve.drive(new Translation2d(translationVal,
-                strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+        swerve.drive(new Translation2d(xVelocity,
+                yVelocity).times(Constants.Swerve.kMaxSpeed), rotationVal,
                 true);
+
+        /*
+         * 
+         * double translationVal;
+         * double strafeVal;
+         * if (DriverStation.getAlliance().toString() == "Red") {
+         * translationVal = -translationLimiter.calculate(
+         * xPidController.calculate(swerve.getPose().getX()));
+         * strafeVal = -strafeLimiter.calculate(
+         * yPidController.calculate(swerve.getPose().getY()));
+         * }
+         * 
+         * else {
+         * translationVal = translationLimiter.calculate(
+         * xPidController.calculate(swerve.getPose().getX()));
+         * strafeVal = strafeLimiter.calculate(
+         * yPidController.calculate(swerve.getPose().getY()));
+         * }
+         * 
+         * double rotationOutput =
+         * rotationController.calculate(swerve.getYaw().getRadians());
+         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
+         * 
+         * translationVal = translationVal + Math.signum(translationVal) *
+         * VisionConstants.kTranslationFF;
+         * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
+         * 
+         * final double trans = translationVal;
+         * final double strafe = strafeVal;
+         * 
+         * System.out.println(trans);
+         * System.out.println(strafe);
+         * 
+         * swerve.drive(new Translation2d(translationVal,
+         * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
+         * true);
+         */
 
     }
 
