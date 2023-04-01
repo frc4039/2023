@@ -354,8 +354,8 @@ public final class Constants {
                 new Translation3d(-0.104, -0.072, 0.662),
                 new Rotation3d(3.14, 0.0, 3.49));
 
-        public static final double kTranslationFF = 0.0145; // liking 0.0145
-        public static final double kStrafeFF = 0.014; // liking 0.014
+        public static final double kTranslationFF = 0.0;
+        public static final double kStrafeFF = 0.0;
     }
 
     public static final class BlinkinConstants {

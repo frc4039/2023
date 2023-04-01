@@ -29,8 +29,8 @@ public class PIDTranslate extends CommandBase {
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
 
     private PIDController xPidController = new PIDController(0.4, 0, 0); // 0.4 kp
-    private PIDController yPidController = new PIDController(0.25, 0, 0); // 0.25 kp, but still a littler jittery and
-                                                                          // slow. Not sure what the best approach is.
+    private PIDController yPidController = new PIDController(0.4, 0, 0); // 0.25 kp, but still a littler jittery and
+                                                                         // slow. Not sure what the best approach is.
 
     public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
         this.swerve = swerve;
