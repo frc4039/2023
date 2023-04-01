@@ -138,7 +138,7 @@ public class RobotContainer {
         mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
         mainTab.add("Gyro zero", new ZeroGyro(s_Swerve)).withSize(2, 1).withPosition(2, 1);
         mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
-                .withPosition(0, 2);
+                .withPosition(0, 2).withWidget("Simple Dial");
         mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
         mainTab.add("Game Field", new Field2d()).withSize(5, 3).withPosition(4, 0);
 
