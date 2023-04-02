@@ -12,6 +12,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.Swerve;
@@ -56,7 +57,7 @@ public class PIDTranslate extends CommandBase {
     public void execute() {
         double translationVal;
         double strafeVal;
-        if (DriverStation.getAlliance().toString() == "Red") {
+        if (DriverStation.getAlliance() == Alliance.Red) {
             translationVal = -translationLimiter.calculate(
                     xPidController.calculate(swerve.getPose().getX()));
             strafeVal = -strafeLimiter.calculate(
