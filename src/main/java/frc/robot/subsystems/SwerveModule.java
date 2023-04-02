@@ -105,6 +105,8 @@ public class SwerveModule {
     public void resetToAbsolute() {
         Rotation2d absolutePosition = getCanCoder().minus(angleOffset);
         integratedAngleEncoder.setPosition(absolutePosition.getDegrees());
+        lastAngle = absolutePosition;
+        setAngle(new SwerveModuleState(0, absolutePosition));
     }
 
     private void configAngleEncoder() {
