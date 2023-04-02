@@ -28,12 +28,12 @@ public class Nodes {
         };
         translations = new Translation2d[] {
 
-                new Translation2d(14.72, 0.57),
-                new Translation2d(14.99, 1.49),
-                new Translation2d(14.99, 1.91),
-                new Translation2d(14.54, 3.65),
-                new Translation2d(14.64, 3.96),
-                new Translation2d(14.95, 4.90),
+                new Translation2d(14.9, 0.54),
+                new Translation2d(14.93, 1.65),
+                new Translation2d(14.84, 2.23),
+                new Translation2d(14.85, 3.38),
+                new Translation2d(14.87, 3.87),
+                new Translation2d(14.87, 5.01),
 
                 new Translation2d(1.64, 4.97),
                 new Translation2d(1.64, 3.84),
