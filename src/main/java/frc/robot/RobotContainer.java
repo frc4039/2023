@@ -189,7 +189,7 @@ public class RobotContainer {
                                 () -> -driver.getRawAxis(strafeAxis),
                                 90)),
                 Map.entry(Alliance.Invalid,
-                        null)),
+                        new InstantCommand())),
                 DriverStation::getAlliance));
 
         // scoring
