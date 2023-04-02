@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.common.Nodes;
@@ -13,14 +15,14 @@ public class NodeSelector extends SubsystemBase {
     private Translation2d selectedNodeTranslation;
     private String selectedNodeLabel;
     private int selectedNodeNumber;
+    private Alliance alliance;
 
     public NodeSelector(RobotContainer container) {
 
         nodes = new Nodes(container.getSwerve());
 
         closestNodeSelected = true;
-        selectedNodeTranslation = nodes.getNearestTranslation();
-        selectedNodeLabel = nodes.getTranslationLabel(selectedNodeTranslation);
+
     }
 
     public Translation2d getSelectedNodeTranslation() {
@@ -33,7 +35,8 @@ public class NodeSelector extends SubsystemBase {
 
     public void increaseSelectedNode() {
         closestNodeSelected = false;
-        if (closestNodeSelected || !closestNodeSelected && selectedNodeNumber == nodes.getTranslations().length - 1) {
+        if (closestNodeSelected
+                || !closestNodeSelected && selectedNodeNumber == nodes.getTranslations(Alliance.Red).length - 1) {
             selectedNodeNumber = 0;
         } else {
             selectedNodeNumber++;
@@ -43,7 +46,7 @@ public class NodeSelector extends SubsystemBase {
     public void decreaseSelectedNode() {
         closestNodeSelected = false;
         if (closestNodeSelected || !closestNodeSelected && selectedNodeNumber == 0) {
-            selectedNodeNumber = nodes.getTranslations().length - 1;
+            selectedNodeNumber = nodes.getTranslations(Alliance.Red).length - 1;
         } else {
             selectedNodeNumber--;
         }
@@ -55,12 +58,14 @@ public class NodeSelector extends SubsystemBase {
 
     @Override
     public void periodic() {
+        alliance = DriverStation.getAlliance();
+
         if (closestNodeSelected) {
-            selectedNodeTranslation = nodes.getNearestTranslation();
+            selectedNodeTranslation = nodes.getNearestTranslation(alliance);
             selectedNodeLabel = "Closest Node";
         } else {
-            selectedNodeTranslation = nodes.getTranslations()[selectedNodeNumber];
-            selectedNodeLabel = nodes.getTranslationLabel(selectedNodeTranslation);
+            selectedNodeTranslation = nodes.getTranslations(alliance)[selectedNodeNumber];
+            selectedNodeLabel = nodes.getTranslationLabel(selectedNodeTranslation, alliance);
         }
 
     }

@@ -10,6 +10,7 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -173,25 +174,23 @@ public class RobotContainer {
         driverLeftTriggerDepressed
                 .whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
                         () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
-
-        if (DriverStation.getAlliance().toString() == "Red") {
-            driverBButton
-                    .whileTrue(new TeleopSwerveAtFixedRotation(
-                            s_Swerve,
-                            () -> -driver.getRawAxis(translationAxis),
-                            () -> -driver.getRawAxis(strafeAxis),
-                            90));
-
-        }
-        if (DriverStation.getAlliance().toString() == "Blue") {
-            driverBButton
-                    .whileTrue(new TeleopSwerveAtFixedRotation(
-                            s_Swerve,
-                            () -> -driver.getRawAxis(translationAxis),
-                            () -> -driver.getRawAxis(strafeAxis),
-                            270));
-
-        }
+        // rotate to HP angle
+        driverBButton.whileTrue(new SelectCommand(Map.ofEntries(
+                Map.entry(Alliance.Blue,
+                        new TeleopSwerveAtFixedRotation(
+                                s_Swerve,
+                                () -> -driver.getRawAxis(translationAxis),
+                                () -> -driver.getRawAxis(strafeAxis),
+                                270)),
+                Map.entry(Alliance.Red,
+                        new TeleopSwerveAtFixedRotation(
+                                s_Swerve,
+                                () -> -driver.getRawAxis(translationAxis),
+                                () -> -driver.getRawAxis(strafeAxis),
+                                90)),
+                Map.entry(Alliance.Invalid,
+                        new InstantCommand())),
+                DriverStation::getAlliance));
 
         // scoring
         driverXButton.onTrue(new CmdGrpScoreLow(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
