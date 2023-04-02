@@ -8,14 +8,11 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
-import frc.robot.Constants.VisionConstants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.subsystems.Swerve;
 
 public class PIDTranslate extends CommandBase {
@@ -27,12 +24,8 @@ public class PIDTranslate extends CommandBase {
 
     private PIDController rotationController = new PIDController(4.0, 0, 0);
 
-    private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
-    private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
-
-    private PIDController xPidController = new PIDController(0.4, 0, 0); // 0.4 kp
-    private PIDController yPidController = new PIDController(0.4, 0, 0); // 0.25 kp, but still a littler jittery and
-                                                                         // slow. Not sure what the best approach is.
+    private ProfiledPIDController xPidController = new ProfiledPIDController(AutoConstants.kPXController, 0, 0,
+            AutoConstants.kPositionControllerConstraints);
 
     public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
         this.swerve = swerve;
@@ -47,75 +40,29 @@ public class PIDTranslate extends CommandBase {
 
     @Override
     public void initialize() {
+
+        Translation2d deltaPosition = calculateGoalPosition();
+
         rotationController.reset();
         rotationController.setSetpoint(rotSup.getAsDouble());
 
-        xPidController.setSetpoint(0);
-        // yPidController.setSetpoint(ySup.getAsDouble());
+        xPidController.reset(deltaPosition.getNorm(), -AutoConstants.kPositionControllerConstraints.maxVelocity);
+        xPidController.setGoal(0.0);
     }
 
     @Override
     public void execute() {
-        double magnitude = Math.sqrt(Math.pow(this.xSup.getAsDouble() - swerve.getPose().getX(), 2)
-                + Math.pow(this.ySup.getAsDouble() - swerve.getPose().getY(), 2));
-        double angle = Math.atan2(this.ySup.getAsDouble() - swerve.getPose().getY(),
-                this.xSup.getAsDouble() - swerve.getPose().getX());
+        Translation2d deltaPosition = calculateGoalPosition();
 
-        double velocity = xPidController.calculate(magnitude);
+        double velocity = xPidController.calculate(deltaPosition.getNorm());
+        Translation2d directionUnitVector = deltaPosition.div(deltaPosition.getNorm());
+        Translation2d output = directionUnitVector.times(velocity);
 
-        double xVelocity = -velocity * Math.cos(angle);
-        double yVelocity = -velocity * Math.sin(angle);
         double rotationOutput = rotationController.calculate(swerve.getYaw().getRadians());
         double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-        System.out.println("Angle: " + angle * 180 / Math.PI);
-        System.out.println("Magnitude: " + magnitude);
-        System.out.println("X: " + (this.xSup.getAsDouble() -
-                swerve.getPose().getX()));
-        System.out.println("Y: " + (this.ySup.getAsDouble() -
-                swerve.getPose().getY()));
-        System.out.println("X Vel: " + xVelocity);
-        System.out.println("Y Vel: " + yVelocity);
 
-        swerve.drive(new Translation2d(xVelocity,
-                yVelocity).times(Constants.Swerve.kMaxSpeed), rotationVal,
+        swerve.autoDrive(output.times(Constants.Swerve.kMaxSpeed), rotationVal,
                 true);
-
-        /*
-         * 
-         * double translationVal;
-         * double strafeVal;
-         * if (DriverStation.getAlliance().toString() == "Red") {
-         * translationVal = -translationLimiter.calculate(
-         * xPidController.calculate(swerve.getPose().getX()));
-         * strafeVal = -strafeLimiter.calculate(
-         * yPidController.calculate(swerve.getPose().getY()));
-         * }
-         * 
-         * else {
-         * translationVal = translationLimiter.calculate(
-         * xPidController.calculate(swerve.getPose().getX()));
-         * strafeVal = strafeLimiter.calculate(
-         * yPidController.calculate(swerve.getPose().getY()));
-         * }
-         * 
-         * double rotationOutput =
-         * rotationController.calculate(swerve.getYaw().getRadians());
-         * double rotationVal = MathUtil.clamp(rotationOutput, -4, 4);
-         * 
-         * translationVal = translationVal + Math.signum(translationVal) *
-         * VisionConstants.kTranslationFF;
-         * strafeVal = strafeVal + Math.signum(strafeVal) * VisionConstants.kStrafeFF;
-         * 
-         * final double trans = translationVal;
-         * final double strafe = strafeVal;
-         * 
-         * System.out.println(trans);
-         * System.out.println(strafe);
-         * 
-         * swerve.drive(new Translation2d(translationVal,
-         * strafeVal).times(Constants.Swerve.kMaxSpeed), rotationVal,
-         * true);
-         */
 
     }
 
@@ -127,5 +74,23 @@ public class PIDTranslate extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    public Translation2d calculateGoalPosition() {
+        Translation2d resultGoalPosition;
+
+        Translation2d goalPos = new Translation2d(this.xSup.getAsDouble(), this.ySup.getAsDouble());
+        Translation2d currentPos = swerve.getPose().getTranslation();
+        Translation2d deltaPos = currentPos.minus(goalPos);
+
+        double xOffset = MathUtil.clamp(Math.abs(deltaPos.getY()), 0, 0.5);
+
+        if (goalPos.getX() < 4) {
+            resultGoalPosition = deltaPos.minus(new Translation2d(xOffset, 0));
+        } else {
+            resultGoalPosition = deltaPos.plus(new Translation2d(xOffset, 0));
+        }
+
+        return resultGoalPosition;
     }
 }

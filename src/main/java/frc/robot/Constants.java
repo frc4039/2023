@@ -189,6 +189,10 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
+        // used only for semi-auto alignment in tele-op
+        public static final TrapezoidProfile.Constraints kPositionControllerConstraints = new TrapezoidProfile.Constraints(
+                2, 1.5);
+
         public static final double kBalanceSpeed = 0.3; // This is the variable to increase speed for
                                                         // DropMobilityBalance
 
@@ -346,12 +350,12 @@ public final class Constants {
         public static final String kCameraName1 = "OV5647";
         public static final String kCameraName2 = "camera2";
 
-        public static final Transform3d kRobotToCam1 = new Transform3d(
-                new Translation3d(0.104, -0.072, 0.662),
+        public static final Transform3d kRobotToCam2 = new Transform3d(
+                new Translation3d(0.072, 0.104, 0.662),
                 new Rotation3d(3.14, 0.0, 2.79));
 
-        public static final Transform3d kRobotToCam2 = new Transform3d(
-                new Translation3d(-0.104, -0.072, 0.662),
+        public static final Transform3d kRobotToCam1 = new Transform3d(
+                new Translation3d(0.072, -0.104, 0.662),
                 new Rotation3d(3.14, 0.0, 3.49));
 
         public static final double kTranslationFF = 0.0; // liking 0.0145

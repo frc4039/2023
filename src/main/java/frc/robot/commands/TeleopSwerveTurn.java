@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerveTurn extends CommandBase {
@@ -46,8 +45,6 @@ public class TeleopSwerveTurn extends CommandBase {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationXSup;
-    private DoubleSupplier rotationYSup;
-    private BooleanSupplier zeroGyroSup;
 
     private SlewRateLimiter translationLimiter = new SlewRateLimiter(2);
     private SlewRateLimiter strafeLimiter = new SlewRateLimiter(2);
@@ -55,15 +52,13 @@ public class TeleopSwerveTurn extends CommandBase {
     private PIDController rotationController = new PIDController(4.0, 0, 0);
 
     public TeleopSwerveTurn(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup,
-            DoubleSupplier rotationXSup, DoubleSupplier rotationYSup, BooleanSupplier zeroGyroBtn) {
+            DoubleSupplier rotationXSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationXSup = rotationXSup;
-        this.rotationYSup = rotationYSup;
-        this.zeroGyroSup = zeroGyroBtn;
 
         rotationController.enableContinuousInput(0, 2 * Math.PI);
     }

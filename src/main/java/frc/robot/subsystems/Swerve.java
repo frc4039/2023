@@ -36,6 +36,7 @@ import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -44,6 +45,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -102,6 +104,18 @@ public class Swerve extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw()));
+
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeed);
+
+        for (SwerveModule mod : mSwerveMods) {
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        }
+    }
+
+    public void autoDrive(Translation2d translation, double rotation, boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
+                        getPose().getRotation()));
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeed);
 
@@ -198,30 +212,35 @@ public class Swerve extends SubsystemBase {
 
         if (!DriverStation.isAutonomousEnabled()) {
 
-            Optional<EstimatedRobotPose> result = pcw1
+            Optional<EstimatedRobotPose> result1 = pcw1
                     .getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
 
-            if (result.isPresent()) {
-                EstimatedRobotPose camPose1 = result.get();
+            if (result1.isPresent()) {
+                EstimatedRobotPose camPose1 = result1.get();
                 swervePoseEstimator.addVisionMeasurement(
-                        camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds);
+                        camPose1.estimatedPose.toPose2d(), camPose1.timestampSeconds,
+                        VecBuilder.fill(2, 2, Units.degreesToRadians(30)));
                 field.getObject("Cam Est Pos 1").setPose(camPose1.estimatedPose.toPose2d());
+
             } else {
                 // move it way off the screen to make it disappear
-                // field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new
-                // Rotation2d()));
-                result = pcw2.getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+                field.getObject("Cam Est Pos 1").setPose(new Pose2d(-100, -100, new Rotation2d()));
 
-                if (result.isPresent()) {
-                    EstimatedRobotPose camPose2 = result.get();
-                    swervePoseEstimator.addVisionMeasurement(
-                            camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds);
-                    field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
-                } else {
-                    // move it way off the screen to make it disappear
-                    // field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new
-                    // Rotation2d()));
-                }
+            }
+
+            Optional<EstimatedRobotPose> result2 = pcw2
+                    .getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
+
+            if (result2.isPresent() && !result1.isPresent()) {
+                EstimatedRobotPose camPose2 = result2.get();
+                swervePoseEstimator.addVisionMeasurement(
+                        camPose2.estimatedPose.toPose2d(), camPose2.timestampSeconds,
+                        VecBuilder.fill(2, 2, Units.degreesToRadians(30)));
+                field.getObject("Cam Est Pos 2").setPose(camPose2.estimatedPose.toPose2d());
+
+            } else {
+                // move it way off the screen to make it disappear
+                field.getObject("Cam Est Pos 2").setPose(new Pose2d(-100, -100, new Rotation2d()));
             }
 
             // System.out.println(swervePoseEstimator.getEstimatedPosition().getTranslation());
