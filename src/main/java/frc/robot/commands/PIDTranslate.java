@@ -48,6 +48,7 @@ public class PIDTranslate extends CommandBase {
 
         xPidController.reset(deltaPosition.getNorm(), -AutoConstants.kPositionControllerConstraints.maxVelocity);
         xPidController.setGoal(0.0);
+        xPidController.setTolerance(0.05);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class PIDTranslate extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return xPidController.atGoal();
     }
 
     public Translation2d calculateGoalPosition() {
