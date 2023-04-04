@@ -191,7 +191,7 @@ public final class Constants {
 
         // used only for semi-auto alignment in tele-op
         public static final TrapezoidProfile.Constraints kPositionControllerConstraints = new TrapezoidProfile.Constraints(
-                2, 1.5);
+                3, 1.5);
 
         public static final double kBalanceSpeed = 0.3; // This is the variable to increase speed for
                                                         // DropMobilityBalance
