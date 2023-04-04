@@ -251,16 +251,31 @@ public class RobotContainer {
         operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
 
         // semi-auto scoring node selector
-        operatorUpButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(1)));
-        operatorLeftButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(2)));
-        operatorDownButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(3)));
+        operatorUpButton.onTrue(new SelectCommand(
+                Map.ofEntries(
+                        Map.entry(Gamepiece.YELLOW,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(1))),
+                        Map.entry(Gamepiece.PURPLE,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(7)))),
+                s_GamePieceSelector::getCurrentGamepiece));
+        operatorLeftButton.onTrue(new SelectCommand(
+                Map.ofEntries(
+                        Map.entry(Gamepiece.YELLOW,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(2))),
+                        Map.entry(Gamepiece.PURPLE,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(8)))),
+                s_GamePieceSelector::getCurrentGamepiece));
+        operatorDownButton.onTrue(new SelectCommand(
+                Map.ofEntries(
+                        Map.entry(Gamepiece.YELLOW,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(3))),
+                        Map.entry(Gamepiece.PURPLE,
+                                new InstantCommand(() -> s_NodeSelector.selectNode(9)))),
+                s_GamePieceSelector::getCurrentGamepiece));
         operatorRightButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(4)));
-        operatorRightJoystickButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(5)));
-        operatorBButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(6)));
+        operatorBackButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(5)));
+        operatorStartButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(6)));
 
-        // manual telescopic extend
-        operatorBackButton.onTrue(new TelescopicScoringExtendMid(s_Telescopic, s_Pivot));
-        operatorStartButton.onTrue(new TelescopicScoringExtendFar(s_Telescopic, s_Pivot));
         /*
          * ********** Intake manual control code ************
          * operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
