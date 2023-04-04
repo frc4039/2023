@@ -52,6 +52,11 @@ public class NodeSelector extends SubsystemBase {
         }
     }
 
+    public void selectNode(int node) {
+        closestNodeSelected = false;
+        selectedNodeNumber = node - 1;
+    }
+
     public void selectClosestNode() {
         closestNodeSelected = true;
     }
