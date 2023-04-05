@@ -41,28 +41,28 @@ public class Nodes {
 
         redTranslations = new Translation2d[] {
 
-                new Translation2d(14.9, 0.54), // Yellow 1
-                new Translation2d(14.93, 1.62), // Yellow 2
-                new Translation2d(14.84, 2.23), // Yellow 3
-                new Translation2d(14.85, 3.34), // Yellow 4
-                new Translation2d(14.87, 3.87), // Yellow 5
-                new Translation2d(14.87, 5.01), // Yellow 6
+                new Translation2d(14.91, 0.55), // Yellow 1
+                new Translation2d(14.92, 1.64), // Yellow 2
+                new Translation2d(14.90, 2.20), // Yellow 3
+                new Translation2d(14.92, 3.32), // Yellow 4
+                new Translation2d(14.90, 3.90), // Yellow 5
+                new Translation2d(14.91, 4.98), // Yellow 6
                 new Translation2d(14.87, 1.1), // purple 1
-                new Translation2d(14.87, 2.8), // purple 2
-                new Translation2d(14.87, 4.4), // purple 3
+                new Translation2d(14.87, 2.76), // purple 2
+                new Translation2d(14.87, 4.44), // purple 3
         };
         blueTranslations = new Translation2d[] {
 
-                new Translation2d(1.64, 4.97), // yellow 1
-                new Translation2d(1.64, 3.84), // yellow 2
-                new Translation2d(1.64, 3.33), // yelllow 3
-                new Translation2d(1.64, 2.19), // yellow 4
-                new Translation2d(1.64, 1.63), // yellow 5
-                new Translation2d(1.64, 0.5), // yellow 6
+                new Translation2d(1.65, 4.93), // yellow 1
+                new Translation2d(1.62, 3.86), // yellow 2
+                new Translation2d(1.63, 3.29), // yelllow 3
+                new Translation2d(1.60, 2.19), // yellow 4
+                new Translation2d(1.64, 1.60), // yellow 5
+                new Translation2d(1.63, 0.51), // yellow 6
                 new Translation2d(1.64, 4.4), // purple 1
-                new Translation2d(1.64, 2.8), // purple 2
-                new Translation2d(1.64, 1.1), // purple 3
-                new Translation2d(13, 6), // blue HP station
+                new Translation2d(1.64, 2.74), // purple 2
+                new Translation2d(1.64, 1.05), // purple 3
+                // new Translation2d(13, 6), // blue HP station
         };
     }
 
