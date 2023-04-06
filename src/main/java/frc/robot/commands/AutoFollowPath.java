@@ -14,20 +14,20 @@ import frc.robot.subsystems.Swerve;
 
 public class AutoFollowPath {
 
-	private static ProfiledPIDController thetaController = new ProfiledPIDController(
-			Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+    private static ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
 
-	public static Command createFollowCommand(Swerve swerve, Trajectory trajectory){
-		thetaController.enableContinuousInput(-Math.PI, Math.PI);
-		return new SwerveControllerCommand(
-				trajectory,
-				swerve::getPose,
-				Constants.Swerve.swerveKinematics,
-				new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-				new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-				thetaController,
-				swerve::setModuleStates,
-				swerve)
-			.andThen(new StopDrive(swerve));
-	}
+    public static Command createFollowCommand(Swerve swerve, Trajectory trajectory) {
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+        return new SwerveControllerCommand(
+                trajectory,
+                swerve::getPose,
+                Constants.Swerve.swerveKinematics,
+                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                thetaController,
+                swerve::setModuleStates,
+                swerve)
+                .andThen(new StopDrive(swerve));
+    }
 }
