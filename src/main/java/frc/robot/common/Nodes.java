@@ -10,6 +10,9 @@ public class Nodes {
     private static Translation2d[] redTranslations;
     private static Translation2d[] blueTranslations;
 
+    // TODO: Move initialization of lists above so that we can reference this in the
+    // two piece auto
+
     private Swerve swerve;
 
     public Nodes(Swerve swerve) {
