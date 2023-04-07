@@ -113,9 +113,9 @@ public class PIDTranslateForAuto extends CommandBase {
 
         if (needsOffset) {
 
-            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 0.5);
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 0.5); // can we change the upper limit of clamp to 1m?
 
-            if (goalPos.getX() < 7) {
+            if (goalPos.getX() < 7) { // do we need this logic?
                 resultGoalPosition = deltaPos.minus(new Translation2d(0, yOffset));
             } else {
                 resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
