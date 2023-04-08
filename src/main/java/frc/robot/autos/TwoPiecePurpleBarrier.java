@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.*;
+import frc.robot.commands.PIDTranslateForAuto.OffsetNeeded;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -42,7 +43,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             addCommands(new ParallelCommandGroup(new Command[] {
                     new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                     new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionGreenCubePickup),
-                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, false, false)
+                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.None, false)
 
             }));
 
@@ -56,7 +57,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             container.getPivot()),
                     // AutoFollowPath.createFollowCommandNoStop(container.getSwerve(),
                     // returnPath_1_Red_pt1)
-                    new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Red, false, true)));
+                    new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Red, OffsetNeeded.Y, true)));
             // addCommands(new PivotMoveToPosition(container.getPivot(),
             // Constants.PivotConstants.kPositionScoringCone));
 
@@ -81,7 +82,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                     .withTimeout(1.0),
                             // AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2_Red)
-                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Red, true, false)
+                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Red, OffsetNeeded.X, false)
                     }) }));
 
             // go to floor pickup for yellow to prep pickup in tele
@@ -116,7 +117,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                     // new TelescopicGreenCube(container.getTelescopic()).withTimeout(1.0),
                     // AutoFollowPath.createFollowCommand(container.getSwerve(),
                     // middlePath_1_Blue)
-                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Blue, false, false)
+                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Blue, OffsetNeeded.None, false)
             }));
 
             // close gripper
@@ -129,7 +130,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             container.getPivot()),
                     // AutoFollowPath.createFollowCommandNoStop(container.getSwerve(),
                     // returnPath_1_Blue_pt1)
-                    new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Blue, false, true)));
+                    new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Blue, OffsetNeeded.Y, true)));
             // addCommands(new PivotMoveToPosition(container.getPivot(),
             // Constants.PivotConstants.kPositionScoringCone));
 
@@ -155,7 +156,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                     .withTimeout(1.0),
                             // AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2_Blue)
-                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Blue, true, false)
+                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Blue, OffsetNeeded.X, false)
                     }) }));
 
             // get ready for yellow floor pickup
@@ -174,7 +175,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* ========= */
 
     public static Pose2d startPosition_Red = new Pose2d(14.87, 4.38, Rotation2d.fromDegrees(180));
-    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 4.65, 4.38 + 0.22, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 4.85, 4.38 + 0.05, Rotation2d.fromDegrees(0));
     // public static Pose2d returnPath_1_Red_pt1_pose = new Pose2d(14.87 - 1.5, 4.38
     // - 0, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Red = new Pose2d(14.87, 4.44, Rotation2d.fromDegrees(0)); // this should be the
@@ -182,7 +183,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                                                                                                    // 3
     // public static Pose2d middlePath_2_Red_pose_pt1 = new Pose2d(14.87 - 5.8, 4.38
     // - 0, Rotation2d.fromDegrees(0));
-    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 5.8, 4.38 - 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 5.8, 4.38 - 0.7, Rotation2d.fromDegrees(0));
 
     /*
      * =============================================================================
@@ -191,12 +192,12 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* ========== */
 
     public static Pose2d startPosition_Blue = new Pose2d(1.64 + 0, 4.35 + 0, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 4.75, 4.35 + 0.1, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + -0.05, Rotation2d.fromDegrees(0));
     // public static Pose2d returnPath_1_Blue_pt1_pose = new Pose2d(1.64 + 1.5, 4.35
     // + 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.4, Rotation2d.fromDegrees(0)); // this should be the
                                                                                                   // same as purple 1
     // public static Pose2d middlePath_2_Blue_pose_pt1 = new Pose2d(1.64 + 6.3, 4.35
     // + 0, Rotation2d.fromDegrees(0));
-    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6.3, 4.35 + -1.4, Rotation2d.fromDegrees(0));
+    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 + -1.4, Rotation2d.fromDegrees(0));
 }

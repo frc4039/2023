@@ -21,7 +21,7 @@ public class PIDTranslateForAuto extends CommandBase {
     private double ySup;
     private double rotSup;
 
-    private boolean needsOffset;
+    private OffsetNeeded needsOffset;
     private boolean useVision;
 
     private PIDController rotationController = new PIDController(4.0, 0, 0);
@@ -29,7 +29,7 @@ public class PIDTranslateForAuto extends CommandBase {
     private ProfiledPIDController xPidController = new ProfiledPIDController(AutoConstants.kPXController, 0, 0,
             AutoConstants.kPositionControllerConstraints);
 
-    public PIDTranslateForAuto(Swerve swerve, double xSup, double ySup, double rotSup, boolean needsOffset,
+    public PIDTranslateForAuto(Swerve swerve, double xSup, double ySup, double rotSup, OffsetNeeded needsOffset,
             boolean useVision) {
         this.swerve = swerve;
         this.xSup = xSup;
@@ -43,7 +43,7 @@ public class PIDTranslateForAuto extends CommandBase {
         addRequirements(swerve);
     }
 
-    public PIDTranslateForAuto(Swerve swerve, Pose2d pose, boolean needsOffset, boolean useVision) {
+    public PIDTranslateForAuto(Swerve swerve, Pose2d pose, OffsetNeeded needsOffset, boolean useVision) {
         this.swerve = swerve;
         this.xSup = pose.getX();
         this.ySup = pose.getY();
@@ -111,19 +111,30 @@ public class PIDTranslateForAuto extends CommandBase {
         Translation2d currentPos = swerve.getPose().getTranslation();
         Translation2d deltaPos = currentPos.minus(goalPos);
 
-        if (needsOffset) {
+        if (needsOffset == OffsetNeeded.X) {
 
-            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 0.5); // can we change the upper limit of clamp to 1m?
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 2.5);
+            resultGoalPosition = deltaPos.minus(new Translation2d(0, yOffset));
 
-            if (goalPos.getX() < 7) { // do we need this logic?
-                resultGoalPosition = deltaPos.minus(new Translation2d(0, yOffset));
+            return resultGoalPosition;
+        } else if (needsOffset == OffsetNeeded.Y) {
+            double xOffset = MathUtil.clamp(Math.abs(deltaPos.getY()), 0, 0.5);
+
+            if (goalPos.getX() < 4) {
+                resultGoalPosition = deltaPos.minus(new Translation2d(xOffset, 0));
             } else {
-                resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
+                resultGoalPosition = deltaPos.plus(new Translation2d(xOffset, 0));
             }
 
             return resultGoalPosition;
         } else {
             return deltaPos;
         }
+    }
+
+    public enum OffsetNeeded {
+        None,
+        X,
+        Y
     }
 }
