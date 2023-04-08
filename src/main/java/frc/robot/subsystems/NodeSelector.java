@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.IntegerEntry;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,6 +19,11 @@ public class NodeSelector extends SubsystemBase {
     private String selectedNodeLabel;
     private int selectedNodeNumber;
     private Alliance alliance;
+    private NetworkTable table;
+    private int lastNodeNT = -1;
+    private int lastHeightNT = -1;
+    private IntegerEntry selectedNodeEntry;
+    private IntegerEntry selectedHeightEntry;
 
     public NodeSelector(RobotContainer container) {
 
@@ -23,6 +31,12 @@ public class NodeSelector extends SubsystemBase {
 
         closestNodeSelected = true;
 
+        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        table = inst.getTable("Node Selector Data");
+
+        selectedNodeEntry = table.getIntegerTopic("selectedNode")
+                .getEntry(0);
+        selectedHeightEntry.set(0);
     }
 
     public Translation2d getSelectedNodeTranslation() {
@@ -62,15 +76,26 @@ public class NodeSelector extends SubsystemBase {
     }
 
     @Override
+
     public void periodic() {
         alliance = DriverStation.getAlliance();
 
-        if (closestNodeSelected) {
-            selectedNodeTranslation = nodes.getNearestTranslation(alliance);
-            selectedNodeLabel = "Closest Node";
-        } else {
+        if (selectedNodeEntry.get() + 1 != lastNodeNT || selectedHeightEntry.get() + 1 != lastHeightNT) {
+            lastNodeNT = (int) selectedNodeEntry.get() + 1;
+            lastHeightNT = (int) selectedHeightEntry.get();
+            closestNodeSelected = false;
+            selectNode((int) selectedNodeEntry.get() + 1);
             selectedNodeTranslation = nodes.getTranslations(alliance)[selectedNodeNumber];
             selectedNodeLabel = nodes.getTranslationLabel(selectedNodeTranslation, alliance);
+            // TODO: Pass scoring height to automatic scoring command, once created.
+        } else {
+            if (closestNodeSelected) {
+                selectedNodeTranslation = nodes.getNearestTranslation(alliance);
+                selectedNodeLabel = "Closest Node";
+            } else {
+                selectedNodeTranslation = nodes.getTranslations(alliance)[selectedNodeNumber];
+                selectedNodeLabel = nodes.getTranslationLabel(selectedNodeTranslation, alliance);
+            }
         }
 
     }
