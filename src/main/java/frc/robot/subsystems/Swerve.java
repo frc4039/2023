@@ -67,10 +67,14 @@ public class Swerve extends SubsystemBase {
     public PhotonCameraWrapper pcw1;
     public PhotonCameraWrapper pcw2;
 
+    private boolean isTrackingAutoVision;
+
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.kPigeonID);
         gyro.configFactoryDefault();
         zeroGyro();
+
+        isTrackingAutoVision = false;
 
         pcw1 = new PhotonCameraWrapper(VisionConstants.kCameraName1, VisionConstants.kRobotToCam1);
         pcw2 = new PhotonCameraWrapper(VisionConstants.kCameraName2, VisionConstants.kRobotToCam2);
@@ -92,7 +96,8 @@ public class Swerve extends SubsystemBase {
                 new Pose2d());
 
         field = new Field2d();
-        field.getObject("Auto path").setTrajectory(DropMobilityBalanceAuto.pDropToMobility);
+        // field.getObject("Auto
+        // path").setTrajectory(TwoPiecePurpleBarrier.middlePath_1_Red);
 
         ShuffleboardTab tab = Shuffleboard.getTab("Swerve Drive");
         for (SwerveModule mod : mSwerveMods) {
@@ -110,6 +115,18 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
+    }
+
+    public void enableAutoVisionTracking() {
+        isTrackingAutoVision = true;
+    }
+
+    public void disableAutoVisionTracking() {
+        isTrackingAutoVision = false;
+    }
+
+    public boolean isUsingAutoVision() {
+        return isTrackingAutoVision;
     }
 
     public void autoDrive(Translation2d translation, double rotation, boolean isOpenLoop) {
@@ -210,7 +227,7 @@ public class Swerve extends SubsystemBase {
                         mSwerveMods[3].getOdometryPosition()
                 }); // get the rotation and offset for encoder
 
-        if (!DriverStation.isAutonomousEnabled()) {
+        if (!DriverStation.isAutonomousEnabled() || isTrackingAutoVision) {
 
             Optional<EstimatedRobotPose> result1 = pcw1
                     .getEstimatedGlobalPose(swervePoseEstimator.getEstimatedPosition());
