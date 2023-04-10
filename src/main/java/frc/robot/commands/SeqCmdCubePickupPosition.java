@@ -19,16 +19,11 @@ import frc.robot.subsystems.IntakeSpinner;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Telescopic;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+//Gets the robot ready to pick up a Cube deploying the Intake
 public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
-    /** Creates a new CubePickup. */
     public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
             IntakeSpinner s_IntakeSpinner,
             Pivot s_Pivot) {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new TelescopicRetract(s_Telescopic),
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
@@ -42,7 +37,6 @@ public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
         // PivotConstants.kPositionPickupCubeWithIntake),
         // () -> !s_Pivot.atSetpoint(PivotConstants.kPositionPrePickupCube)
         // || !s_Intake.atSetpoint(IntakeConstants.kIntakePositionRightPickup))
-
         );
     }
 }

@@ -255,7 +255,7 @@ public final class Constants {
         public static final double kPositionPickupCube = 134;
         public static final double kPositionPrePickupCube = -95;
         public static final double kPositionPickupCubeWithIntake = -123;
-        public static final double kPositionForSafeIntakeRetract = -125;
+        public static final double kPositionForSafeIntakeRetract = -95;
         public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
     }
