@@ -253,6 +253,9 @@ public final class Constants {
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = 65;
         public static final double kPositionPickupCube = 134;
+        public static final double kPositionPrePickupCube = -95;
+        public static final double kPositionPickupCubeWithIntake = -123;
+        public static final double kPositionForSafeIntakeRetract = -125;
         public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
     }
@@ -313,13 +316,14 @@ public final class Constants {
         public static final double kIntakeSpinningMotorForward = 0.5;
         public static final double kIntakeSpinningMotorOff = 0;
         public static final int kSmartCurrentLimit = 10;
+        public static final double kBreakSpeed = -0.03;
         public static final double kStoppedSpeed = 0;
 
         public static final double kIntakePositionRightRetracted = 0.07;
-        public static final double kIntakePositionRightPickup = 14.52;
+        public static final double kIntakePositionRightPickup = 12.52;
         public static final double kIntakePositionRightExtended = 16.00;
         public static final double kIntakePositionLeftRetracted = 0.07;
-        public static final double kIntakePositionLeftPickup = 14.76;
+        public static final double kIntakePositionLeftPickup = 12.76;
         public static final double kIntakePositionLeftExtended = 16.25;
         public static final double kPositionConversionFactor = 1;
 

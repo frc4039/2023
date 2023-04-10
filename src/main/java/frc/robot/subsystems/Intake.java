@@ -41,9 +41,7 @@ public class Intake extends SubsystemBase {
         ConfigIntakeMotor(m_intakeMotorLeft, IntakeConstants.kIntakeLeftMotorInverted, m_integratedIntakeEncoderLeft,
                 m_intakeControllerLeft);
 
-        // this.pickup();
-        // this.retract();
-        this.stopIntake();
+        intakeBreak();
 
         ShuffleboardTab tab = Shuffleboard.getTab("Intake");
         tab.addNumber("Intake left", () -> GetIntakePositionLeft());
@@ -81,8 +79,13 @@ public class Intake extends SubsystemBase {
     }
 
     public void stopIntake() {
-        m_intakeMotorRight.set(IntakeConstants.kStoppedSpeed - 0.03);
-        m_intakeMotorLeft.set(IntakeConstants.kStoppedSpeed - 0.03);
+        m_intakeMotorRight.set(IntakeConstants.kStoppedSpeed);
+        m_intakeMotorLeft.set(IntakeConstants.kStoppedSpeed);
+    }
+
+    public void intakeBreak() {
+        m_intakeMotorRight.set(IntakeConstants.kBreakSpeed);
+        m_intakeMotorLeft.set(IntakeConstants.kBreakSpeed);
     }
 
     @Override

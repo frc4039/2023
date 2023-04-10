@@ -277,7 +277,8 @@ public class RobotContainer {
         operatorBackButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(5)));
         operatorStartButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(6)));
 
-        driverLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
+        driverLeftButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
+                s_IntakeSpinner, s_Pivot));
 
         /*
          * ********** Intake manual control code ************
@@ -313,6 +314,10 @@ public class RobotContainer {
 
     public Intake getIntake() {
         return s_Intake;
+    }
+
+    public IntakeSpinner gIntakeSpinner() {
+        return s_IntakeSpinner;
     }
 
     public AutoModeSelector getAutoModeSelector() {
