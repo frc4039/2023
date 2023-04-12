@@ -197,7 +197,7 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -175;
+        public static final double kPivotVerticalOffset = -173;
 
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 124;
