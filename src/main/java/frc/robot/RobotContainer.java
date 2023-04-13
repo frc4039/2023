@@ -58,6 +58,7 @@ public class RobotContainer {
     private final Trigger driverLeftTriggerDepressed = new Trigger(
             () -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger driverRightButton = new Trigger(() -> driver.getPOV() == 90);
+    private final Trigger driverLeftButton = new Trigger(() -> driver.getPOV() == 270);
 
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -276,6 +277,9 @@ public class RobotContainer {
         operatorBackButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(5)));
         operatorStartButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(6)));
 
+        driverLeftButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
+                s_IntakeSpinner, s_Pivot).withTimeout(10));
+
         /*
          * ********** Intake manual control code ************
          * operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
@@ -310,6 +314,10 @@ public class RobotContainer {
 
     public Intake getIntake() {
         return s_Intake;
+    }
+
+    public IntakeSpinner gIntakeSpinner() {
+        return s_IntakeSpinner;
     }
 
     public AutoModeSelector getAutoModeSelector() {

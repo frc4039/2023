@@ -128,7 +128,7 @@ public final class Constants {
             public static final int kAngleMotorID = 11; // Angle Motor Controller - [FLA]
             public static final int kCanCoderID = 12; // Front Left Encoder - [FLE]
             public static final boolean kDriveMotorInvert = true;
-            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(167.4);
+            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(280.72);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(kDriveMotorID,
                     kAngleMotorID,
                     kCanCoderID, kAngleOffset, kDriveMotorInvert);
@@ -245,14 +245,17 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -176.9; // was -115.3
+        public static final double kPivotVerticalOffset = -175; // was -115.3
 
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = 65;
-        public static final double kPositionPickupCube = 134;
+        public static final double kPositionPickupCube = 130.5;
+        public static final double kPositionPrePickupCube = -95;
+        public static final double kPositionPickupCubeWithIntake = -129;
+        public static final double kPositionForSafeIntakeRetract = -95;
         public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
     }
@@ -313,13 +316,14 @@ public final class Constants {
         public static final double kIntakeSpinningMotorForward = 0.5;
         public static final double kIntakeSpinningMotorOff = 0;
         public static final int kSmartCurrentLimit = 10;
+        public static final double kBreakSpeed = -0.04;
         public static final double kStoppedSpeed = 0;
 
         public static final double kIntakePositionRightRetracted = 0.07;
-        public static final double kIntakePositionRightPickup = 14.52;
+        public static final double kIntakePositionRightPickup = 12.52;
         public static final double kIntakePositionRightExtended = 16.00;
         public static final double kIntakePositionLeftRetracted = 0.07;
-        public static final double kIntakePositionLeftPickup = 14.76;
+        public static final double kIntakePositionLeftPickup = 12.76;
         public static final double kIntakePositionLeftExtended = 16.25;
         public static final double kPositionConversionFactor = 1;
 
