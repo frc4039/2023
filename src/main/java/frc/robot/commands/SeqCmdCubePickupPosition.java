@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ConeGuideConstants;
 import frc.robot.Constants.GripperConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.ConeGuide;
 import frc.robot.subsystems.Gripper;
@@ -25,7 +24,7 @@ public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
             IntakeSpinner s_IntakeSpinner,
             Pivot s_Pivot) {
         addCommands(
-                new TelescopicRetract(s_Telescopic),
+                new TelescopicRetract(s_Telescopic).withTimeout(1.0),
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
                 new IntakeMotorSpin(s_IntakeSpinner),
