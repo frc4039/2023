@@ -41,6 +41,8 @@ public class Intake extends SubsystemBase {
         ConfigIntakeMotor(m_intakeMotorLeft, IntakeConstants.kIntakeLeftMotorInverted, m_integratedIntakeEncoderLeft,
                 m_intakeControllerLeft);
 
+        intakeBreak();
+
         ShuffleboardTab tab = Shuffleboard.getTab("Intake");
         tab.addNumber("Intake left", () -> GetIntakePositionLeft());
         tab.addNumber("Intake right", () -> GetIntakePositionRight());
@@ -81,8 +83,14 @@ public class Intake extends SubsystemBase {
         m_intakeMotorLeft.set(IntakeConstants.kStoppedSpeed);
     }
 
+    public void intakeBreak() {
+        m_intakeMotorRight.set(IntakeConstants.kBreakSpeed);
+        m_intakeMotorLeft.set(IntakeConstants.kBreakSpeed);
+    }
+
     @Override
-    public void periodic() {}
+    public void periodic() {
+    }
 
     private void ConfigIntakeMotor(CANSparkMax motor, boolean invertedMode, RelativeEncoder integratedEncoder,
             SparkMaxPIDController controller) {

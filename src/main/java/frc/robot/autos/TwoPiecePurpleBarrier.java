@@ -42,6 +42,10 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             // purple
             addCommands(new ParallelCommandGroup(new Command[] {
                     new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+                    // new SeqCmdCubePickupPosition(container.getTelescopic(),
+                    // container.getConeGuide(),
+                    // container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
+                    // container.getPivot()),
                     new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionGreenCubePickup),
                     new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.None, false)
 
@@ -192,7 +196,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* ========== */
 
     public static Pose2d startPosition_Blue = new Pose2d(1.64 + 0, 4.35 + 0, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + -0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.1, Rotation2d.fromDegrees(0));
     // public static Pose2d returnPath_1_Blue_pt1_pose = new Pose2d(1.64 + 1.5, 4.35
     // + 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.4, Rotation2d.fromDegrees(0)); // this should be the

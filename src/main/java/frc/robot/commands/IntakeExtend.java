@@ -30,7 +30,7 @@ public class IntakeExtend extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (m_manualExtend || m_Pivot.getSetpoint() == PivotConstants.kPositionPickupCube) {
+        if (m_manualExtend || m_Pivot.getSetpoint() < 120) {
             m_Intake.extend();
         }
     }
