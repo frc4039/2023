@@ -62,6 +62,9 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             addCommands(new ParallelCommandGroup(
                     new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
                             container.getPivot()),
+                    new IntakeExtend(
+                            container.getIntake(),
+                            container.getPivot(), false),
                     new SequentialCommandGroup(new Command[] {
                             new WaitUntilCommand(
                                     () -> container.getPivot()
@@ -146,6 +149,9 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             addCommands(new ParallelCommandGroup(
                     new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
                             container.getPivot()),
+                    new IntakeExtend(
+                            container.getIntake(),
+                            container.getPivot(), false),
                     new SequentialCommandGroup(new Command[] {
                             new WaitUntilCommand(
                                     () -> container.getPivot()
