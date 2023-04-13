@@ -316,7 +316,7 @@ public final class Constants {
         public static final double kIntakeSpinningMotorForward = 0.5;
         public static final double kIntakeSpinningMotorOff = 0;
         public static final int kSmartCurrentLimit = 10;
-        public static final double kBreakSpeed = -0.03;
+        public static final double kBreakSpeed = -0.04;
         public static final double kStoppedSpeed = 0;
 
         public static final double kIntakePositionRightRetracted = 0.07;

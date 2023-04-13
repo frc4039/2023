@@ -58,13 +58,14 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             addCommands(new GripperRetrieve(container.getGripper())
                     .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
+            addCommands(new IntakeExtend(
+                    container.getIntake(),
+                    container.getPivot(), false));
+
             // scoring position and drive back to score
             addCommands(new ParallelCommandGroup(
                     new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
                             container.getPivot()),
-                    new IntakeExtend(
-                            container.getIntake(),
-                            container.getPivot(), false),
                     new SequentialCommandGroup(new Command[] {
                             new WaitUntilCommand(
                                     () -> container.getPivot()
@@ -86,7 +87,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
             // extend arm
             addCommands(
-                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(0.4));
+                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(.4));
             // Drop score, retract, drive to yellow pickup
             addCommands(new SequentialCommandGroup(new Command[] {
                     // new PivotMoveToPosition(container.getPivot(),
@@ -145,13 +146,14 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             addCommands(new GripperRetrieve(container.getGripper())
                     .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
+            addCommands(new IntakeExtend(
+                    container.getIntake(),
+                    container.getPivot(), false));
+
             // pivot to scoring position and drive back to scoring location
             addCommands(new ParallelCommandGroup(
                     new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
                             container.getPivot()),
-                    new IntakeExtend(
-                            container.getIntake(),
-                            container.getPivot(), false),
                     new SequentialCommandGroup(new Command[] {
                             new WaitUntilCommand(
                                     () -> container.getPivot()
@@ -173,7 +175,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
             // extend arm
             addCommands(
-                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(1.0));
+                    new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(.4));
 
             // Score second game piece and druve to yellow
             addCommands(new SequentialCommandGroup(new Command[] {
@@ -208,12 +210,12 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.05, Rotation2d.fromDegrees(0));
     // public static Pose2d returnPath_1_Red_pt1_pose = new Pose2d(14.87 - 1.5, 4.38
     // - 0, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(14.87, 4.44, Rotation2d.fromDegrees(0)); // this should be the
+    public static Pose2d scoringLocation_Red = new Pose2d(15.00, 4.44, Rotation2d.fromDegrees(0)); // this should be the
                                                                                                    // same as red purple
                                                                                                    // 3
     // public static Pose2d middlePath_2_Red_pose_pt1 = new Pose2d(14.87 - 5.8, 4.38
     // - 0, Rotation2d.fromDegrees(0));
-    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 4.38 - 1.4, Rotation2d.fromDegrees(0));
+    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 4.38 - 1.2, Rotation2d.fromDegrees(0));
 
     /*
      * =============================================================================
@@ -229,5 +231,5 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                                                                                                   // same as purple 1
     // public static Pose2d middlePath_2_Blue_pose_pt1 = new Pose2d(1.64 + 6.3, 4.35
     // + 0, Rotation2d.fromDegrees(0));
-    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 + -1.4, Rotation2d.fromDegrees(0));
+    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 + -1.2, Rotation2d.fromDegrees(0));
 }

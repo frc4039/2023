@@ -85,7 +85,13 @@ public class Intake extends SubsystemBase {
 
     public void intakeBreak() {
         m_intakeMotorRight.set(IntakeConstants.kBreakSpeed);
+        if (m_integratedIntakeEncoderRight.getPosition() < 0) {
+            m_integratedIntakeEncoderRight.setPosition(0);
+        }
         m_intakeMotorLeft.set(IntakeConstants.kBreakSpeed);
+        if (m_integratedIntakeEncoderLeft.getPosition() < 0) {
+            m_integratedIntakeEncoderLeft.setPosition(0);
+        }
     }
 
     @Override
