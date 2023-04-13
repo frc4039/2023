@@ -36,7 +36,8 @@ public class NodeSelector extends SubsystemBase {
 
         selectedNodeEntry = table.getIntegerTopic("selectedNode")
                 .getEntry(0);
-        selectedHeightEntry.set(0);
+        selectedHeightEntry = table.getIntegerTopic("selectedHeight")
+                .getEntry(0);
     }
 
     public Translation2d getSelectedNodeTranslation() {
