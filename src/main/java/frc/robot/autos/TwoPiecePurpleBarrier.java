@@ -43,13 +43,10 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
             // retract arm and pivot up to vertical, also start driving to middle to pickup
             // purple
             addCommands(new ParallelRaceGroup(new Command[] {
-                    // new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                     new SeqCmdCubePickupPosition(container.getTelescopic(),
                             container.getConeGuide(),
                             container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                             container.getPivot()),
-                    // new PivotMoveToPosition(container.getPivot(),
-                    // Constants.PivotConstants.kPositionGreenCubePickup),
                     new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.None, false)
 
             }));
@@ -129,13 +126,10 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
             // retract arm and pivot up to vertical, also start driving to middle
             addCommands(new ParallelCommandGroup(new Command[] {
-                    // new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                     new SeqCmdCubePickupPosition(container.getTelescopic(),
                             container.getConeGuide(),
                             container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                             container.getPivot()),
-                    // new PivotMoveToPosition(container.getPivot(),
-                    // Constants.PivotConstants.kPositionGreenCubePickup),
                     // new TelescopicGreenCube(container.getTelescopic()).withTimeout(1.0),
                     // AutoFollowPath.createFollowCommand(container.getSwerve(),
                     // middlePath_1_Blue)
