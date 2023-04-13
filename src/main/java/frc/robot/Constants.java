@@ -245,16 +245,16 @@ public final class Constants {
 
         // Degrees. Adding this to the encoder reading should give 0 when
         // the arm is vertical.
-        public static final double kPivotVerticalOffset = -176.9; // was -115.3
+        public static final double kPivotVerticalOffset = -175; // was -115.3
 
         // Setpoints. All setpoints given in degrees from vertical.
         public static final double kPositionPickupCone = 124;
         public static final double kPositionScoringRelease = 60; // release angle
         public static final double kPositionScoringCone = 50; // scoring angle
         public static final double kPositionScoringCube = 65;
-        public static final double kPositionPickupCube = 134;
+        public static final double kPositionPickupCube = 130.5;
         public static final double kPositionPrePickupCube = -95;
-        public static final double kPositionPickupCubeWithIntake = -123;
+        public static final double kPositionPickupCubeWithIntake = -129;
         public static final double kPositionForSafeIntakeRetract = -95;
         public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
