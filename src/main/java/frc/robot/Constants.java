@@ -278,7 +278,7 @@ public final class Constants {
         public static final double kTelescopicMid = 34940;
         public static final double kTelescopicGreenCube = 2800;
 
-        public static final double kTelescopicKP = 0.07;
+        public static final double kTelescopicKP = 0.08; // was 0.07, may need to be tuned
         public static final double kTelescopicKI = 0.00;
         public static final double kTelescopicKD = 0.04;
         public static final double kTelescopicKFF = 0.00;
