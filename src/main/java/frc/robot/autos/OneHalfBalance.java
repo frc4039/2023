@@ -36,7 +36,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                         .withTimeout(1.0),
                 new SequentialCommandGroup(new Command[] {
-                        new WaitUntilCommand(() -> new WaitCommand(5).isFinished()),
+                        new WaitUntilCommand(() -> new WaitCommand(2).isFinished()),
                         new IntakeRetract(container.getIntake())
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
@@ -73,11 +73,11 @@ public class OneHalfBalance extends SequentialCommandGroup {
     public static Trajectory pDropToMobility = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(6, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.2, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.chargeStationForwardConfigHalfGamepiece);
 
     public static Trajectory pPickupToCharge = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(6, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.2, 0, Rotation2d.fromDegrees(0)),
             List.of(),
             new Pose2d(4.25, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.chargeStationReverseConfigHhalfGamepiece);
