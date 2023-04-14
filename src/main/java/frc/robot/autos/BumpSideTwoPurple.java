@@ -40,23 +40,18 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
                     new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                     new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                             .withTimeout(1.0),
-                    
+
                     new PIDTranslateForAuto(container.getSwerve(), bumpOutbound_Red, OffsetNeeded.None, false)
 
             }));
 
             addCommands(new ParallelCommandGroup(new Command[] {
-                new SeqCmdCubePickupPosition(container.getTelescopic(),
+                    new SeqCmdCubePickupPosition(container.getTelescopic(),
                             container.getConeGuide(),
                             container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                             container.getPivot()),
-            new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false)
-        }));
-            new SeqCmdCubePickupPosition(container.getTelescopic(),
-                            container.getConeGuide(),
-                            container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                            container.getPivot()),
-            new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false)
+                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false)
+            }));
 
             // close gripper
             addCommands(new GripperRetrieve(container.getGripper())
