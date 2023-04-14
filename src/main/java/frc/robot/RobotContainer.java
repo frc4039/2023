@@ -279,17 +279,6 @@ public class RobotContainer {
 
         driverLeftButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
                 s_IntakeSpinner, s_Pivot).withTimeout(10));
-
-        /*
-         * ********** Intake manual control code ************
-         * operatorLeftButton.whileTrue(new IntakeMotorSpin(s_IntakeSpinner));
-         * operatorUpButton
-         * .onTrue(new IntakeExtend(s_Intake, s_Pivot,
-         * true).withTimeout(IntakeConstants.kIntakeExtendTimeout));
-         * operatorDownButton.onTrue(new
-         * IntakeRetract(s_Intake).withTimeout(IntakeConstants.kIntakeRetractTimeout));
-         */
-
     }
 
     public Swerve getSwerve() {

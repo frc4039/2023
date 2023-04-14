@@ -56,8 +56,8 @@ public class Nodes {
         };
         blueTranslations = new Translation2d[] {
 
-                new Translation2d(1.65, 4.93), // yellow 1
-                new Translation2d(1.62, 3.86), // yellow 2
+                new Translation2d(1.63, 5.01), // yellow 1
+                new Translation2d(1.68, 3.85), // yellow 2
                 new Translation2d(1.63, 3.29), // yelllow 3
                 new Translation2d(1.60, 2.19), // yellow 4
                 new Translation2d(1.64, 1.60), // yellow 5
