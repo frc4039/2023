@@ -41,9 +41,11 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
                             container.getConeGuide(),
                             container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                             container.getPivot()),
-                    new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.None, false)
+                    new PIDTranslateForAuto(container.getSwerve(), bump_Red, OffsetNeeded.None, false)
 
             }));
+
+            addCommands(new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false));
 
             // close gripper
             addCommands(new GripperRetrieve(container.getGripper())
@@ -65,10 +67,10 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
                     }),
                     // AutoFollowPath.createFollowCommandNoStop(container.getSwerve(),
                     // returnPath_1_Red_pt1)
-                    new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Red, OffsetNeeded.Y, true)));
+                    new PIDTranslateForAuto(container.getSwerve(), bump_Red, OffsetNeeded.Y, false)));
             // addCommands(new PivotMoveToPosition(container.getPivot(),
             // Constants.PivotConstants.kPositionScoringCone));
-
+            addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation_Red, OffsetNeeded.Y, true));
             // addCommands(new
             // InstantCommand(container.getSwerve()::enableAutoVisionTracking));
             // addCommands(new PIDTranslateForAuto(container.getSwerve(),
@@ -195,6 +197,7 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
     /* ========= */
 
     public static Pose2d startPosition_Red = new Pose2d(14.87, 1.04, Rotation2d.fromDegrees(180));
+    public static Pose2d bump_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Red = new Pose2d(14.92, 1.07, Rotation2d.fromDegrees(0)); // this should be the
                                                                                                    // same as red purple
