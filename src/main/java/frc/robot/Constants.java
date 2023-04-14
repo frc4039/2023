@@ -174,6 +174,7 @@ public final class Constants {
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 1.5;
         public static final double kMaxChargeStationSpeedMetersPerSecond = 1.5;
+        public static final double kMaxHalfGamepieceChargeStationSpeedMetersPerSecond = 2.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -216,6 +217,14 @@ public final class Constants {
                 kMaxChargeStationSpeedMetersPerSecond,
                 kMaxAccelerationMetersPerSecondSquared)
                 .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig chargeStationForwardConfigHalfGamepiece = new TrajectoryConfig(
+                kMaxHalfGamepieceChargeStationSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(false);
+        public static TrajectoryConfig chargeStationReverseConfigHhalfGamepiece = new TrajectoryConfig(
+                kMaxHalfGamepieceChargeStationSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(Swerve.swerveKinematics).setReversed(true);
 
         public static TrajectoryConfig twoPurpleBarrierForwardConfig = new TrajectoryConfig(
                 kTwoPurpleBarrierMaxSpeedMetersPerSecond,

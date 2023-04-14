@@ -16,9 +16,9 @@ import frc.robot.commands.*;
 import frc.robot.commands.PIDTranslateForAuto.OffsetNeeded;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
+public class BumpSideTwoPurple extends SequentialCommandGroup {
 
-    public TwoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
+    public BumpSideTwoPurple(RobotContainer container, boolean isRed) {
         if (isRed) {
             // addCommands(new ResetRobotPose(container.getSwerve(),
             // middlePath_1_Red.getInitialPose()));
@@ -194,12 +194,12 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* Red Paths */ // 0.0572
     /* ========= */
 
-    public static Pose2d startPosition_Red = new Pose2d(14.87, 4.38, Rotation2d.fromDegrees(180));
-    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(15.00, 4.44, Rotation2d.fromDegrees(0)); // this should be the
-                                                                                                   // same as red purple
-                                                                                                   // 3
-    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 4.38 - 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d startPosition_Red = new Pose2d(14.87, 1.04, Rotation2d.fromDegrees(180));
+    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 1.04 - 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Red = new Pose2d(15.00, 1.1, Rotation2d.fromDegrees(0)); // this should be the
+                                                                                                  // same as red purple
+                                                                                                  // 1
+    public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 
     /*
      * =============================================================================
@@ -209,7 +209,11 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
     public static Pose2d startPosition_Blue = new Pose2d(1.64 + 0, 4.35 + 0, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.1, Rotation2d.fromDegrees(0));
+    // public static Pose2d returnPath_1_Blue_pt1_pose = new Pose2d(1.64 + 1.5, 4.35
+    // + 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.4, Rotation2d.fromDegrees(0)); // this should be the
-                                                                                                  // same as purple 1
+                                                                                                  // same as purple 3
+    // public static Pose2d middlePath_2_Blue_pose_pt1 = new Pose2d(1.64 + 6.3, 4.35
+    // + 0, Rotation2d.fromDegrees(0));
     public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 + -1.2, Rotation2d.fromDegrees(0));
 }

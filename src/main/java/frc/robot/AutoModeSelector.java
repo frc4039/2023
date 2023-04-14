@@ -22,9 +22,12 @@ public class AutoModeSelector {
         // middlePickupStraight(container, false));
         // autoModeChooser.addOption("Middle Pickup Balance",
         // middlePickupBalance(container));
-        autoModeChooser.addOption("Guardrail Yellow + Mobility", new DropMobilityChargeSide(container));
+        autoModeChooser.addOption("Bump side Yellow + Mobility", new DropMobilityChargeSide(container));
         autoModeChooser.addOption("2 Purple Barrier (red)", twoPiecePurpleBarrier(container, true));
         autoModeChooser.addOption("2 Purple Barrier (blue)", twoPiecePurpleBarrier(container, false));
+        autoModeChooser.addOption("OneHalfBalance (Yellow Only)", oneHalfBalance(container));
+        autoModeChooser.addOption("Bump Side Two Purple (Red)", bumpSideTwoPurple(container, true));
+        autoModeChooser.addOption("Bump Side Two Purple (Blue)", bumpSideTwoPurple(container, false));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -59,6 +62,14 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup twoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
         return new TwoPiecePurpleBarrier(container, isRed);
+    }
+
+    private SequentialCommandGroup oneHalfBalance(RobotContainer container) {
+        return new OneHalfBalance(container);
+    }
+
+    private SequentialCommandGroup bumpSideTwoPurple(RobotContainer container, boolean isRed) {
+        return new BumpSideTwoPurple(container, isRed);
     }
 
 }
