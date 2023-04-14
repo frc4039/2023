@@ -45,7 +45,7 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
 
             }));
 
-            addCommands(new ParallelCommandGroup(new Command[] {
+            addCommands(new ParallelRaceGroup(new Command[] {
                     new SeqCmdCubePickupPosition(container.getTelescopic(),
                             container.getConeGuide(),
                             container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
