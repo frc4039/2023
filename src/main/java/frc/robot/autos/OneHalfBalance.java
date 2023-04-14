@@ -38,11 +38,11 @@ public class OneHalfBalance extends SequentialCommandGroup {
 
         addCommands(new ParallelCommandGroup(new Command[] {
                 new SequentialCommandGroup(new Command[] {
-                        new WaitCommand(3),
+                        new WaitCommand(1.5),
                         new SeqCmdCubePickupPosition(container.getTelescopic(),
                                 container.getConeGuide(),
                                 container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                                container.getPivot()).withTimeout(4)
+                                container.getPivot()).withTimeout(2)
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility)
