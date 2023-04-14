@@ -37,7 +37,10 @@ public class OneHalfBalance extends SequentialCommandGroup {
                         .withTimeout(1.0),
                 new SequentialCommandGroup(new Command[] {
                         new WaitCommand(3),
-                        new IntakeRetract(container.getIntake())
+                        new SeqCmdCubePickupPosition(container.getTelescopic(),
+                                container.getConeGuide(),
+                                container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
+                                container.getPivot())
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility)
