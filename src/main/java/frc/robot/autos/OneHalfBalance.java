@@ -34,7 +34,9 @@ public class OneHalfBalance extends SequentialCommandGroup {
         addCommands(new ParallelCommandGroup(new Command[] {
                 new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
-                        .withTimeout(1.0),
+                        .withTimeout(1.0) }));
+
+        addCommands(new ParallelCommandGroup(new Command[] {
                 new SequentialCommandGroup(new Command[] {
                         new WaitCommand(3),
                         new SeqCmdCubePickupPosition(container.getTelescopic(),
