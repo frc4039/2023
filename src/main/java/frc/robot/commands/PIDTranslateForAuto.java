@@ -111,10 +111,17 @@ public class PIDTranslateForAuto extends CommandBase {
         Translation2d currentPos = swerve.getPose().getTranslation();
         Translation2d deltaPos = currentPos.minus(goalPos);
 
-        if (needsOffset == OffsetNeeded.X) {
+        if (needsOffset == OffsetNeeded.XMinus) {
 
             double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 2.5);
             resultGoalPosition = deltaPos.minus(new Translation2d(0, yOffset));
+
+            return resultGoalPosition;
+        }
+        if (needsOffset == OffsetNeeded.XPlus) {
+
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 2.5);
+            resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
 
             return resultGoalPosition;
         } else if (needsOffset == OffsetNeeded.Y) {
@@ -134,7 +141,8 @@ public class PIDTranslateForAuto extends CommandBase {
 
     public enum OffsetNeeded {
         None,
-        X,
+        XMinus,
+        XPlus,
         Y
     }
 }

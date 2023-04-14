@@ -90,7 +90,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                     .withTimeout(1.0),
                             // AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2_Red)
-                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Red, OffsetNeeded.X, false)
+                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Red, OffsetNeeded.XMinus, false)
                     }) }));
 
             // go to floor pickup for yellow to prep pickup in tele
@@ -176,7 +176,8 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
                             new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                                     .withTimeout(1.0),
                             // AutoFollowPath.createFollowCommand(container.getSwerve(), middlePath_2_Blue)
-                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Blue, OffsetNeeded.X, false)
+                            new PIDTranslateForAuto(container.getSwerve(), yellowPickup_Blue, OffsetNeeded.XMinus,
+                                    false)
                     }) }));
 
             // get ready for yellow floor pickup
