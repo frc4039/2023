@@ -32,12 +32,16 @@ public class OneHalfBalance extends SequentialCommandGroup {
 
         // retract arm and pivot up to vertical, also start driving
         addCommands(new ParallelCommandGroup(new Command[] {
-                AutoFollowPath.createFollowCommand(container.getSwerve(),
-                        pDropToMobility),
+                new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                        .withTimeout(1.0),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(() -> new WaitCommand(5).isFinished()),
                         new IntakeRetract(container.getIntake())
-                }) }));
+                }),
+                AutoFollowPath.createFollowCommand(container.getSwerve(),
+                        pDropToMobility)
+        }));
 
         // close gripper
         addCommands(new GripperRetrieve(container.getGripper())
