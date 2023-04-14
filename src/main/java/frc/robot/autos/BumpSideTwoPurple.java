@@ -36,16 +36,27 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
 
             // retract arm and pivot up to vertical, also start driving to middle to pickup
             // purple
-            addCommands(new ParallelRaceGroup(new Command[] {
-                    new SeqCmdCubePickupPosition(container.getTelescopic(),
-                            container.getConeGuide(),
-                            container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                            container.getPivot()),
+            addCommands(new ParallelCommandGroup(new Command[] {
+                    new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
+                    new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                            .withTimeout(1.0),
+                    
                     new PIDTranslateForAuto(container.getSwerve(), bumpOutbound_Red, OffsetNeeded.None, false)
 
             }));
 
-            addCommands(new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false));
+            addCommands(new ParallelCommandGroup(new Command[] {
+                new SeqCmdCubePickupPosition(container.getTelescopic(),
+                            container.getConeGuide(),
+                            container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
+                            container.getPivot()),
+            new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false)
+        }));
+            new SeqCmdCubePickupPosition(container.getTelescopic(),
+                            container.getConeGuide(),
+                            container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
+                            container.getPivot()),
+            new PIDTranslateForAuto(container.getSwerve(), purplePickup_Red, OffsetNeeded.Y, false)
 
             // close gripper
             addCommands(new GripperRetrieve(container.getGripper())
