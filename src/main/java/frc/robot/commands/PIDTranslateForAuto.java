@@ -73,7 +73,7 @@ public class PIDTranslateForAuto extends CommandBase {
         Translation2d deltaPosition = calculateGoalPosition();
 
         if (useVision) {
-            if (!swerve.isUsingAutoVision() && deltaPosition.getNorm() < 1) {
+            if (!swerve.isUsingAutoVision() && deltaPosition.getNorm() < 1.2) {
                 swerve.enableAutoVisionTracking();
             }
         } else {
@@ -101,7 +101,7 @@ public class PIDTranslateForAuto extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return calculateGoalPosition().getNorm() < 0.1;
+        return calculateGoalPosition().getNorm() < 0.12;
     }
 
     public Translation2d calculateGoalPosition() {
