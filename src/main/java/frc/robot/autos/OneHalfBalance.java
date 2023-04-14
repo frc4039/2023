@@ -36,7 +36,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                         .withTimeout(1.0),
                 new SequentialCommandGroup(new Command[] {
-                        new WaitUntilCommand(() -> new WaitCommand(2).isFinished()),
+                        new WaitUntilCommand(3),
                         new IntakeRetract(container.getIntake())
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
