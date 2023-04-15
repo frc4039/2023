@@ -73,7 +73,7 @@ public class PIDTranslateForAuto extends CommandBase {
         Translation2d deltaPosition = calculateGoalPosition();
 
         if (useVision) {
-            if (!swerve.isUsingAutoVision() && deltaPosition.getNorm() < 1) {
+            if (!swerve.isUsingAutoVision() && deltaPosition.getNorm() < 1.2) {
                 swerve.enableAutoVisionTracking();
             }
         } else {
@@ -101,7 +101,7 @@ public class PIDTranslateForAuto extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return calculateGoalPosition().getNorm() < 0.1;
+        return calculateGoalPosition().getNorm() < 0.12;
     }
 
     public Translation2d calculateGoalPosition() {
@@ -111,10 +111,17 @@ public class PIDTranslateForAuto extends CommandBase {
         Translation2d currentPos = swerve.getPose().getTranslation();
         Translation2d deltaPos = currentPos.minus(goalPos);
 
-        if (needsOffset == OffsetNeeded.X) {
+        if (needsOffset == OffsetNeeded.XMinus) {
 
             double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 2.5);
             resultGoalPosition = deltaPos.minus(new Translation2d(0, yOffset));
+
+            return resultGoalPosition;
+        }
+        if (needsOffset == OffsetNeeded.XPlus) {
+
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 2.5);
+            resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
 
             return resultGoalPosition;
         } else if (needsOffset == OffsetNeeded.Y) {
@@ -134,7 +141,8 @@ public class PIDTranslateForAuto extends CommandBase {
 
     public enum OffsetNeeded {
         None,
-        X,
+        XMinus,
+        XPlus,
         Y
     }
 }
