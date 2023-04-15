@@ -16,9 +16,9 @@ import frc.robot.commands.*;
 import frc.robot.commands.PIDTranslateForAuto.OffsetNeeded;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class TwoPiecePurpleBarrier_bak extends SequentialCommandGroup {
+public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
-    public TwoPiecePurpleBarrier_bak(RobotContainer container, boolean isRed) {
+    public TwoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
         if (isRed) {
             // addCommands(new ResetRobotPose(container.getSwerve(),
             // middlePath_1_Red.getInitialPose()));
