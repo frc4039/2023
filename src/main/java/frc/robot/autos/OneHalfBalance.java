@@ -36,13 +36,15 @@ public class OneHalfBalance extends SequentialCommandGroup {
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                         .withTimeout(1.0) }));
 
-        addCommands(new ParallelCommandGroup(new Command[] {
+        // start driving over charge station. After 1.5 seconds move pivot to pickup and
+        // extend intake. Command should end when end of path reached.
+        addCommands(new ParallelRaceGroup(new Command[] {
                 new SequentialCommandGroup(new Command[] {
                         new WaitCommand(1.5),
                         new SeqCmdCubePickupPosition(container.getTelescopic(),
                                 container.getConeGuide(),
                                 container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                                container.getPivot()).withTimeout(2)
+                                container.getPivot())
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility)
@@ -69,7 +71,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropAndBalanceYellowSide1)));
-
+        // drive up charge station and balance
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
                 pDropAndBalanceYellowSide1),
                 new AwaitLevelCharge(container.getSwerve())));
