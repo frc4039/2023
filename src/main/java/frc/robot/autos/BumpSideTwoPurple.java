@@ -37,12 +37,11 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
         addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCube));
         addCommands(
                 new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(.55));
-        // Open gripper
+        // Open gripper to score pre load
         addCommands(new GripperRelease(container.getGripper())
                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
-        // retract arm and pivot up to vertical, also start driving to middle to pickup
-        // purple
+        // retract arm and pivot up to vertical, also start driving to bump
         addCommands(new ParallelCommandGroup(new Command[] {
                 new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
@@ -52,23 +51,25 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
 
         }));
 
+        // extend intake and pivot to purple pickup position. Drive to purple pickup
+        // location
         addCommands(new ParallelRaceGroup(new Command[] {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                         container.getPivot()),
-                new PIDTranslateForAuto(container.getSwerve(), purplePickup, OffsetNeeded.Y, false)
+                new PIDTranslateForAuto(container.getSwerve(), purplePickup, OffsetNeeded.None, false)
         }));
 
         // close gripper
         addCommands(new GripperRetrieve(container.getGripper())
                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
-
+        // extend intake to avoid knocking purple out of grip
         addCommands(new IntakeExtend(
                 container.getIntake(),
                 container.getPivot(), false));
 
-        // scoring position and drive back to score
+        // scoring position and drive back to bump
         addCommands(new ParallelCommandGroup(
                 new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
                         container.getPivot()),
@@ -78,8 +79,8 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
                                         .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
                         new IntakeRetract(container.getIntake())
                 }),
-                new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.Y, false)));
-
+                new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.None, false)));
+        // drive from bump to scoring location
         addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation, OffsetNeeded.Y, true));
 
         // extend arm
@@ -114,16 +115,18 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(14.92, 1.07, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Red = new Pose2d(14.92, 1.07, Rotation2d.fromDegrees(0)); // TODO: Same as Red
+                                                                                                   // Purple 1
     public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 
     /* Blue Paths */
     /* ========== */
 
-    public static Pose2d startPosition_Blue = new Pose2d(1.64, 4.35, Rotation2d.fromDegrees(0));
-    public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 4.35, Rotation2d.fromDegrees(0));
-    public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.5, 4.35, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.5, 4.35 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Blue = new Pose2d(1.59, 4.38, Rotation2d.fromDegrees(0));
-    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 + 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d startPosition_Blue = new Pose2d(1.64, 1.04, Rotation2d.fromDegrees(0));
+    public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 1.04, Rotation2d.fromDegrees(0));
+    public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.5, 1.04, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Blue = new Pose2d(1.59, 1.07, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
+                                                                                                   // Purple 3
+    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 }
