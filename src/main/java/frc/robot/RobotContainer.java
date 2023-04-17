@@ -181,8 +181,27 @@ public class RobotContainer {
         driverLeftTriggerDepressed
                 .whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
                         () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0, OffsetNeeded.Y));
+
         // rotate to HP angle
         driverBButton.whileTrue(new SelectCommand(Map.ofEntries(
+                Map.entry(Alliance.Blue,
+                        new TeleopSwerveAtFixedRotation(
+                                s_Swerve,
+                                () -> -driver.getRawAxis(translationAxis),
+                                () -> -driver.getRawAxis(strafeAxis),
+                                270)),
+                Map.entry(Alliance.Red,
+                        new TeleopSwerveAtFixedRotation(
+                                s_Swerve,
+                                () -> -driver.getRawAxis(translationAxis),
+                                () -> -driver.getRawAxis(strafeAxis),
+                                90)),
+                Map.entry(Alliance.Invalid,
+                        new InstantCommand())),
+                DriverStation::getAlliance));
+
+        // rotate to HP angle
+        driverLeftBumper.whileTrue(new SelectCommand(Map.ofEntries(
                 Map.entry(Alliance.Blue,
                         new PIDTranslate(s_Swerve, () -> 14.2,
                                 () -> 7.6, () -> 270, OffsetNeeded.XPlus)),
