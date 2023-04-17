@@ -53,6 +53,7 @@ public class RobotContainer {
     private final JoystickButton driverRightBumper = new JoystickButton(driver,
             XboxController.Button.kRightBumper.value);
     private final JoystickButton driverBackButton = new JoystickButton(driver, XboxController.Button.kBack.value);
+    private final JoystickButton driverStartButton = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final Trigger driverRightTriggerDepressed = new Trigger(
             () -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
     private final Trigger driverLeftTriggerDepressed = new Trigger(
@@ -159,6 +160,8 @@ public class RobotContainer {
         /* Driver Buttons */
         /* ============== */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
+        driverStartButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
+                s_IntakeSpinner, s_Pivot).withTimeout(10));
 
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(
@@ -277,8 +280,6 @@ public class RobotContainer {
         operatorBackButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(5)));
         operatorStartButton.onTrue(new InstantCommand(() -> s_NodeSelector.selectNode(6)));
 
-        driverLeftButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
-                s_IntakeSpinner, s_Pivot).withTimeout(10));
     }
 
     public Swerve getSwerve() {
