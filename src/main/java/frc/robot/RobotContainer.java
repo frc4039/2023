@@ -203,11 +203,11 @@ public class RobotContainer {
         // rotate to HP angle
         driverLeftBumper.whileTrue(new SelectCommand(Map.ofEntries(
                 Map.entry(Alliance.Blue,
-                        new PIDTranslate(s_Swerve, () -> 14.2,
-                                () -> 7.6, () -> 270, OffsetNeeded.XPlus)),
+                        new PIDTranslate(s_Swerve, () -> 14.42,
+                                () -> 7.84, () -> 270, OffsetNeeded.XPlus)),
                 Map.entry(Alliance.Red,
-                        new PIDTranslate(s_Swerve, () -> 2.3,
-                                () -> 7.6, () -> 90, OffsetNeeded.XPlus)),
+                        new PIDTranslate(s_Swerve, () -> 2.24,
+                                () -> 7.74, () -> 90, OffsetNeeded.XPlus)),
                 Map.entry(Alliance.Invalid,
                         new InstantCommand())),
                 DriverStation::getAlliance));
