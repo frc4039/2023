@@ -98,7 +98,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* ========= */
 
     public static Pose2d startPosition_Red = new Pose2d(14.87, 4.38, Rotation2d.fromDegrees(180));
-    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.1, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Red = new Pose2d(14.92, 4.44, Rotation2d.fromDegrees(0)); // TODO: Same as Red
                                                                                                    // Purple 3
     public static Pose2d yellowPickup_Red = new Pose2d(14.92 - 6, 4.38 - 1.2, Rotation2d.fromDegrees(0));
@@ -107,7 +107,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* ========== */
 
     public static Pose2d startPosition_Blue = new Pose2d(1.64, 4.35, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.1, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.41, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
                                                                                                    // Purple 1
     public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 - 1.2, Rotation2d.fromDegrees(0));
