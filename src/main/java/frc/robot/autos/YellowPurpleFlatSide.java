@@ -16,9 +16,9 @@ import frc.robot.commands.*;
 import frc.robot.commands.PIDTranslateForAuto.OffsetNeeded;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
+public class YellowPurpleFlatSide extends SequentialCommandGroup {
 
-    public TwoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
+    public YellowPurpleFlatSide(RobotContainer container, boolean isRed) {
         if (isRed) {
             ExecuteCommands(container, startPosition_Red, purplePickup_Red, scoringLocation_Red, yellowPickup_Red);
         } else if (!isRed) {
@@ -31,11 +31,13 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
         // reset pose to initial position
         addCommands(new ResetRobotPose(container.getSwerve(), startPosition));
 
-        // Pivot and extend arm -> score preload
-        addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCube));
+        // Pivot and extend arm
+        addCommands(new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringCone));
+        addCommands(new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(0.6));
+
+        // drop pivot and open gripper
         addCommands(
-                new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(.55));
-        // Open gripper
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionScoringRelease));
         addCommands(new GripperRelease(container.getGripper())
                 .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
@@ -72,7 +74,7 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
 
         // extend arm
         addCommands(
-                new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(.4));
+                new TelescopicScoringExtendFar(container.getTelescopic(), container.getPivot()).withTimeout(.55));
         // Drop score, retract, drive to yellow pickup
         addCommands(new SequentialCommandGroup(new Command[] {
                 new GripperRelease(container.getGripper())
@@ -97,8 +99,8 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* Red Paths */
     /* ========= */
 
-    public static Pose2d startPosition_Red = new Pose2d(14.87, 4.38, Rotation2d.fromDegrees(180));
-    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.1, Rotation2d.fromDegrees(0));
+    public static Pose2d startPosition_Red = new Pose2d(14.92, 4.99, Rotation2d.fromDegrees(180));
+    public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.1, 4.38 + 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Red = new Pose2d(14.92, 4.44, Rotation2d.fromDegrees(0)); // TODO: Same as Red
                                                                                                    // Purple 3
     public static Pose2d yellowPickup_Red = new Pose2d(14.92 - 6, 4.38 - 1.2, Rotation2d.fromDegrees(0));
@@ -106,8 +108,8 @@ public class TwoPiecePurpleBarrier extends SequentialCommandGroup {
     /* Blue Paths */
     /* ========== */
 
-    public static Pose2d startPosition_Blue = new Pose2d(1.64, 4.35, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.1, Rotation2d.fromDegrees(0));
+    public static Pose2d startPosition_Blue = new Pose2d(1.64, 4.98, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.41, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
                                                                                                    // Purple 1
     public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 - 1.2, Rotation2d.fromDegrees(0));

@@ -70,7 +70,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                         new IntakeRetract(container.getIntake())
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
-                        pDropAndBalanceYellowSide1)));
+                        pPickupToCharge)));
         // drive up charge station and balance
         addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
                 pDropAndBalanceYellowSide1),

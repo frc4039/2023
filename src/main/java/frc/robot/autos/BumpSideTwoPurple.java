@@ -115,8 +115,8 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(14.92, 1.07, Rotation2d.fromDegrees(0)); // TODO: Same as Red
-                                                                                                   // Purple 1
+    public static Pose2d scoringLocation_Red = new Pose2d(15, 1.09, Rotation2d.fromDegrees(0)); // TODO: Same as Red
+                                                                                                // Purple 1
     public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 
     /* Blue Paths */
@@ -126,7 +126,9 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Blue = new Pose2d(1.59, 1.07, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
+    public static Pose2d scoringLocation_Blue = new Pose2d(1.58, 1.03, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
                                                                                                    // Purple 3
+                                                                                                   // Possibly need to
+                                                                                                   // decrease 'x' value
     public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 }

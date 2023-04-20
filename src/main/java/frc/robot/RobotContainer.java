@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
+import frc.robot.commands.PIDTranslate.OffsetNeeded;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.GamePieceSelector.Gamepiece;
 
@@ -179,7 +180,8 @@ public class RobotContainer {
         // Semi-auto alignment to scoring locations
         driverLeftTriggerDepressed
                 .whileTrue(new PIDTranslate(s_Swerve, () -> s_NodeSelector.getSelectedNodeTranslation().getX(),
-                        () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0));
+                        () -> s_NodeSelector.getSelectedNodeTranslation().getY(), () -> 0.0, OffsetNeeded.Y));
+
         // rotate to HP angle
         driverBButton.whileTrue(new SelectCommand(Map.ofEntries(
                 Map.entry(Alliance.Blue,
@@ -194,6 +196,18 @@ public class RobotContainer {
                                 () -> -driver.getRawAxis(translationAxis),
                                 () -> -driver.getRawAxis(strafeAxis),
                                 90)),
+                Map.entry(Alliance.Invalid,
+                        new InstantCommand())),
+                DriverStation::getAlliance));
+
+        // rotate to HP angle
+        driverLeftBumper.whileTrue(new SelectCommand(Map.ofEntries(
+                Map.entry(Alliance.Blue,
+                        new PIDTranslate(s_Swerve, () -> 14.42,
+                                () -> 7.84, () -> 270, OffsetNeeded.XPlus)),
+                Map.entry(Alliance.Red,
+                        new PIDTranslate(s_Swerve, () -> 2.24,
+                                () -> 7.74, () -> 90, OffsetNeeded.XPlus)),
                 Map.entry(Alliance.Invalid,
                         new InstantCommand())),
                 DriverStation::getAlliance));

@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         m_robotContainer.getPivot().stop();
+        m_robotContainer.getGripper().setOff();
     }
 
     @Override

@@ -101,7 +101,7 @@ public class PIDTranslateForAuto extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return calculateGoalPosition().getNorm() < 0.12;
+        return calculateGoalPosition().getNorm() < 0.1;
     }
 
     public Translation2d calculateGoalPosition() {
