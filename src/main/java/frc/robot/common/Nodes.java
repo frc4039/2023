@@ -44,24 +44,24 @@ public class Nodes {
 
         redTranslations = new Translation2d[] {
 
-                new Translation2d(14.92, 0.52), // Yellow 1
-                new Translation2d(14.93, 1.64), // Yellow 2
+                new Translation2d(14.92, 0.54), // Yellow 1
+                new Translation2d(14.93, 1.635), // Yellow 2
                 new Translation2d(14.90, 2.21), // Yellow 3
-                new Translation2d(14.93, 3.32), // Yellow 4
+                new Translation2d(14.93, 3.305), // Yellow 4
                 new Translation2d(14.92, 3.89), // Yellow 5
-                new Translation2d(14.92, 4.99), // Yellow 6
-                new Translation2d(14.92, 1.08), // purple 1
+                new Translation2d(14.92, 4.98), // Yellow 6
+                new Translation2d(14.92, 1.09), // purple 1
                 new Translation2d(14.92, 2.76), // purple 2
                 new Translation2d(14.92, 4.44), // purple 3
         };
         blueTranslations = new Translation2d[] {
 
-                new Translation2d(1.64, 4.98), // yellow 1
-                new Translation2d(1.64, 3.84), // yellow 2
+                new Translation2d(1.64, 4.97), // yellow 1
+                new Translation2d(1.64, 3.85), // yellow 2
                 new Translation2d(1.64, 3.28), // yelllow 3
-                new Translation2d(1.61, 2.16), // yellow 4
-                new Translation2d(1.63, 1.59), // yellow 5
-                new Translation2d(1.62, 0.48), // yellow 6
+                new Translation2d(1.61, 2.17), // yellow 4
+                new Translation2d(1.63, 1.595), // yellow 5
+                new Translation2d(1.62, 0.475), // yellow 6
                 new Translation2d(1.64, 4.41), // purple 1
                 new Translation2d(1.63, 2.72), // purple 2
                 new Translation2d(1.63, 1.03), // purple 3

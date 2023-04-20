@@ -115,7 +115,7 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(15, 1.08, Rotation2d.fromDegrees(0)); // TODO: Same as Red
+    public static Pose2d scoringLocation_Red = new Pose2d(15, 1.09, Rotation2d.fromDegrees(0)); // TODO: Same as Red
                                                                                                 // Purple 1
     public static Pose2d yellowPickup_Red = new Pose2d(14.87 - 6, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 
