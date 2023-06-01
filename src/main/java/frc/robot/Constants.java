@@ -309,6 +309,7 @@ public final class Constants {
         public static final int kGripperForwardChannel = 7;
         public static final int kGripperReverseChannel = 8;
         public static final double kGripperReleaseTimeout = 0.25;
+        public static final int kBeamBreakerChannel = 0;
     }
 
     public static final class IntakeConstants {
