@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.BlinkinConstants;
 import frc.robot.Constants.GripperConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -46,7 +47,7 @@ public class Gripper extends SubsystemBase {
         // This method will be called once per scheduler run
         if (!m_ReleaseMode && !m_BeamBreaker.get()) {
             setClose();
-            m_BlinkinGamePiece.SetColour(0);
+            m_BlinkinGamePiece.SetColour(BlinkinConstants.kColourValueFlashingWhite);
             m_ReleaseMode = true;
         }
         if (m_BeamBreaker.get()) {
