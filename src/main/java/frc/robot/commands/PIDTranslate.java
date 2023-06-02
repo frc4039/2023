@@ -22,16 +22,20 @@ public class PIDTranslate extends CommandBase {
     private DoubleSupplier ySup;
     private DoubleSupplier rotSup;
 
+    private OffsetNeeded needsOffset;
+
     private PIDController rotationController = new PIDController(4.0, 0, 0);
 
     private ProfiledPIDController xPidController = new ProfiledPIDController(AutoConstants.kPXController, 0, 0,
             AutoConstants.kPositionControllerConstraints);
 
-    public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup) {
+    public PIDTranslate(Swerve swerve, DoubleSupplier xSup, DoubleSupplier ySup, DoubleSupplier rotSup,
+            OffsetNeeded needsOffset) {
         this.swerve = swerve;
         this.xSup = xSup;
         this.ySup = ySup;
         this.rotSup = () -> Math.toRadians(rotSup.getAsDouble());
+        this.needsOffset = needsOffset;
 
         rotationController.enableContinuousInput(0, 2 * Math.PI);
 
@@ -83,14 +87,30 @@ public class PIDTranslate extends CommandBase {
         Translation2d currentPos = swerve.getPose().getTranslation();
         Translation2d deltaPos = currentPos.minus(goalPos);
 
-        double xOffset = MathUtil.clamp(Math.abs(deltaPos.getY()), 0, 0.5);
+        if (needsOffset == OffsetNeeded.XPlus) {
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 0.5);
+            resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
 
-        if (goalPos.getX() < 4) {
-            resultGoalPosition = deltaPos.minus(new Translation2d(xOffset, 0));
+            return resultGoalPosition;
+        } else if (needsOffset == OffsetNeeded.Y) {
+
+            double xOffset = MathUtil.clamp(Math.abs(deltaPos.getY()), 0, 0.5);
+
+            if (goalPos.getX() < 4) {
+                resultGoalPosition = deltaPos.minus(new Translation2d(xOffset, 0));
+            } else {
+                resultGoalPosition = deltaPos.plus(new Translation2d(xOffset, 0));
+            }
+
+            return resultGoalPosition;
         } else {
-            resultGoalPosition = deltaPos.plus(new Translation2d(xOffset, 0));
+            return deltaPos;
         }
+    }
 
-        return resultGoalPosition;
+    public enum OffsetNeeded {
+        None,
+        XPlus,
+        Y
     }
 }

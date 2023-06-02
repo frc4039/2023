@@ -44,27 +44,27 @@ public class Nodes {
 
         redTranslations = new Translation2d[] {
 
-                new Translation2d(14.92, 0.51), // Yellow 1
-                new Translation2d(14.93, 1.63), // Yellow 2
-                new Translation2d(14.90, 2.20), // Yellow 3
-                new Translation2d(14.92, 3.32), // Yellow 4
-                new Translation2d(14.90, 3.90), // Yellow 5
-                new Translation2d(14.91, 4.98), // Yellow 6
-                new Translation2d(14.87, 1.1), // purple 1
-                new Translation2d(14.87, 2.76), // purple 2
-                new Translation2d(14.87, 4.44), // purple 3
+                new Translation2d(14.92, 0.54), // Yellow 1
+                new Translation2d(14.93, 1.635), // Yellow 2
+                new Translation2d(14.90, 2.21), // Yellow 3
+                new Translation2d(14.93, 3.305), // Yellow 4
+                new Translation2d(14.92, 3.89), // Yellow 5
+                new Translation2d(14.92, 4.98), // Yellow 6
+                new Translation2d(14.92, 1.09), // purple 1
+                new Translation2d(14.92, 2.76), // purple 2
+                new Translation2d(14.92, 4.44), // purple 3
         };
         blueTranslations = new Translation2d[] {
 
-                new Translation2d(1.63, 5.01), // yellow 1
-                new Translation2d(1.68, 3.85), // yellow 2
-                new Translation2d(1.63, 3.29), // yelllow 3
-                new Translation2d(1.60, 2.19), // yellow 4
-                new Translation2d(1.64, 1.60), // yellow 5
-                new Translation2d(1.63, 0.51), // yellow 6
-                new Translation2d(1.64, 4.4), // purple 1
-                new Translation2d(1.64, 2.74), // purple 2
-                new Translation2d(1.64, 1.05), // purple 3
+                new Translation2d(1.64, 4.97), // yellow 1
+                new Translation2d(1.64, 3.85), // yellow 2
+                new Translation2d(1.64, 3.28), // yelllow 3
+                new Translation2d(1.61, 2.17), // yellow 4
+                new Translation2d(1.63, 1.595), // yellow 5
+                new Translation2d(1.62, 0.475), // yellow 6
+                new Translation2d(1.64, 4.41), // purple 1
+                new Translation2d(1.63, 2.72), // purple 2
+                new Translation2d(1.63, 1.03), // purple 3
                 // new Translation2d(13, 6), // blue HP station
         };
     }

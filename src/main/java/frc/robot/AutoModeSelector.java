@@ -13,7 +13,8 @@ public class AutoModeSelector {
         // autoModeChooser.addOption("Drop and drive (yellow side)",
         // dropAndDriveYellow(container));
         autoModeChooser.addOption("Drop and balance", dropAndBalanceYellow(container));
-        autoModeChooser.addOption("Drop, Mobility, and balance", dropMobilityAndBalance(container));
+        autoModeChooser.addOption("1 Piece Mobility Balance (any preload)", dropMobilityAndBalance(container));
+        autoModeChooser.addOption("1.5 Balance (Yellow Preload Only)", oneHalfBalance(container));
         // autoModeChooser.addOption("Drop, drive, strafe, and pickup", new
         // DropAndDriveAndStrafeAndPickup(container));
         // autoModeChooser.addOption("Middle Pickup (red)",
@@ -22,12 +23,14 @@ public class AutoModeSelector {
         // middlePickupStraight(container, false));
         // autoModeChooser.addOption("Middle Pickup Balance",
         // middlePickupBalance(container));
-        autoModeChooser.addOption("Bump side Yellow + Mobility", new DropMobilityChargeSide(container));
-        autoModeChooser.addOption("2 Purple Barrier (red)", twoPiecePurpleBarrier(container, true));
-        autoModeChooser.addOption("2 Purple Barrier (blue)", twoPiecePurpleBarrier(container, false));
-        autoModeChooser.addOption("OneHalfBalance (Yellow Only)", oneHalfBalance(container));
-        autoModeChooser.addOption("Bump Side Two Purple (Red)", bumpSideTwoPurple(container, true));
-        autoModeChooser.addOption("Bump Side Two Purple (Blue)", bumpSideTwoPurple(container, false));
+
+        autoModeChooser.addOption("Flat Side 2 Purple (Red)", twoPiecePurpleBarrier(container, true));
+        autoModeChooser.addOption("Flat Side 2 Purple (Blue)", twoPiecePurpleBarrier(container, false));
+        autoModeChooser.addOption("Bump Side 2 Purple (Red)", bumpSideTwoPurple(container, true));
+        autoModeChooser.addOption("Bump Side 2 Purple (Blue)", bumpSideTwoPurple(container, false));
+        autoModeChooser.addOption("Bump side 1 Yellow + Mobility", new DropMobilityChargeSide(container));
+        autoModeChooser.addOption("Flat Side Yellow, Purple (Red)", yellowPurpleFlatSide(container, true));
+        autoModeChooser.addOption("Flat Side Yellow, Purple (Blue)", yellowPurpleFlatSide(container, false));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -70,6 +73,10 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup bumpSideTwoPurple(RobotContainer container, boolean isRed) {
         return new BumpSideTwoPurple(container, isRed);
+    }
+
+    private SequentialCommandGroup yellowPurpleFlatSide(RobotContainer container, boolean isRed) {
+        return new YellowPurpleFlatSide(container, isRed);
     }
 
 }

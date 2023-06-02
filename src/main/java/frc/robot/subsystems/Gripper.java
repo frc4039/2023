@@ -6,6 +6,7 @@ import frc.robot.Constants.GripperConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Gripper extends SubsystemBase {
 
@@ -34,6 +35,10 @@ public class Gripper extends SubsystemBase {
 
     public void setOpen() {
         gripperPneumatic.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public Value getState() {
+        return gripperPneumatic.get();
     }
 
     @Override
