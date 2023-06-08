@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.BlinkinConstants;
+import frc.robot.Constants.GripperConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -13,8 +16,14 @@ public class Gripper extends SubsystemBase {
     private DoubleSolenoid gripperPneumatic = new DoubleSolenoid(Constants.kSolenoidCanID, PneumaticsModuleType.REVPH,
             Constants.GripperConstants.kGripperForwardChannel,
             Constants.GripperConstants.kGripperReverseChannel);
+    private DigitalInput m_BeamBreaker;
+    private boolean m_ReleaseMode;
+    private BlinkinGamePiece m_BlinkinGamePiece;
 
-    public Gripper() {
+    public Gripper(BlinkinGamePiece blinkinGamePiece) {
+        m_BeamBreaker = new DigitalInput(GripperConstants.kBeamBreakerChannel);
+        m_ReleaseMode = false;
+        m_BlinkinGamePiece = blinkinGamePiece;
     }
 
     public void setOff() {
@@ -31,5 +40,18 @@ public class Gripper extends SubsystemBase {
 
     public Value getState() {
         return gripperPneumatic.get();
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        if (!m_ReleaseMode && !m_BeamBreaker.get()) {
+            setClose();
+            m_BlinkinGamePiece.SetColour(BlinkinConstants.kColourValueFlashingWhite);
+            m_ReleaseMode = true;
+        }
+        if (m_BeamBreaker.get()) {
+            m_ReleaseMode = false;
+        }
     }
 }

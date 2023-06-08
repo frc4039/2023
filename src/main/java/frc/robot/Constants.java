@@ -309,6 +309,7 @@ public final class Constants {
         public static final int kGripperForwardChannel = 7;
         public static final int kGripperReverseChannel = 8;
         public static final double kGripperReleaseTimeout = 0.25;
+        public static final int kBeamBreakerChannel = 0;
     }
 
     public static final class IntakeConstants {
@@ -381,6 +382,7 @@ public final class Constants {
         // Colours
         public static final double kColourValueCube = 0.89;
         public static final double kColourValueCone = 0.69;
+        public static final double kColourValueFlashingWhite = -0.05;
         public static final double kColourValueRainbow = -0.99;
     }
 }
