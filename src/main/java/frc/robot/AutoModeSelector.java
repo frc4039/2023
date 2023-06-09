@@ -28,6 +28,8 @@ public class AutoModeSelector {
         autoModeChooser.addOption("Flat Side 2 Purple (Blue)", twoPiecePurpleBarrier(container, false));
         autoModeChooser.addOption("Bump Side 2 Purple (Red)", bumpSideTwoPurple(container, true));
         autoModeChooser.addOption("Bump Side 2 Purple (Blue)", bumpSideTwoPurple(container, false));
+        autoModeChooser.addOption("Bump Side 3 Purple (Red)", bumpSideThreePurple(container, true));
+        autoModeChooser.addOption("Bump Side 3 Purple (Blue)", bumpSideThreePurple(container, false));
         autoModeChooser.addOption("Bump side 1 Yellow + Mobility", new DropMobilityChargeSide(container));
         autoModeChooser.addOption("Flat Side Yellow, Purple (Red)", yellowPurpleFlatSide(container, true));
         autoModeChooser.addOption("Flat Side Yellow, Purple (Blue)", yellowPurpleFlatSide(container, false));
@@ -73,6 +75,10 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup bumpSideTwoPurple(RobotContainer container, boolean isRed) {
         return new BumpSideTwoPurple(container, isRed);
+    }
+
+    private SequentialCommandGroup bumpSideThreePurple(RobotContainer container, boolean isRed) {
+        return new BumpSideThreePurple(container, isRed);
     }
 
     private SequentialCommandGroup yellowPurpleFlatSide(RobotContainer container, boolean isRed) {
