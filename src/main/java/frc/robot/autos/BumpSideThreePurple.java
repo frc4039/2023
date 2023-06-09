@@ -40,7 +40,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
         }));
 
         // retract cone guide and pivot up to vertical, also start driving to bump
-        addCommands(new ParallelCommandGroup(new Command[] {
+        addCommands(new ParallelRaceGroup(new Command[] {
                 new ConeGuideRetract(container.getConeGuide()),
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
                         .withTimeout(1.0)
