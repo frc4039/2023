@@ -109,8 +109,8 @@ public class YellowPurpleFlatSide extends SequentialCommandGroup {
     /* ========== */
 
     public static Pose2d startPosition_Blue = new Pose2d(1.64, 4.98, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup_Blue = new Pose2d(1.64 + 5.1, 4.35 + 0.15, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.64, 4.41, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
                                                                                                    // Purple 1
-    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 - 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d yellowPickup_Blue = new Pose2d(1.64 + 6, 4.35 - 0.9, Rotation2d.fromDegrees(0));
 }

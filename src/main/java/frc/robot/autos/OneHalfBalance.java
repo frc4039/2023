@@ -82,11 +82,11 @@ public class OneHalfBalance extends SequentialCommandGroup {
     public static Trajectory pDropToMobility = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             List.of(),
-            new Pose2d(5.5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.9, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.chargeStationForwardConfigHalfGamepiece);
 
     public static Trajectory pPickupToCharge = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(5.5, 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(5.9, 0, Rotation2d.fromDegrees(0)),
             List.of(),
             new Pose2d(4.25, 0, Rotation2d.fromDegrees(0)),
             Constants.AutoConstants.chargeStationReverseConfigHhalfGamepiece);
