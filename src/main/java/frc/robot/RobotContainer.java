@@ -89,7 +89,6 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Pivot s_Pivot = new Pivot();
-    private final Gripper s_Gripper = new Gripper();
     private final Telescopic s_Telescopic = new Telescopic();
     private final Intake s_Intake = new Intake();
     private final IntakeSpinner s_IntakeSpinner = new IntakeSpinner();
@@ -98,6 +97,7 @@ public class RobotContainer {
     private final PressureSensor s_PressureSensor = new PressureSensor();
     private final NodeSelector s_NodeSelector = new NodeSelector(this);
     private final BlinkinGamePiece s_BlinkinGamePiece = new BlinkinGamePiece();
+    private final Gripper s_Gripper = new Gripper(s_BlinkinGamePiece);
     private final GamePieceSelector s_GamePieceSelector = new GamePieceSelector(null);
 
     private AutoModeSelector autoModeSelector;
