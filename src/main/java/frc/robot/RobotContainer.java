@@ -266,7 +266,7 @@ public class RobotContainer {
                 s_GamePieceSelector::getCurrentGamepiece));
         // pivot angles
         operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
-        operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
+        operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Pivot));
 
         // semi-auto scoring node selector
         operatorUpButton.onTrue(new SelectCommand(

@@ -21,10 +21,12 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public BumpSideThreePurple(RobotContainer container, boolean isRed) {
         if (isRed) {
             ExecuteComands(container, startPosition_Red, bumpOutbound_Red, bumpInbound_Red, purplePickup1_Red,
-                    scoringLocation_Red, purplePickup2_Red, purplePickup1Rotate90_Red, purplePickup1Rotate270_Red);
+                    scoringLocation_Red, purplePickup2_Red, purplePickup1Rotate90_Red,
+                    purplePickup1RotateToPickup2_Red);
         } else if (!isRed) {
             ExecuteComands(container, startPosition_Blue, bumpOutbound_Blue, bumpInbound_Blue, purplePickup1_Blue,
-                    scoringLocation_Blue, purplePickup2_Blue, purplePickup1Rotate270_Blue, purplePickup1Rotate90_Blue);
+                    scoringLocation_Blue, purplePickup2_Blue, purplePickup1RotateToPickup2_Blue,
+                    purplePickup1Rotate90_Blue);
         }
     }
 
@@ -35,11 +37,9 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
         addCommands(new ResetRobotPose(container.getSwerve(), startPosition));
 
         // flick the pre-loaded cube
-        addCommands(new SequentialCommandGroup(new Command[] {
-                new ConeGuideDeploy(container.getConeGuide()).withTimeout(0.25)
-        }));
+        addCommands(new ConeGuideDeploy(container.getConeGuide()).withTimeout(0.25));
 
-        // retract cone guide and pivot up to vertical, also start driving to bump
+        // retract cone guide and move pivot up to vertical
         addCommands(new ParallelRaceGroup(new Command[] {
                 new ConeGuideRetract(container.getConeGuide()),
                 new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
@@ -48,7 +48,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
 
         // extend intake and pivot to purple pickup position. Drive to purple pickup
         // location 1
-        addCommands(new ParallelRaceGroup(new Command[] {
+        addCommands(new ParallelCommandGroup(new Command[] {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
@@ -56,9 +56,52 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                 new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.None, false)
         }));
 
+        // Probably not needed as the gripper has the auto close
         // close gripper
-        addCommands(new GripperRetrieve(container.getGripper())
-                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+        // addCommands(new GripperRetrieve(container.getGripper())
+        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+
+        // extend intake to avoid knocking purple out of grip
+        addCommands(new IntakeExtend(
+                container.getIntake(),
+                container.getPivot(), false));
+
+        // travel position and drive back to bump
+        addCommands(new ParallelCommandGroup(
+                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                        .withTimeout(1.0),
+                new SequentialCommandGroup(new Command[] {
+                        new WaitUntilCommand(
+                                () -> container.getPivot()
+                                        .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
+                        new IntakeRetract(container.getIntake())
+                }),
+                new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.None, false)));
+
+        // Drop cube, drive to second purple pickup
+        addCommands(new SequentialCommandGroup(new Command[] {
+                new GripperRelease(container.getGripper())
+                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout + 2),
+                new PIDTranslateForAuto(container.getSwerve(),
+                        rotateTowardsPickup2, OffsetNeeded.None, false)
+        }));
+
+        // extend intake and pivot to purple pickup position. Drive to purple pickup
+        // location 2
+        addCommands(new ParallelCommandGroup(new Command[] {
+                new SeqCmdCubePickupPosition(container.getTelescopic(),
+                        container.getConeGuide(),
+                        container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
+                        container.getPivot()),
+                new PIDTranslateForAuto(container.getSwerve(), purplePickup2,
+                        OffsetNeeded.None, false)
+        }));
+
+        // Probably not needed as the gripper has the auto close
+        // close gripper
+        // addCommands(new GripperRetrieve(container.getGripper())
+        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+
         // extend intake to avoid knocking purple out of grip
         addCommands(new IntakeExtend(
                 container.getIntake(),
@@ -66,7 +109,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
 
         // scoring position and drive back to bump
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                new CmdGrpScoringPosition(container.getConeGuide(),
                         container.getPivot()),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(
@@ -76,83 +119,31 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                 }),
                 new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.None, false)));
 
+        // drive from bump to scoring location
+        addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation, OffsetNeeded.Y, true));
+
         // extend arm
         addCommands(
-                new TelescopicScoringExtendMid(container.getTelescopic(), container.getPivot()).withTimeout(.4));
+                new TelescopicScoringExtendMid(container.getTelescopic(),
+                        container.getPivot()).withTimeout(.4));
 
-        // Drop score, retract, drive to second purple pickup
+        // Drop score, retract, drive to bump
         addCommands(new SequentialCommandGroup(new Command[] {
                 new GripperRelease(container.getGripper())
                         .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
-                        new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                        new PivotMoveToPosition(container.getPivot(),
+                                Constants.PivotConstants.kPositionTravel)
                                 .withTimeout(1.0),
-                        new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.XPlus, false)
+                        new PIDTranslateForAuto(container.getSwerve(), bumpOutbound,
+                                OffsetNeeded.XPlus, false)
                 })
         }));
 
-        addCommands(new PIDTranslateForAuto(container.getSwerve(), rotateTowardsPickup2, OffsetNeeded.XPlus, false));
-
-        // extend intake and pivot to purple pickup position. Drive to purple pickup
-        // location 2
-        // addCommands(new ParallelRaceGroup(new Command[] {
-        // new SeqCmdCubePickupPosition(container.getTelescopic(),
-        // container.getConeGuide(),
-        // container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-        // container.getPivot()),
-        // new PIDTranslateForAuto(container.getSwerve(), purplePickup2,
-        // OffsetNeeded.None, false),
-        // new PIDTranslateForAuto(container.getSwerve(), purplePickup1,
-        // OffsetNeeded.XPlus, false),
-        // new PIDTranslateForAuto(container.getSwerve(), rotateBack,
-        // OffsetNeeded.XPlus, false)
-        // }));
-
-        // scoring position and drive back to bump
-        // addCommands(new ParallelCommandGroup(
-        // new CmdGrpScoringPosition(container.getConeGuide(),
-        // container.getTelescopic(),
-        // container.getPivot()),
-        // new SequentialCommandGroup(new Command[] {
-        // new WaitUntilCommand(
-        // () -> container.getPivot()
-        // .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
-        // new IntakeRetract(container.getIntake())
-        // }),
-        // new PIDTranslateForAuto(container.getSwerve(), bumpInbound,
-        // OffsetNeeded.None, false)));
-
-        // extend arm
-        // addCommands(
-        // new TelescopicScoringExtendMid(container.getTelescopic(),
-        // container.getPivot()).withTimeout(.4));
-
-        // Drop score, retract, drive out of community
-        // addCommands(new SequentialCommandGroup(new Command[] {
-        // new GripperRelease(container.getGripper())
-        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-        // new ParallelCommandGroup(new Command[] {
-        // new TelescopicRetract(container.getTelescopic()).withTimeout(1.0),
-        // new PivotMoveToPosition(container.getPivot(),
-        // Constants.PivotConstants.kPositionTravel)
-        // .withTimeout(1.0),
-        // new PIDTranslateForAuto(container.getSwerve(), bumpOutbound,
-        // OffsetNeeded.XPlus, false),
-        // new PIDTranslateForAuto(container.getSwerve(), purplePickup1,
-        // OffsetNeeded.XPlus, false)
-        // })
-        // }));
-
-        // go to floor pickup for yellow to prep pickup in tele
-        // addCommands(new ParallelCommandGroup(new Command[] {
-        // new GripperRelease(container.getGripper())
-        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
-        // new ConeGuideDeploy(container.getConeGuide())
-        // .withTimeout(Constants.ConeGuideConstants.kConeGuideRetractTimeout),
-        // new PivotMoveToPosition(container.getPivot(),
-        // Constants.PivotConstants.kPositionPickupCone)
-        // }));
+        // Drive out of community
+        addCommands(new PIDTranslateForAuto(container.getSwerve(), purplePickup1,
+                OffsetNeeded.XPlus, false));
     }
 
     /* Red Paths */
@@ -163,7 +154,8 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1Rotate90_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(90));
-    public static Pose2d purplePickup1Rotate270_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(270));
+    public static Pose2d purplePickup1RotateToPickup2_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05,
+            Rotation2d.fromDegrees(270));
     public static Pose2d scoringLocation_Red = new Pose2d(15, 1.09, Rotation2d.fromDegrees(0)); // TODO: Same as Red
                                                                                                 // Purple 1
     public static Pose2d purplePickup2_Red = new Pose2d(14.87 - 5.5, 1.04 + 1.2, Rotation2d.fromDegrees(0));
@@ -174,12 +166,13 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d startPosition_Blue = new Pose2d(1.64 + 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.5, 1.04, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup1_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup1Rotate90_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(90));
-    public static Pose2d purplePickup1Rotate270_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(270));
+    public static Pose2d purplePickup1_Blue = new Pose2d(1.64 + 4.9, 1.04 - 0.05, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup1Rotate90_Blue = new Pose2d(1.64 + 4.9, 1.04 - 0.05, Rotation2d.fromDegrees(270));
+    public static Pose2d purplePickup1RotateToPickup2_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05,
+            Rotation2d.fromDegrees(90));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.58, 1.03, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
                                                                                                    // Purple 3
                                                                                                    // Possibly need to
                                                                                                    // decrease 'x' value
-    public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 5.5, 1.04 + 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 4.9, 1.04 + 0.9, Rotation2d.fromDegrees(90));
 }

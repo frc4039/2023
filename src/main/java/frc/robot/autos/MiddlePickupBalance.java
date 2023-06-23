@@ -48,7 +48,7 @@ public class MiddlePickupBalance extends SequentialCommandGroup {
 
         // scoring position and drive back to score
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(), container.getPivot()),
+                new CmdGrpScoringPosition(container.getConeGuide(), container.getPivot()),
                 AutoFollowPath.createFollowCommand(container.getSwerve(), returnPath_1)));
         // addCommands(new PivotMoveToPosition(container.getPivot(),
         // Constants.PivotConstants.kPositionScoringCone));

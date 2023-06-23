@@ -49,7 +49,7 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
 
             // scoring position and drive back to score
             addCommands(new ParallelCommandGroup(
-                    new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                    new CmdGrpScoringPosition(container.getConeGuide(),
                             container.getPivot()),
                     AutoFollowPath.createFollowCommand(container.getSwerve(), returnPath_1_Red)));
             // addCommands(new PivotMoveToPosition(container.getPivot(),
@@ -98,7 +98,7 @@ public class MiddlePickupStraight extends SequentialCommandGroup {
 
             // scoring position and drive back to score
             addCommands(new ParallelCommandGroup(
-                    new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                    new CmdGrpScoringPosition(container.getConeGuide(),
                             container.getPivot()),
                     AutoFollowPath.createFollowCommand(container.getSwerve(), returnPath_1_Blue)));
             // addCommands(new PivotMoveToPosition(container.getPivot(),

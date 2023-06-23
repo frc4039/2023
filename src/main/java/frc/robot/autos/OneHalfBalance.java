@@ -61,7 +61,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
         // pivot to scoring position, then move intake back in, and drive back to charge
         // station
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                new CmdGrpScoringPosition(container.getConeGuide(),
                         container.getPivot()),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(

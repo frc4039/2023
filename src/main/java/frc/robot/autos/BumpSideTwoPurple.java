@@ -71,7 +71,7 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
 
         // scoring position and drive back to bump
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                new CmdGrpScoringPosition(container.getConeGuide(),
                         container.getPivot()),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(
