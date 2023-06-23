@@ -57,14 +57,14 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                 new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.None, false)
         }));
 
-        // close gripper
-        addCommands(new GripperRetrieve(container.getGripper())
-                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
-
-        // extend intake to avoid knocking purple out of grip
-        addCommands(new IntakeExtend(
-                container.getIntake(),
-                container.getPivot(), true));
+        // close gripper & extend intake to avoid knocking purple out of grip
+        addCommands(new ParallelCommandGroup(new Command[] {
+                new GripperRetrieve(container.getGripper())
+                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                new IntakeExtend(
+                        container.getIntake(),
+                        container.getPivot(), true)
+        }));
 
         // // travel position and drive back to bump
         addCommands(new ParallelCommandGroup(
@@ -100,14 +100,14 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                         OffsetNeeded.None, false)
         }));
 
-        // close gripper
-        addCommands(new GripperRetrieve(container.getGripper())
-                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
-
-        // extend intake to avoid knocking purple out of grip
-        addCommands(new IntakeExtend(
-                container.getIntake(),
-                container.getPivot(), true));
+        // close gripper & extend intake to avoid knocking purple out of grip
+        addCommands(new ParallelCommandGroup(new Command[] {
+                new GripperRetrieve(container.getGripper())
+                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout),
+                new IntakeExtend(
+                        container.getIntake(),
+                        container.getPivot(), true)
+        }));
 
         // scoring position and drive back to bump
         addCommands(new ParallelCommandGroup(
