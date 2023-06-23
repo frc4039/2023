@@ -40,15 +40,16 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
         addCommands(new ConeGuideDeploy(container.getConeGuide()).withTimeout(0.25));
 
         // retract cone guide and move pivot up to vertical
-        addCommands(new ParallelRaceGroup(new Command[] {
-                new ConeGuideRetract(container.getConeGuide()),
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
-                        .withTimeout(1.0)
-        }));
+        // addCommands(new ParallelRaceGroup(new Command[] {
+        // // new ConeGuideRetract(container.getConeGuide()),
+        // new PivotMoveToPosition(container.getPivot(),
+        // Constants.PivotConstants.kPositionTravel)
+        // .withTimeout(1.0)
+        // }));
 
         // extend intake and pivot to purple pickup position. Drive to purple pickup
         // location 1
-        addCommands(new ParallelCommandGroup(new Command[] {
+        addCommands(new ParallelRaceGroup(new Command[] {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
@@ -56,19 +57,20 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                 new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.None, false)
         }));
 
-        // Probably not needed as the gripper has the auto close
         // close gripper
-        // addCommands(new GripperRetrieve(container.getGripper())
-        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+        addCommands(new GripperRetrieve(container.getGripper())
+                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
         // extend intake to avoid knocking purple out of grip
         addCommands(new IntakeExtend(
                 container.getIntake(),
-                container.getPivot(), false));
+                container.getPivot(), true));
 
-        // travel position and drive back to bump
+        // // travel position and drive back to bump
         addCommands(new ParallelCommandGroup(
-                new PivotMoveToPosition(container.getPivot(), Constants.PivotConstants.kPositionTravel)
+                new IntakeMotorSpin(container.gIntakeSpinner()).withTimeout(0.75),
+                new PivotMoveToPosition(container.getPivot(),
+                        Constants.PivotConstants.kPositionTravel)
                         .withTimeout(1.0),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(
@@ -76,19 +78,20 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                                         .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
                         new IntakeRetract(container.getIntake())
                 }),
-                new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.None, false)));
+                new PIDTranslateForAuto(container.getSwerve(), bumpInbound,
+                        OffsetNeeded.None, false)));
 
         // Drop cube, drive to second purple pickup
         addCommands(new SequentialCommandGroup(new Command[] {
                 new GripperRelease(container.getGripper())
-                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout + 2),
-                new PIDTranslateForAuto(container.getSwerve(),
-                        rotateTowardsPickup2, OffsetNeeded.None, false)
+                        .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout + 0.075)
+                // new PIDTranslateForAuto(container.getSwerve(),
+                // rotateTowardsPickup2, OffsetNeeded.None, false)
         }));
 
         // extend intake and pivot to purple pickup position. Drive to purple pickup
         // location 2
-        addCommands(new ParallelCommandGroup(new Command[] {
+        addCommands(new ParallelRaceGroup(new Command[] {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
@@ -97,15 +100,14 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                         OffsetNeeded.None, false)
         }));
 
-        // Probably not needed as the gripper has the auto close
         // close gripper
-        // addCommands(new GripperRetrieve(container.getGripper())
-        // .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
+        addCommands(new GripperRetrieve(container.getGripper())
+                .withTimeout(Constants.GripperConstants.kGripperReleaseTimeout));
 
         // extend intake to avoid knocking purple out of grip
         addCommands(new IntakeExtend(
                 container.getIntake(),
-                container.getPivot(), false));
+                container.getPivot(), true));
 
         // scoring position and drive back to bump
         addCommands(new ParallelCommandGroup(
@@ -117,10 +119,16 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                                         .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
                         new IntakeRetract(container.getIntake())
                 }),
-                new PIDTranslateForAuto(container.getSwerve(), bumpInbound, OffsetNeeded.None, false)));
+                new PIDTranslateForAuto(container.getSwerve(), bumpInbound,
+                        OffsetNeeded.None, false)));
 
-        // drive from bump to scoring location
-        addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation, OffsetNeeded.Y, true));
+        // Remove after testing - only for running at the portable
+        addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation,
+                OffsetNeeded.Y, false));
+
+        // // drive from bump to scoring location
+        // addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation,
+        // OffsetNeeded.Y, true));
 
         // extend arm
         addCommands(
@@ -170,9 +178,12 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d purplePickup1Rotate90_Blue = new Pose2d(1.64 + 4.9, 1.04 - 0.05, Rotation2d.fromDegrees(270));
     public static Pose2d purplePickup1RotateToPickup2_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05,
             Rotation2d.fromDegrees(90));
-    public static Pose2d scoringLocation_Blue = new Pose2d(1.58, 1.03, Rotation2d.fromDegrees(0)); // TODO: Same as Blue
-                                                                                                   // Purple 3
-                                                                                                   // Possibly need to
-                                                                                                   // decrease 'x' value
-    public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 4.9, 1.04 + 0.9, Rotation2d.fromDegrees(90));
+    public static Pose2d scoringLocation_Blue = new Pose2d(1.58 - 0.68, 1.03 + 0.3, Rotation2d.fromDegrees(0)); // TODO:
+                                                                                                                // Same
+                                                                                                                // as
+                                                                                                                // Blue
+    // Purple 3
+    // Possibly need to
+    // decrease 'x' value
+    public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 5, 1.04 + 1.1, Rotation2d.fromDegrees(20));
 }
