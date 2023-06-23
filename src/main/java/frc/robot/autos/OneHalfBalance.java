@@ -69,12 +69,14 @@ public class OneHalfBalance extends SequentialCommandGroup {
                                         .getEncoder() >= Constants.PivotConstants.kPositionForSafeIntakeRetract),
                         new IntakeRetract(container.getIntake())
                 }),
-                AutoFollowPath.createFollowCommand(container.getSwerve(),
-                        pPickupToCharge)));
-        // drive up charge station and balance
-        addCommands(new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
-                pDropAndBalanceYellowSide1),
-                new AwaitLevelCharge(container.getSwerve())));
+                new SequentialCommandGroup(new Command[] {
+                        AutoFollowPath.createFollowCommand(container.getSwerve(),
+                                pPickupToCharge),
+                        new ParallelRaceGroup(AutoFollowPath.createFollowCommand(container.getSwerve(),
+                                pDropAndBalanceYellowSide1),
+                                new AwaitLevelCharge(container.getSwerve()))
+                })));
+
     }
 
     public static Trajectory pDropToMobility = TrajectoryGenerator.generateTrajectory(
