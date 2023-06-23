@@ -29,6 +29,6 @@ public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
                 new IntakeMotorSpin(s_IntakeSpinner),
                 new IntakePickup(s_Intake),
-                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCubeWithIntake));
+                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCubeWithIntake - 2));
     }
 }
