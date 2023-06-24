@@ -145,13 +145,13 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                                 Constants.PivotConstants.kPositionTravel)
                                 .withTimeout(1.0),
                         new PIDTranslateForAuto(container.getSwerve(), bumpOutbound,
-                                OffsetNeeded.XPlus, false)
+                                OffsetNeeded.None, false)
                 })
         }));
 
         // Drive out of community
         addCommands(new PIDTranslateForAuto(container.getSwerve(), purplePickup1,
-                OffsetNeeded.XPlus, false));
+                OffsetNeeded.None, false));
     }
 
     /* Red Paths */
