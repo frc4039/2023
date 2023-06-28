@@ -264,6 +264,7 @@ public final class Constants {
         public static final double kPositionPickupCube = 130.5;
         public static final double kPositionPrePickupCube = -95;
         public static final double kPositionPickupCubeWithIntake = -129;
+        public static final double kPositionPickupCubeWithIntakeForAuto = -132;
         public static final double kPositionForSafeIntakeRetract = -95;
         public static final double kPositionTravel = 25;
         public static final double kPositionGreenCubePickup = -125;
@@ -382,6 +383,7 @@ public final class Constants {
         // Colours
         public static final double kColourValueCube = 0.89;
         public static final double kColourValueCone = 0.69;
+        public static final double kColourValueOff = 0.97;
         public static final double kColourValueFlashingWhite = -0.05;
         public static final double kColourValueRainbow = -0.99;
     }

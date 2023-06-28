@@ -44,7 +44,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                         new SeqCmdCubePickupPosition(container.getTelescopic(),
                                 container.getConeGuide(),
                                 container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                                container.getPivot())
+                                container.getPivot(), false)
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility)

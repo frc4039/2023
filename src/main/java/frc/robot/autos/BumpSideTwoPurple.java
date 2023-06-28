@@ -57,7 +57,7 @@ public class BumpSideTwoPurple extends SequentialCommandGroup {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                        container.getPivot()),
+                        container.getPivot(), false),
                 new PIDTranslateForAuto(container.getSwerve(), purplePickup, OffsetNeeded.None, false)
         }));
 

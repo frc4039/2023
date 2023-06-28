@@ -22,13 +22,14 @@ import frc.robot.subsystems.Telescopic;
 public class SeqCmdCubePickupPosition extends ParallelCommandGroup {
     public SeqCmdCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper, Intake s_Intake,
             IntakeSpinner s_IntakeSpinner,
-            Pivot s_Pivot) {
+            Pivot s_Pivot, boolean pickUpLower) {
         addCommands(
                 new TelescopicRetract(s_Telescopic).withTimeout(1.0),
                 new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
                 new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
                 new IntakeMotorSpin(s_IntakeSpinner),
                 new IntakePickup(s_Intake),
-                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCubeWithIntake - 2));
+                new PivotMoveToPosition(s_Pivot, pickUpLower ? PivotConstants.kPositionPickupCubeWithIntakeForAuto
+                        : PivotConstants.kPositionPickupCubeWithIntake));
     }
 }

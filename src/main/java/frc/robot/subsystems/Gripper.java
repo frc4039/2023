@@ -47,7 +47,7 @@ public class Gripper extends SubsystemBase {
         // This method will be called once per scheduler run
         if (!m_ReleaseMode && !m_BeamBreaker.get()) {
             setClose();
-            m_BlinkinGamePiece.SetColour(BlinkinConstants.kColourValueFlashingWhite);
+            m_BlinkinGamePiece.BlinkAndStopColour();
             m_ReleaseMode = true;
         }
         if (m_BeamBreaker.get()) {
