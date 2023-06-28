@@ -27,8 +27,7 @@ public class BlinkinGamePiece extends SubsystemBase {
     public void BlinkAndStopColour() {
         double currentColourValue = m_BlinkinStrip.get();
         SetColour(BlinkinConstants.kColourValueOff);
-        SetColour(currentColourValue);
-        SetColour(BlinkinConstants.kColourValueOff);
+        new WaitCommand(0.5);
         SetColour(currentColourValue);
     }
 

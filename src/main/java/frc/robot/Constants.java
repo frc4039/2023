@@ -383,7 +383,7 @@ public final class Constants {
         // Colours
         public static final double kColourValueCube = 0.89;
         public static final double kColourValueCone = 0.69;
-        public static final double kColourValueOff = 0.97;
+        public static final double kColourValueOff = 0.35;
         public static final double kColourValueFlashingWhite = -0.05;
         public static final double kColourValueRainbow = -0.99;
     }
