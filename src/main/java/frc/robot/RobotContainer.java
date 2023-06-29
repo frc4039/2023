@@ -162,7 +162,7 @@ public class RobotContainer {
         /* ============== */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
         driverStartButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
-                s_IntakeSpinner, s_Pivot).withTimeout(10));
+                s_IntakeSpinner, s_Pivot, false).withTimeout(10));
 
         driverYButton
                 .whileTrue(new TeleopSwerveAtFixedRotation(

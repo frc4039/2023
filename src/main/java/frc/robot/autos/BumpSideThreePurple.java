@@ -21,31 +21,20 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public BumpSideThreePurple(RobotContainer container, boolean isRed) {
         if (isRed) {
             ExecuteComands(container, startPosition_Red, bumpOutbound_Red, bumpInbound_Red, purplePickup1_Red,
-                    scoringLocation_Red, purplePickup2_Red, purplePickup1Rotate90_Red,
-                    purplePickup1RotateToPickup2_Red);
+                    scoringLocation_Red, purplePickup2_Red);
         } else if (!isRed) {
             ExecuteComands(container, startPosition_Blue, bumpOutbound_Blue, bumpInbound_Blue, purplePickup1_Blue,
-                    scoringLocation_Blue, purplePickup2_Blue, purplePickup1RotateToPickup2_Blue,
-                    purplePickup1Rotate90_Blue);
+                    scoringLocation_Blue, purplePickup2_Blue);
         }
     }
 
     private void ExecuteComands(RobotContainer container, Pose2d startPosition, Pose2d bumpOutbound, Pose2d bumpInbound,
-            Pose2d purplePickup1, Pose2d scoringLocation, Pose2d purplePickup2, Pose2d rotateTowardsPickup2,
-            Pose2d rotateBack) {
+            Pose2d purplePickup1, Pose2d scoringLocation, Pose2d purplePickup2) {
         // reset pose to initial position
         addCommands(new ResetRobotPose(container.getSwerve(), startPosition));
 
         // flick the pre-loaded cube
         addCommands(new ConeGuideDeploy(container.getConeGuide()).withTimeout(0.25));
-
-        // retract cone guide and move pivot up to vertical
-        // addCommands(new ParallelRaceGroup(new Command[] {
-        // // new ConeGuideRetract(container.getConeGuide()),
-        // new PivotMoveToPosition(container.getPivot(),
-        // Constants.PivotConstants.kPositionTravel)
-        // .withTimeout(1.0)
-        // }));
 
         // extend intake and pivot to purple pickup position. Drive to purple pickup
         // location 1
@@ -155,9 +144,6 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup1Rotate90_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(90));
-    public static Pose2d purplePickup1RotateToPickup2_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05,
-            Rotation2d.fromDegrees(270));
     public static Pose2d scoringLocation_Red = new Pose2d(15, 1.09, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup2_Red = new Pose2d(14.87 - 5.5, 1.04 + 1.2, Rotation2d.fromDegrees(0));
 
@@ -168,9 +154,6 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1_Blue = new Pose2d(1.64 + 5, 1.04, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup1Rotate90_Blue = new Pose2d(1.64 + 4.9, 1.04 - 0.05, Rotation2d.fromDegrees(270));
-    public static Pose2d purplePickup1RotateToPickup2_Blue = new Pose2d(1.64 + 5.5, 1.04 - 0.05,
-            Rotation2d.fromDegrees(90));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.58 - 0.68, 1.03 + 0.3, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 5, 1.04 + 1.3, Rotation2d.fromDegrees(20));
 }
