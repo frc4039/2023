@@ -143,9 +143,9 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d startPosition_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(180));
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.5, 1.04, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup1_Red = new Pose2d(14.87 - 5.5, 1.04 - 0.05, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(15, 1.09, Rotation2d.fromDegrees(0));
-    public static Pose2d purplePickup2_Red = new Pose2d(14.87 - 5.5, 1.04 + 1.2, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup1_Red = new Pose2d(14.87 - 5, 1.04, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Red = new Pose2d(15 + 0.68, 1.09 - 0.3, Rotation2d.fromDegrees(0));
+    public static Pose2d purplePickup2_Red = new Pose2d(14.87 - 5, 1.04 + 1.3, Rotation2d.fromDegrees(0));
 
     /* Blue Paths */
     /* ========== */
@@ -156,4 +156,5 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d purplePickup1_Blue = new Pose2d(1.64 + 5, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d scoringLocation_Blue = new Pose2d(1.58 - 0.68, 1.03 + 0.3, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 5, 1.04 + 1.3, Rotation2d.fromDegrees(20));
+
 }
