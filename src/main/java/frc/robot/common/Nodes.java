@@ -19,24 +19,24 @@ public class Nodes {
         this.swerve = swerve;
 
         redTranslationLabels = new String[] {
-                "RP 1",
-                "RP 2",
-                "RP 3",
-                "RP 4",
-                "RP 5",
-                "RP 6",
+                "YEL 1",
+                "YEL 2",
+                "YEL 3",
+                "YEL 4",
+                "YEL 5",
+                "YEL 6",
                 "PUR 1",
                 "PUR 2",
                 "PUR 3"
         };
 
         blueTranslationLabels = new String[] {
-                "BP 1",
-                "BP 2",
-                "BP 3",
-                "BP 4",
-                "BP 5",
-                "BP 6",
+                "YEL 1",
+                "YEL 2",
+                "YEL 3",
+                "YEL 4",
+                "YEL 5",
+                "YEL 6",
                 "PUR 1",
                 "PUR 2",
                 "PUR 3"

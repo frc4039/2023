@@ -161,7 +161,7 @@ public class RobotContainer {
         /* Driver Buttons */
         /* ============== */
         driverBackButton.onTrue(new InstantCommand(() -> s_Swerve.resetPoseAndGyro()));
-        driverStartButton.onTrue(new SeqCmdCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
+        driverStartButton.onTrue(new CmdGrpManualCubePickupPosition(s_Telescopic, s_ConeGuide, s_Gripper, s_Intake,
                 s_IntakeSpinner, s_Pivot).withTimeout(10));
 
         driverYButton
@@ -266,7 +266,7 @@ public class RobotContainer {
                 s_GamePieceSelector::getCurrentGamepiece));
         // pivot angles
         operatorYButton.onTrue(new CmdGrpTravelPosition(s_Telescopic, s_ConeGuide, s_Pivot, s_Intake));
-        operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Telescopic, s_Pivot));
+        operatorAButton.onTrue(new CmdGrpScoringPosition(s_ConeGuide, s_Pivot));
 
         // semi-auto scoring node selector
         operatorUpButton.onTrue(new SelectCommand(

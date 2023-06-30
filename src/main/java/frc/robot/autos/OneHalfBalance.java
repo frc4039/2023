@@ -44,7 +44,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
                         new SeqCmdCubePickupPosition(container.getTelescopic(),
                                 container.getConeGuide(),
                                 container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                                container.getPivot())
+                                container.getPivot(), false)
                 }),
                 AutoFollowPath.createFollowCommand(container.getSwerve(),
                         pDropToMobility)
@@ -61,7 +61,7 @@ public class OneHalfBalance extends SequentialCommandGroup {
         // pivot to scoring position, then move intake back in, and drive back to charge
         // station
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                new CmdGrpScoringPosition(container.getConeGuide(),
                         container.getPivot()),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(

@@ -30,7 +30,7 @@ public class IntakeExtend extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (m_manualExtend || m_Pivot.atSetpoint(PivotConstants.kPositionPickupCubeWithIntake)) {
+        if (ShouldExtend()) {
             m_Intake.extend();
         }
     }
@@ -41,10 +41,14 @@ public class IntakeExtend extends CommandBase {
         m_Intake.stopIntake();
     }
 
+    private boolean ShouldExtend() {
+        return (m_manualExtend || m_Pivot.getEncoder() < -120);
+    }
+
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (m_manualExtend || m_Pivot.atSetpoint(PivotConstants.kPositionPickupCubeWithIntake)) {
+        if (ShouldExtend()) {
             if (m_Intake.atSetpoint(IntakeConstants.kIntakePositionRightExtended)) {
                 return true;
             }

@@ -47,7 +47,7 @@ public class YellowPurpleFlatSide extends SequentialCommandGroup {
                 new SeqCmdCubePickupPosition(container.getTelescopic(),
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
-                        container.getPivot()),
+                        container.getPivot(), false),
                 new PIDTranslateForAuto(container.getSwerve(), purplePickup, OffsetNeeded.None, false)
 
         }));
@@ -62,7 +62,7 @@ public class YellowPurpleFlatSide extends SequentialCommandGroup {
 
         // scoring position and drive back to score
         addCommands(new ParallelCommandGroup(
-                new CmdGrpScoringPosition(container.getConeGuide(), container.getTelescopic(),
+                new CmdGrpScoringPosition(container.getConeGuide(),
                         container.getPivot()),
                 new SequentialCommandGroup(new Command[] {
                         new WaitUntilCommand(
