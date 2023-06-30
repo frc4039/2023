@@ -249,7 +249,7 @@ public final class Constants {
         public static final double kNominalVoltage = kDefaultVoltage;
 
         public static final TrapezoidProfile.Constraints kProfileConstraints = new TrapezoidProfile.Constraints(
-                200, 250);
+                225, 275);
         public static double kPivotKP = 0.15;
 
         // Degrees. Adding this to the encoder reading should give 0 when

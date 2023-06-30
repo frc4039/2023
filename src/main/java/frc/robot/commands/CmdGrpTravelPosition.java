@@ -20,7 +20,7 @@ public class CmdGrpTravelPosition extends SequentialCommandGroup {
 
     public CmdGrpTravelPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Pivot s_Pivot, Intake s_Intake) {
         addCommands(
-                new IntakeExtend(s_Intake, s_Pivot, false),
+                new IntakeExtend(s_Intake, s_Pivot, false).withTimeout(2),
                 new ParallelCommandGroup(new Command[] {
                         new TelescopicRetract(s_Telescopic),
                         new ConeGuideRetract(s_ConeGuide)

@@ -22,13 +22,16 @@ public class CmdGrpManualCubePickupPosition extends SequentialCommandGroup {
     public CmdGrpManualCubePickupPosition(Telescopic s_Telescopic, ConeGuide s_ConeGuide, Gripper s_Gripper,
             Intake s_Intake, IntakeSpinner s_IntakeSpinner, Pivot s_Pivot) {
         addCommands(
-                new TelescopicRetract(s_Telescopic).withTimeout(1.0),
-                new ParallelCommandGroup(new Command[] {
-                        new ConeGuideRetract(s_ConeGuide).withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
-                        new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
-                        new IntakeMotorSpin(s_IntakeSpinner),
-                        new IntakePickup(s_Intake),
-                        new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCubeWithIntake)
+                new SequentialCommandGroup(new Command[] {
+                        new TelescopicRetract(s_Telescopic).withTimeout(1.0),
+                        new ParallelCommandGroup(new Command[] {
+                                new ConeGuideRetract(s_ConeGuide)
+                                        .withTimeout(ConeGuideConstants.kConeGuideRetractTimeout),
+                                new GripperRelease(s_Gripper).withTimeout(GripperConstants.kGripperReleaseTimeout),
+                                new IntakeMotorSpin(s_IntakeSpinner),
+                                new IntakePickup(s_Intake),
+                                new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionPickupCubeWithIntake)
+                        })
                 }));
     }
 }
