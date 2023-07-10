@@ -124,6 +124,13 @@ public class PIDTranslateForAuto extends CommandBase {
             resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
 
             return resultGoalPosition;
+        } else if (needsOffset == OffsetNeeded.XPlusSmaller) {
+
+            double yOffset = MathUtil.clamp(Math.abs(deltaPos.getX()), 0, 0.6);
+            resultGoalPosition = deltaPos.plus(new Translation2d(0, yOffset));
+
+            return resultGoalPosition;
+
         } else if (needsOffset == OffsetNeeded.Y) {
             double xOffset = MathUtil.clamp(Math.abs(deltaPos.getY()), 0, 0.5);
 
@@ -143,6 +150,7 @@ public class PIDTranslateForAuto extends CommandBase {
         None,
         XMinus,
         XPlus,
+        XPlusSmaller,
         Y
     }
 }
