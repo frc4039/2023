@@ -19,11 +19,13 @@ public class Gripper extends SubsystemBase {
     private DigitalInput m_BeamBreaker;
     private boolean m_ReleaseMode;
     private BlinkinGamePiece m_BlinkinGamePiece;
+    private boolean m_UseBeamBreaker;
 
     public Gripper(BlinkinGamePiece blinkinGamePiece) {
         m_BeamBreaker = new DigitalInput(GripperConstants.kBeamBreakerChannel);
         m_ReleaseMode = false;
         m_BlinkinGamePiece = blinkinGamePiece;
+        m_UseBeamBreaker = true;
     }
 
     public void setOff() {
@@ -45,13 +47,15 @@ public class Gripper extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (!m_ReleaseMode && !m_BeamBreaker.get()) {
-            setClose();
-            m_BlinkinGamePiece.SetColour(BlinkinConstants.kColourValueFlashing);
-            m_ReleaseMode = true;
-        }
-        if (m_BeamBreaker.get()) {
-            m_ReleaseMode = false;
+        if (m_UseBeamBreaker) {
+            if (!m_ReleaseMode && !m_BeamBreaker.get()) {
+                setClose();
+                m_BlinkinGamePiece.SetColour(BlinkinConstants.kColourValueFlashing);
+                m_ReleaseMode = true;
+            }
+            if (m_BeamBreaker.get()) {
+                m_ReleaseMode = false;
+            }
         }
     }
 }

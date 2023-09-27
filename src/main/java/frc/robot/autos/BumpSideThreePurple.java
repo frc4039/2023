@@ -84,7 +84,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                         container.getPivot(), true),
                 new PIDTranslateForAuto(container.getSwerve(),
                         purplePickup2,
-                        OffsetNeeded.Y, false) // testing Y offset - pending test xminus and xplus
+                        OffsetNeeded.XPlusSmaller, false)
         }));
 
         // close gripper & extend intake to avoid knocking purple out of grip
@@ -108,7 +108,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                 }),
                 new PIDTranslateForAuto(container.getSwerve(),
                         bumpInbound,
-                        OffsetNeeded.Y, false)));
+                        OffsetNeeded.XPlusSmaller, false)));
 
         // drive from bump to scoring location
         addCommands(new PIDTranslateForAuto(container.getSwerve(), scoringLocation,
@@ -145,7 +145,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Red = new Pose2d(14.87 - 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Red = new Pose2d(14.87 - 2.73, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1_Red = new Pose2d(14.87 - 5.2, 1.04, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Red = new Pose2d(14.87 - 0.2, 1.03 + 0.3, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Red = new Pose2d(14.87 - 0.05, 1.03 + 0.2, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup2_Red = new Pose2d(14.87 - 5.2, 1.04 + 1.3, Rotation2d.fromDegrees(-22));
 
     /* Blue Paths */
@@ -155,7 +155,7 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
     public static Pose2d bumpOutbound_Blue = new Pose2d(1.64 + 2, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d bumpInbound_Blue = new Pose2d(1.64 + 2.73, 1.04, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup1_Blue = new Pose2d(1.64 + 5.2, 1.04, Rotation2d.fromDegrees(0));
-    public static Pose2d scoringLocation_Blue = new Pose2d(1.64 - 0.2, 1.03 + 0.3, Rotation2d.fromDegrees(0));
+    public static Pose2d scoringLocation_Blue = new Pose2d(1.64 + 0.15, 1.03 + 0.2, Rotation2d.fromDegrees(0));
     public static Pose2d purplePickup2_Blue = new Pose2d(1.64 + 5.2, 1.04 + 1.35, Rotation2d.fromDegrees(22));
 
 }
