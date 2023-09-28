@@ -6,6 +6,7 @@ package frc.robot.autos;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -17,6 +18,9 @@ import frc.robot.commands.PIDTranslateForAuto.OffsetNeeded;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class BumpSideThreePurple extends SequentialCommandGroup {
+
+    private final TrapezoidProfile.Constraints kFasterConstraints = new TrapezoidProfile.Constraints(
+            4.5, 2);
 
     public BumpSideThreePurple(RobotContainer container, boolean isRed) {
         if (isRed) {
@@ -43,7 +47,8 @@ public class BumpSideThreePurple extends SequentialCommandGroup {
                         container.getConeGuide(),
                         container.getGripper(), container.getIntake(), container.gIntakeSpinner(),
                         container.getPivot(), true),
-                new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.None, false)
+                new PIDTranslateForAuto(container.getSwerve(), purplePickup1, OffsetNeeded.None,
+                        kFasterConstraints, false)
         }));
 
         // close gripper & extend intake to avoid knocking purple out of grip

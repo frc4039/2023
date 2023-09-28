@@ -9,6 +9,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
@@ -26,8 +27,11 @@ public class PIDTranslateForAuto extends CommandBase {
 
     private PIDController rotationController = new PIDController(4.0, 0, 0);
 
-    private ProfiledPIDController xPidController = new ProfiledPIDController(AutoConstants.kPXController, 0, 0,
+    private final ProfiledPIDController kXPidControllerDefault = new ProfiledPIDController(AutoConstants.kPXController,
+            0, 0,
             AutoConstants.kPositionControllerConstraints);
+
+    private ProfiledPIDController _xPidController;
 
     public PIDTranslateForAuto(Swerve swerve, double xSup, double ySup, double rotSup, OffsetNeeded needsOffset,
             boolean useVision) {
@@ -39,6 +43,8 @@ public class PIDTranslateForAuto extends CommandBase {
         this.useVision = useVision;
 
         rotationController.enableContinuousInput(0, 2 * Math.PI);
+
+        _xPidController = kXPidControllerDefault;
 
         addRequirements(swerve);
     }
@@ -53,6 +59,24 @@ public class PIDTranslateForAuto extends CommandBase {
 
         rotationController.enableContinuousInput(0, 2 * Math.PI);
 
+        _xPidController = kXPidControllerDefault;
+
+        addRequirements(swerve);
+    }
+
+    public PIDTranslateForAuto(Swerve swerve, Pose2d pose, OffsetNeeded needsOffset,
+            Constraints constraints, boolean useVision) {
+        this.swerve = swerve;
+        this.xSup = pose.getX();
+        this.ySup = pose.getY();
+        this.rotSup = pose.getRotation().getRadians();
+        this.needsOffset = needsOffset;
+        this.useVision = useVision;
+
+        rotationController.enableContinuousInput(0, 2 * Math.PI);
+
+        _xPidController = new ProfiledPIDController(AutoConstants.kPXController, 0, 0, constraints);
+
         addRequirements(swerve);
     }
 
@@ -64,8 +88,8 @@ public class PIDTranslateForAuto extends CommandBase {
         rotationController.reset();
         rotationController.setSetpoint(rotSup);
 
-        xPidController.reset(deltaPosition.getNorm());
-        xPidController.setGoal(0.0);
+        _xPidController.reset(deltaPosition.getNorm());
+        _xPidController.setGoal(0.0);
     }
 
     @Override
@@ -82,7 +106,7 @@ public class PIDTranslateForAuto extends CommandBase {
             }
         }
 
-        double velocity = xPidController.calculate(deltaPosition.getNorm());
+        double velocity = _xPidController.calculate(deltaPosition.getNorm());
         Translation2d directionUnitVector = deltaPosition.div(deltaPosition.getNorm());
         Translation2d output = directionUnitVector.times(velocity);
 
