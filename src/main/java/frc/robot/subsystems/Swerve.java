@@ -54,7 +54,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.PhotonCameraWrapper;
 import frc.robot.Constants.VisionConstants;
-import frc.robot.autos.*;
 
 public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro;

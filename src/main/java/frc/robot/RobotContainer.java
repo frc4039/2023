@@ -43,7 +43,8 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationXAxis = XboxController.Axis.kRightX.value;
-    private final int rotationYAxis = XboxController.Axis.kRightY.value;
+    // Currently not being used
+    // private final int rotationYAxis = XboxController.Axis.kRightY.value;
 
     /* Driver Buttons */
     private final JoystickButton driverYButton = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -60,13 +61,17 @@ public class RobotContainer {
     private final Trigger driverLeftTriggerDepressed = new Trigger(
             () -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
     private final Trigger driverRightButton = new Trigger(() -> driver.getPOV() == 90);
-    private final Trigger driverLeftButton = new Trigger(() -> driver.getPOV() == 270);
+    // Currently not being used
+    // private final Trigger driverLeftButton = new Trigger(() -> driver.getPOV() ==
+    // 270);
 
     /* Operator Buttons */
     private final JoystickButton operatorYButton = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton operatorAButton = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton operatorXButton = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton operatorBButton = new JoystickButton(operator, XboxController.Button.kB.value);
+    // Currently not being used
+    // private final JoystickButton operatorBButton = new JoystickButton(operator,
+    // XboxController.Button.kB.value);
     private final JoystickButton operatorLeftBumper = new JoystickButton(operator,
             XboxController.Button.kLeftBumper.value);
     private final JoystickButton operatorRightBumper = new JoystickButton(operator,
@@ -83,8 +88,10 @@ public class RobotContainer {
             () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
     private final JoystickButton operatorLeftJoystickButton = new JoystickButton(operator,
             XboxController.Button.kLeftStick.value);
-    private final JoystickButton operatorRightJoystickButton = new JoystickButton(operator,
-            XboxController.Button.kRightStick.value);
+    // Currently not being used
+    // private final JoystickButton operatorRightJoystickButton = new
+    // JoystickButton(operator,
+    // XboxController.Button.kRightStick.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
