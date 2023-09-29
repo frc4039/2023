@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.BlinkinGamePiece;
 import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Pivot;
@@ -19,9 +18,6 @@ public class CmdGrpScoreLow extends SequentialCommandGroup {
     public CmdGrpScoreLow(Pivot s_Pivot, Gripper s_Gripper, Telescopic s_Telescopic,
             BlinkinGamePiece s_BlinkinGamePiece) {
         addCommands(
-                // pivot to extend angle
-                // new PivotMoveToPosition(s_Pivot, PivotConstants.kPositionScoringCone),
-                // score
                 new CmdGrpGamePieceScoring(s_Pivot, s_Gripper, s_Telescopic, s_BlinkinGamePiece));
     }
 }

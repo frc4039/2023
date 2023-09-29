@@ -45,9 +45,10 @@ public class AutoModeSelector {
         return command;
     }
 
-    private SequentialCommandGroup dropAndDriveYellow(RobotContainer container) {
-        return new DropAndDriveYellowSide(container);
-    }
+    // Currently not being used
+    // private SequentialCommandGroup dropAndDriveYellow(RobotContainer container) {
+    // return new DropAndDriveYellowSide(container);
+    // }
 
     private SequentialCommandGroup dropAndBalanceYellow(RobotContainer container) {
         return new DropAndBalanceYellowSide(container);
@@ -57,13 +58,17 @@ public class AutoModeSelector {
         return new DropMobilityBalanceAuto(container);
     }
 
-    private SequentialCommandGroup middlePickupStraight(RobotContainer container, boolean isRed) {
-        return new MiddlePickupStraight(container, isRed);
-    }
+    // Currently not being used
+    // private SequentialCommandGroup middlePickupStraight(RobotContainer container,
+    // boolean isRed) {
+    // return new MiddlePickupStraight(container, isRed);
+    // }
 
-    private SequentialCommandGroup middlePickupBalance(RobotContainer container) {
-        return new MiddlePickupBalance(container);
-    }
+    // Currently not being used
+    // private SequentialCommandGroup middlePickupBalance(RobotContainer container)
+    // {
+    // return new MiddlePickupBalance(container);
+    // }
 
     private SequentialCommandGroup twoPiecePurpleBarrier(RobotContainer container, boolean isRed) {
         return new TwoPiecePurpleBarrier(container, isRed);
