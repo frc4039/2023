@@ -164,7 +164,7 @@ public final class Constants {
             public static final int kAngleMotorID = 20; // Angle Motor Controller - [BRA]
             public static final int canCoderID = 21; // Back Right Encoder - [BRE]
             public static final boolean kDriveMotorInvert = true;
-            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(268.5); // old 280.3
+            public static final Rotation2d kAngleOffset = Rotation2d.fromDegrees(348.1); // old 280.3
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(kDriveMotorID,
                     kAngleMotorID,
                     canCoderID, kAngleOffset, kDriveMotorInvert);
