@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class BumpSideThreePurple extends SequentialCommandGroup {
 
     private final TrapezoidProfile.Constraints kFasterConstraints = new TrapezoidProfile.Constraints(
-            4.5, 2);
+            4, 2);
 
     public BumpSideThreePurple(RobotContainer container, boolean isRed) {
         if (isRed) {
