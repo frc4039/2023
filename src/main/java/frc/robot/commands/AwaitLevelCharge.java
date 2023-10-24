@@ -21,7 +21,7 @@ public class AwaitLevelCharge extends CommandBase {
 
     @Override
     public void execute() {
-        if (Math.abs(swerve.getRawPitch()) > 20.0) {
+        if (Math.abs(swerve.getRawPitch()) > 18.0) {
             liftoff = true;
         }
     }
